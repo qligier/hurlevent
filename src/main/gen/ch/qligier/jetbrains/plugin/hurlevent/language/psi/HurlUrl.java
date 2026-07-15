@@ -7,10 +7,7 @@ import com.intellij.psi.PsiElement;
 
 public interface HurlUrl extends PsiElement {
 
-  @Nullable
-  HurlValueString getValueString();
-
-  @Nullable
-  PsiElement getTUrl();
+  @NotNull
+  List<HurlTemplate> getTemplateList();
 
 }

@@ -7,12 +7,13 @@ import com.intellij.lang.ASTNode;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiElementVisitor;
 import com.intellij.psi.util.PsiTreeUtil;
-import static ch.qligier.jetbrains.plugin.hurlevent.language.psi.HurlElementTypes.*;
+import static ch.qligier.jetbrains.plugin.hurlevent.language.psi.HurlTypes.*;
+import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import ch.qligier.jetbrains.plugin.hurlevent.language.psi.*;
 
-public class HurlPredicateImpl extends HurlPsiImplUtil implements HurlPredicate {
+public class HurlPredicateImpl extends ASTWrapperPsiElement implements HurlPredicate {
 
-  public HurlPredicateImpl(ASTNode node) {
+  public HurlPredicateImpl(@NotNull ASTNode node) {
     super(node);
   }
 
@@ -27,15 +28,15 @@ public class HurlPredicateImpl extends HurlPsiImplUtil implements HurlPredicate 
   }
 
   @Override
-  @NotNull
-  public HurlPredicateType getPredicateType() {
-    return findNotNullChildByClass(HurlPredicateType.class);
+  @Nullable
+  public HurlNotPredicate getNotPredicate() {
+    return findChildByClass(HurlNotPredicate.class);
   }
 
   @Override
-  @Nullable
-  public HurlPredicateValue getPredicateValue() {
-    return findChildByClass(HurlPredicateValue.class);
+  @NotNull
+  public HurlPredicateFunc getPredicateFunc() {
+    return findNotNullChildByClass(HurlPredicateFunc.class);
   }
 
 }

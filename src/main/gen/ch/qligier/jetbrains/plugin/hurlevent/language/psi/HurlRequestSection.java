@@ -17,6 +17,9 @@ public interface HurlRequestSection extends PsiElement {
   HurlFormParamsSection getFormParamsSection();
 
   @Nullable
+  HurlHeader getHeader();
+
+  @Nullable
   HurlMultipartFormDataSection getMultipartFormDataSection();
 
   @Nullable

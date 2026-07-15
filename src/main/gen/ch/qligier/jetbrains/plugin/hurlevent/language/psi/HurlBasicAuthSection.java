@@ -7,13 +7,7 @@ import com.intellij.psi.PsiElement;
 
 public interface HurlBasicAuthSection extends PsiElement {
 
-  @NotNull
-  List<HurlKeyValue> getKeyValueList();
-
-  @NotNull
-  List<HurlLineBreak> getLineBreakList();
-
-  @NotNull
-  PsiElement getTBasicAuthSection();
+  @Nullable
+  HurlKeyValueList getKeyValueList();
 
 }

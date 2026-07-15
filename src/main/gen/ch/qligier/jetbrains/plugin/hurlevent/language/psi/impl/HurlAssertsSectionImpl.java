@@ -7,12 +7,13 @@ import com.intellij.lang.ASTNode;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiElementVisitor;
 import com.intellij.psi.util.PsiTreeUtil;
-import static ch.qligier.jetbrains.plugin.hurlevent.language.psi.HurlElementTypes.*;
+import static ch.qligier.jetbrains.plugin.hurlevent.language.psi.HurlTypes.*;
+import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import ch.qligier.jetbrains.plugin.hurlevent.language.psi.*;
 
-public class HurlAssertsSectionImpl extends HurlPsiImplUtil implements HurlAssertsSection {
+public class HurlAssertsSectionImpl extends ASTWrapperPsiElement implements HurlAssertsSection {
 
-  public HurlAssertsSectionImpl(ASTNode node) {
+  public HurlAssertsSectionImpl(@NotNull ASTNode node) {
     super(node);
   }
 
@@ -27,21 +28,9 @@ public class HurlAssertsSectionImpl extends HurlPsiImplUtil implements HurlAsser
   }
 
   @Override
-  @NotNull
-  public List<HurlAssert> getAssertList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, HurlAssert.class);
-  }
-
-  @Override
-  @NotNull
-  public List<HurlLineBreak> getLineBreakList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, HurlLineBreak.class);
-  }
-
-  @Override
-  @NotNull
-  public PsiElement getTAssertsSection() {
-    return findNotNullChildByType(T_ASSERTS_SECTION);
+  @Nullable
+  public HurlAssertList getAssertList() {
+    return findChildByClass(HurlAssertList.class);
   }
 
 }

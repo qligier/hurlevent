@@ -7,12 +7,13 @@ import com.intellij.lang.ASTNode;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiElementVisitor;
 import com.intellij.psi.util.PsiTreeUtil;
-import static ch.qligier.jetbrains.plugin.hurlevent.language.psi.HurlElementTypes.*;
+import static ch.qligier.jetbrains.plugin.hurlevent.language.psi.HurlTypes.*;
+import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import ch.qligier.jetbrains.plugin.hurlevent.language.psi.*;
 
-public class HurlMultipartFormDataSectionImpl extends HurlPsiImplUtil implements HurlMultipartFormDataSection {
+public class HurlMultipartFormDataSectionImpl extends ASTWrapperPsiElement implements HurlMultipartFormDataSection {
 
-  public HurlMultipartFormDataSectionImpl(ASTNode node) {
+  public HurlMultipartFormDataSectionImpl(@NotNull ASTNode node) {
     super(node);
   }
 
@@ -27,21 +28,9 @@ public class HurlMultipartFormDataSectionImpl extends HurlPsiImplUtil implements
   }
 
   @Override
-  @NotNull
-  public List<HurlLineBreak> getLineBreakList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, HurlLineBreak.class);
-  }
-
-  @Override
-  @NotNull
-  public List<HurlMultipartFormDataParam> getMultipartFormDataParamList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, HurlMultipartFormDataParam.class);
-  }
-
-  @Override
-  @NotNull
-  public PsiElement getTMultipartFormDataSection() {
-    return findNotNullChildByType(T_MULTIPART_FORM_DATA_SECTION);
+  @Nullable
+  public HurlKeyValueList getKeyValueList() {
+    return findChildByClass(HurlKeyValueList.class);
   }
 
 }

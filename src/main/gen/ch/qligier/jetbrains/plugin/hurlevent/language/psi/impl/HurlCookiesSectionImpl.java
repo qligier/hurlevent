@@ -7,12 +7,13 @@ import com.intellij.lang.ASTNode;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiElementVisitor;
 import com.intellij.psi.util.PsiTreeUtil;
-import static ch.qligier.jetbrains.plugin.hurlevent.language.psi.HurlElementTypes.*;
+import static ch.qligier.jetbrains.plugin.hurlevent.language.psi.HurlTypes.*;
+import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import ch.qligier.jetbrains.plugin.hurlevent.language.psi.*;
 
-public class HurlCookiesSectionImpl extends HurlPsiImplUtil implements HurlCookiesSection {
+public class HurlCookiesSectionImpl extends ASTWrapperPsiElement implements HurlCookiesSection {
 
-  public HurlCookiesSectionImpl(ASTNode node) {
+  public HurlCookiesSectionImpl(@NotNull ASTNode node) {
     super(node);
   }
 
@@ -27,21 +28,9 @@ public class HurlCookiesSectionImpl extends HurlPsiImplUtil implements HurlCooki
   }
 
   @Override
-  @NotNull
-  public List<HurlKeyValue> getKeyValueList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, HurlKeyValue.class);
-  }
-
-  @Override
-  @NotNull
-  public List<HurlLineBreak> getLineBreakList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, HurlLineBreak.class);
-  }
-
-  @Override
-  @NotNull
-  public PsiElement getTCookiesSection() {
-    return findNotNullChildByType(T_COOKIES_SECTION);
+  @Nullable
+  public HurlKeyValueList getKeyValueList() {
+    return findChildByClass(HurlKeyValueList.class);
   }
 
 }

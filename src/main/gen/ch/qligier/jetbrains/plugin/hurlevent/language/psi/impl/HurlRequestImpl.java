@@ -7,12 +7,13 @@ import com.intellij.lang.ASTNode;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiElementVisitor;
 import com.intellij.psi.util.PsiTreeUtil;
-import static ch.qligier.jetbrains.plugin.hurlevent.language.psi.HurlElementTypes.*;
+import static ch.qligier.jetbrains.plugin.hurlevent.language.psi.HurlTypes.*;
+import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import ch.qligier.jetbrains.plugin.hurlevent.language.psi.*;
 
-public class HurlRequestImpl extends HurlPsiImplUtil implements HurlRequest {
+public class HurlRequestImpl extends ASTWrapperPsiElement implements HurlRequest {
 
-  public HurlRequestImpl(ASTNode node) {
+  public HurlRequestImpl(@NotNull ASTNode node) {
     super(node);
   }
 
@@ -34,38 +35,14 @@ public class HurlRequestImpl extends HurlPsiImplUtil implements HurlRequest {
 
   @Override
   @NotNull
-  public List<HurlHeader> getHeaderList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, HurlHeader.class);
-  }
-
-  @Override
-  @NotNull
-  public List<HurlLineBreak> getLineBreakList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, HurlLineBreak.class);
-  }
-
-  @Override
-  @NotNull
-  public HurlMethod getMethod() {
-    return findNotNullChildByClass(HurlMethod.class);
+  public HurlRequestLine getRequestLine() {
+    return findNotNullChildByClass(HurlRequestLine.class);
   }
 
   @Override
   @NotNull
   public List<HurlRequestSection> getRequestSectionList() {
     return PsiTreeUtil.getChildrenOfTypeAsList(this, HurlRequestSection.class);
-  }
-
-  @Override
-  @Nullable
-  public HurlSpace getSpace() {
-    return findChildByClass(HurlSpace.class);
-  }
-
-  @Override
-  @Nullable
-  public HurlUrl getUrl() {
-    return findChildByClass(HurlUrl.class);
   }
 
 }

@@ -7,13 +7,7 @@ import com.intellij.psi.PsiElement;
 
 public interface HurlCookiesSection extends PsiElement {
 
-  @NotNull
-  List<HurlKeyValue> getKeyValueList();
-
-  @NotNull
-  List<HurlLineBreak> getLineBreakList();
-
-  @NotNull
-  PsiElement getTCookiesSection();
+  @Nullable
+  HurlKeyValueList getKeyValueList();
 
 }

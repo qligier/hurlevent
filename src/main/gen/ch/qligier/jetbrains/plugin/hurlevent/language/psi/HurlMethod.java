@@ -7,7 +7,4 @@ import com.intellij.psi.PsiElement;
 
 public interface HurlMethod extends PsiElement {
 
-  @NotNull
-  PsiElement getTMethod();
-
 }

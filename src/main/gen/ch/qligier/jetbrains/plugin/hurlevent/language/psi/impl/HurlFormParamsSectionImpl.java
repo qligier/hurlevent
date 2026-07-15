@@ -7,12 +7,13 @@ import com.intellij.lang.ASTNode;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiElementVisitor;
 import com.intellij.psi.util.PsiTreeUtil;
-import static ch.qligier.jetbrains.plugin.hurlevent.language.psi.HurlElementTypes.*;
+import static ch.qligier.jetbrains.plugin.hurlevent.language.psi.HurlTypes.*;
+import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import ch.qligier.jetbrains.plugin.hurlevent.language.psi.*;
 
-public class HurlFormParamsSectionImpl extends HurlPsiImplUtil implements HurlFormParamsSection {
+public class HurlFormParamsSectionImpl extends ASTWrapperPsiElement implements HurlFormParamsSection {
 
-  public HurlFormParamsSectionImpl(ASTNode node) {
+  public HurlFormParamsSectionImpl(@NotNull ASTNode node) {
     super(node);
   }
 
@@ -27,21 +28,9 @@ public class HurlFormParamsSectionImpl extends HurlPsiImplUtil implements HurlFo
   }
 
   @Override
-  @NotNull
-  public List<HurlKeyValue> getKeyValueList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, HurlKeyValue.class);
-  }
-
-  @Override
-  @NotNull
-  public List<HurlLineBreak> getLineBreakList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, HurlLineBreak.class);
-  }
-
-  @Override
-  @NotNull
-  public PsiElement getTFormParamsSection() {
-    return findNotNullChildByType(T_FORM_PARAMS_SECTION);
+  @Nullable
+  public HurlKeyValueList getKeyValueList() {
+    return findChildByClass(HurlKeyValueList.class);
   }
 
 }

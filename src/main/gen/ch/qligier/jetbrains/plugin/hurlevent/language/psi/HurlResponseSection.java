@@ -13,4 +13,7 @@ public interface HurlResponseSection extends PsiElement {
   @Nullable
   HurlCapturesSection getCapturesSection();
 
+  @Nullable
+  HurlHeader getHeader();
+
 }

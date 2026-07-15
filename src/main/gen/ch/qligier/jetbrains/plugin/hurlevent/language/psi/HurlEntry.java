@@ -8,9 +8,6 @@ import com.intellij.psi.PsiElement;
 public interface HurlEntry extends PsiElement {
 
   @NotNull
-  List<HurlLineBreak> getLineBreakList();
-
-  @NotNull
   HurlRequest getRequest();
 
   @Nullable

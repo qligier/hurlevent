@@ -4,6 +4,7 @@
 
 package ch.qligier.jetbrains.plugin.hurlevent.language
 
+import ch.qligier.jetbrains.plugin.hurlevent.common.Icons
 import com.intellij.extapi.psi.PsiFileBase
 import com.intellij.openapi.fileTypes.FileType
 import com.intellij.openapi.fileTypes.LanguageFileType
@@ -25,5 +26,5 @@ object HurlFileType : LanguageFileType(HurlLanguage) {
 
     override fun getDefaultExtension(): String = "hurl"
 
-    override fun getIcon(): Icon = TODO()
+    override fun getIcon(): Icon = Icons.HURL_ICON
 }

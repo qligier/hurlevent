@@ -8,9 +8,45 @@ import com.intellij.psi.PsiElement;
 public interface HurlQuery extends PsiElement {
 
   @Nullable
-  HurlQueryTarget getQueryTarget();
+  HurlBodyQuery getBodyQuery();
 
-  @NotNull
-  HurlQueryType getQueryType();
+  @Nullable
+  HurlBytesQuery getBytesQuery();
+
+  @Nullable
+  HurlCertificateQuery getCertificateQuery();
+
+  @Nullable
+  HurlCookieQuery getCookieQuery();
+
+  @Nullable
+  HurlDurationQuery getDurationQuery();
+
+  @Nullable
+  HurlHeaderQuery getHeaderQuery();
+
+  @Nullable
+  HurlJsonpathQuery getJsonpathQuery();
+
+  @Nullable
+  HurlMd5Query getMd5Query();
+
+  @Nullable
+  HurlRegexQuery getRegexQuery();
+
+  @Nullable
+  HurlSha256Query getSha256Query();
+
+  @Nullable
+  HurlStatusQuery getStatusQuery();
+
+  @Nullable
+  HurlUrlQuery getUrlQuery();
+
+  @Nullable
+  HurlVariableQuery getVariableQuery();
+
+  @Nullable
+  HurlXpathQuery getXpathQuery();
 
 }

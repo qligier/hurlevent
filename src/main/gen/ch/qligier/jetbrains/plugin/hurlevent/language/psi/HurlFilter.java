@@ -8,12 +8,42 @@ import com.intellij.psi.PsiElement;
 public interface HurlFilter extends PsiElement {
 
   @Nullable
-  HurlFilterArg getFilterArg();
+  HurlCountFilter getCountFilter();
 
-  @NotNull
-  HurlFilterType getFilterType();
+  @Nullable
+  HurlDecodeFilter getDecodeFilter();
 
-  @NotNull
-  HurlSpace getSpace();
+  @Nullable
+  HurlFormatFilter getFormatFilter();
+
+  @Nullable
+  HurlHtmlEscapeFilter getHtmlEscapeFilter();
+
+  @Nullable
+  HurlHtmlUnescapeFilter getHtmlUnescapeFilter();
+
+  @Nullable
+  HurlNthFilter getNthFilter();
+
+  @Nullable
+  HurlReplaceFilter getReplaceFilter();
+
+  @Nullable
+  HurlSplitFilter getSplitFilter();
+
+  @Nullable
+  HurlToDateFilter getToDateFilter();
+
+  @Nullable
+  HurlToFloatFilter getToFloatFilter();
+
+  @Nullable
+  HurlToIntFilter getToIntFilter();
+
+  @Nullable
+  HurlUrlDecodeFilter getUrlDecodeFilter();
+
+  @Nullable
+  HurlUrlEncodeFilter getUrlEncodeFilter();
 
 }

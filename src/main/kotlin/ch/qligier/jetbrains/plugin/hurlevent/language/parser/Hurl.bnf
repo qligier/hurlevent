@@ -1,0 +1,328 @@
+/*
+ * Copyright 2026 Quentin Ligier. Use of this source code is governed by the MIT license.
+ */
+
+{
+  parserClass="ch.qligier.jetbrains.plugin.hurlevent.language.parser.HurlParser"
+
+  extends="com.intellij.extapi.psi.ASTWrapperPsiElement"
+
+  psiClassPrefix="Hurl"
+  psiImplClassSuffix="Impl"
+  psiPackage="ch.qligier.jetbrains.plugin.hurlevent.language.psi"
+  psiImplPackage="ch.qligier.jetbrains.plugin.hurlevent.language.psi.impl"
+  psiImplUtilClass="ch.qligier.jetbrains.plugin.hurlevent.language.psi.impl.HurlPsiImplUtil"
+
+  elementTypeHolderClass="ch.qligier.jetbrains.plugin.hurlevent.language.psi.HurlTypes"
+  elementTypeClass="ch.qligier.jetbrains.plugin.hurlevent.language.psi.HurlElementType"
+  tokenTypeClass="ch.qligier.jetbrains.plugin.hurlevent.language.lexer.HurlTokenType"
+
+  tokens = [
+    // Methods
+    GET="GET"
+    POST="POST"
+    PUT="PUT"
+    DELETE="DELETE"
+    PATCH="PATCH"
+    HEAD="HEAD"
+    OPTIONS="OPTIONS"
+    CONNECT="CONNECT"
+    TRACE="TRACE"
+    LINK="LINK"
+    UNLINK="UNLINK"
+    PURGE="PURGE"
+    LOCK="LOCK"
+    UNLOCK="UNLOCK"
+    PROPFIND="PROPFIND"
+    PROPPATCH="PROPPATCH"
+    COPY="COPY"
+    MOVE="MOVE"
+    MKCOL="MKCOL"
+    REPORT="REPORT"
+    SEARCH="SEARCH"
+
+    // Punctuation
+    COLON=":"
+    SEMICOLON=";"
+    COMMA=","
+    LBRACE="{"
+    RBRACE="}"
+    LBRACKET="["
+    RBRACKET="]"
+    LPAREN="("
+    RPAREN=")"
+    DOT="."
+    STAR="*"
+    LBRACE2="{{"
+    RBRACE2="}}"
+
+    // Operators
+    EQUALS_OP="=="
+    NOT_EQUALS_OP="!="
+    GREATER_THAN_OP=">"
+    GREATER_THAN_OR_EQUALS_OP=">="
+    LESS_THAN_OP="<"
+    LESS_THAN_OR_EQUALS_OP="<="
+
+    // Misc
+    COMMENT="COMMENT"
+    NEWLINE="NEWLINE"
+  ]
+}
+
+// Root rule
+hurlFile ::= (entry_ | COMMENT | NEWLINE)*
+
+private entry_ ::= !<<eof>> entry {
+  recoverWhile = entry_recover
+}
+private entry_recover ::= !(method | HTTP_VERSION | NEWLINE)
+
+entry ::= request NEWLINE* response? {
+  pin = 1
+}
+
+// Request
+request ::= request_line NEWLINE* request_section* body? {
+  pin = 1
+}
+
+request_line ::= method url {
+  pin = 1
+}
+
+method ::= GET | POST | PUT | DELETE | PATCH | HEAD | OPTIONS
+         | CONNECT | TRACE | LINK | UNLINK | PURGE | LOCK | UNLOCK
+         | PROPFIND | PROPPATCH | COPY | MOVE | MKCOL | REPORT | SEARCH
+
+url ::= url_content+
+private url_content ::= URL_VALUE | template
+
+// Response
+response ::= response_line NEWLINE* response_section* body? {
+  pin = 1
+}
+
+response_line ::= HTTP_VERSION status_value {
+  pin = 1
+}
+
+status_value ::= STATUS_CODE | STAR
+
+// Headers
+header ::= HEADER_KEY COLON header_val? {
+  pin = 1
+}
+
+header_val ::= (HEADER_VALUE | template)+
+
+// Sections
+request_section ::= header NEWLINE
+                   | query_string_params_section
+                   | form_params_section
+                   | multipart_form_data_section
+                   | cookies_section
+                   | basic_auth_section
+                   | options_section
+                   | NEWLINE
+                   | COMMENT NEWLINE?
+
+response_section ::= captures_section
+                    | asserts_section
+                    | header NEWLINE
+                    | NEWLINE
+                    | COMMENT NEWLINE?
+
+query_string_params_section ::= SECTION_QUERY_STRING_PARAMS NEWLINE key_value_list {
+  pin = 1
+}
+
+form_params_section ::= SECTION_FORM_PARAMS NEWLINE key_value_list {
+  pin = 1
+}
+
+multipart_form_data_section ::= SECTION_MULTIPART_FORM_DATA NEWLINE key_value_list {
+  pin = 1
+}
+
+cookies_section ::= SECTION_COOKIES NEWLINE key_value_list {
+  pin = 1
+}
+
+basic_auth_section ::= SECTION_BASIC_AUTH NEWLINE key_value_list {
+  pin = 1
+}
+
+options_section ::= SECTION_OPTIONS NEWLINE option_list {
+  pin = 1
+}
+
+captures_section ::= SECTION_CAPTURES NEWLINE capture_list {
+  pin = 1
+}
+
+asserts_section ::= SECTION_ASSERTS NEWLINE assert_list {
+  pin = 1
+}
+
+// Key-Value pairs
+key_value_list ::= (key_value_pair | COMMENT NEWLINE? | NEWLINE)*
+key_value_pair ::= kv_key COLON value_content NEWLINE? {
+  pin = 2
+}
+
+kv_key ::= KEY_STRING | QUOTED_STRING | BACKTICK_STRING
+
+value_content ::= (VALUE_STRING | QUOTED_STRING | BACKTICK_STRING | NUMBER | FLOAT_NUMBER
+                  | TRUE | FALSE | NULL | template | FILE_PREFIX FILENAME?)+
+
+// Options
+option_list ::= (option_entry | COMMENT NEWLINE? | NEWLINE)*
+option_entry ::= option_key COLON option_value NEWLINE? {
+  pin = 2
+}
+
+option_key ::= KW_AWS_SIGV4 | KW_CACERT | KW_CERT | KW_COMPRESSED | KW_CONNECT_TO
+             | KW_DELAY | KW_HTTP10 | KW_HTTP11 | KW_HTTP2 | KW_HTTP3
+             | KW_INSECURE | KW_IPVF | KW_IPVS | KW_KEY | KW_LOCATION
+             | KW_LOCATION_TRUSTED | KW_MAX_REDIRS | KW_OUTPUT | KW_PATH_AS_IS
+             | KW_PROXY | KW_RESOLVE | KW_RETRY | KW_RETRY_INTERVAL | KW_SKIP
+             | KW_UNIX_SOCKET | KW_USER | KW_VERBOSE | KW_VERY_VERBOSE | KW_VARIABLE
+             | KEY_STRING
+
+option_value ::= (VALUE_STRING | QUOTED_STRING | NUMBER | FLOAT_NUMBER | TRUE | FALSE | template)+
+
+// Captures
+capture_list ::= (capture_entry | COMMENT NEWLINE? | NEWLINE)*
+capture_entry ::= KEY_STRING COLON query filter_list? NEWLINE? {
+  pin = 2
+}
+
+// Asserts
+assert_list ::= (assert_entry | COMMENT NEWLINE? | NEWLINE)*
+assert_entry ::= query filter_list? predicate NEWLINE? {
+  pin = 1
+}
+
+// Queries
+query ::= status_query
+        | url_query
+        | header_query
+        | cookie_query
+        | body_query
+        | xpath_query
+        | jsonpath_query
+        | regex_query
+        | variable_query
+        | duration_query
+        | sha256_query
+        | md5_query
+        | bytes_query
+        | certificate_query
+
+status_query ::= KW_STATUS
+url_query ::= KW_URL
+header_query ::= KW_HEADER quoted_string_value
+cookie_query ::= KW_COOKIE quoted_string_value
+body_query ::= KW_BODY
+xpath_query ::= KW_XPATH quoted_string_value
+jsonpath_query ::= KW_JSONPATH quoted_string_value
+regex_query ::= KW_REGEX quoted_string_value
+variable_query ::= KW_VARIABLE quoted_string_value
+duration_query ::= KW_DURATION
+sha256_query ::= KW_SHA256
+md5_query ::= KW_MD5
+bytes_query ::= KW_BYTES
+certificate_query ::= KW_CERTIFICATE quoted_string_value
+
+quoted_string_value ::= QUOTED_STRING | BACKTICK_STRING
+
+// Filters
+filter_list ::= filter+
+filter ::= count_filter | nth_filter | replace_filter | split_filter
+         | to_date_filter | to_float_filter | to_int_filter | decode_filter
+         | format_filter | html_escape_filter | html_unescape_filter
+         | url_encode_filter | url_decode_filter
+
+count_filter ::= KW_COUNT
+nth_filter ::= KW_NTH NUMBER
+replace_filter ::= KW_REPLACE quoted_string_value quoted_string_value
+split_filter ::= KW_SPLIT quoted_string_value
+to_date_filter ::= KW_TO_DATE quoted_string_value
+to_float_filter ::= KW_TO_FLOAT
+to_int_filter ::= KW_TO_INT
+decode_filter ::= KW_DECODE quoted_string_value
+format_filter ::= KW_FORMAT quoted_string_value
+html_escape_filter ::= KW_HTML_ESCAPE
+html_unescape_filter ::= KW_HTML_UNESCAPE
+url_encode_filter ::= KW_URL_ENCODE
+url_decode_filter ::= KW_URL_DECODE
+
+// Predicates
+predicate ::= not_predicate? predicate_func
+
+not_predicate ::= KW_NOT
+
+predicate_func ::= equals_predicate | not_equals_predicate
+                 | greater_than_predicate | greater_than_or_equals_predicate
+                 | less_than_predicate | less_than_or_equals_predicate
+                 | starts_with_predicate | ends_with_predicate
+                 | contains_predicate | includes_predicate | matches_predicate
+                 | exists_predicate | is_empty_predicate
+                 | is_number_predicate | is_string_predicate | is_boolean_predicate
+                 | is_collection_predicate | is_date_predicate | is_iso_date_predicate
+                 | is_float_predicate | is_integer_predicate
+                 | operator_predicate
+
+equals_predicate ::= KW_EQUALS predicate_value
+not_equals_predicate ::= KW_NOT_EQUALS predicate_value
+greater_than_predicate ::= KW_GREATER_THAN predicate_value
+greater_than_or_equals_predicate ::= KW_GREATER_THAN_OR_EQUALS predicate_value
+less_than_predicate ::= KW_LESS_THAN predicate_value
+less_than_or_equals_predicate ::= KW_LESS_THAN_OR_EQUALS predicate_value
+starts_with_predicate ::= KW_STARTS_WITH predicate_value
+ends_with_predicate ::= KW_ENDS_WITH predicate_value
+contains_predicate ::= KW_CONTAINS predicate_value
+includes_predicate ::= KW_INCLUDES predicate_value
+matches_predicate ::= KW_MATCHES predicate_value
+exists_predicate ::= KW_EXISTS
+is_empty_predicate ::= KW_IS_EMPTY
+is_number_predicate ::= KW_IS_NUMBER
+is_string_predicate ::= KW_IS_STRING
+is_boolean_predicate ::= KW_IS_BOOLEAN
+is_collection_predicate ::= KW_IS_COLLECTION
+is_date_predicate ::= KW_IS_DATE
+is_iso_date_predicate ::= KW_IS_ISO_DATE
+is_float_predicate ::= KW_IS_FLOAT
+is_integer_predicate ::= KW_IS_INTEGER
+
+operator_predicate ::= (EQUALS_OP | NOT_EQUALS_OP | GREATER_THAN_OP | GREATER_THAN_OR_EQUALS_OP
+                       | LESS_THAN_OP | LESS_THAN_OR_EQUALS_OP) predicate_value
+
+predicate_value ::= QUOTED_STRING | BACKTICK_STRING | NUMBER | FLOAT_NUMBER
+                   | TRUE | FALSE | NULL | template
+
+// Body
+body ::= json_body | xml_body | multiline_string_body | file_body | base64_body | hex_body | raw_body
+
+json_body ::= LBRACE json_content* RBRACE {
+  pin = 1
+}
+json_content ::= JSON_TEXT | template
+
+xml_body ::= XML_TEXT+
+
+multiline_string_body ::= MULTILINE_STRING_OPEN multiline_content* MULTILINE_STRING_CLOSE {
+  pin = 1
+}
+multiline_content ::= MULTILINE_STRING_CONTENT | template
+
+file_body ::= FILE_PREFIX FILENAME?
+base64_body ::= BASE64_PREFIX BASE64_DATA?
+hex_body ::= HEX_PREFIX HEX_DATA?
+raw_body ::= BODY_DATA+
+
+// Template variable
+template ::= LBRACE2 TEMPLATE_VAR RBRACE2 {
+  pin = 1
+}

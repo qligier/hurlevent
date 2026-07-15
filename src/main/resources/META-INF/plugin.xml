@@ -38,8 +38,10 @@
 
         <!-- The Hurl language -->
         <fileType name="Hurl" language="hurl" extensions="hurl" implementationClass="ch.qligier.jetbrains.plugin.hurlevent.language.HurlFileType"/>
-        <lang.parserDefinition language="hurl" 
+        <lang.parserDefinition language="hurl"
                                implementationClass="ch.qligier.jetbrains.plugin.hurlevent.language.parser.HurlParserDefinition"/>
+        <lang.syntaxHighlighterFactory language="hurl"
+                                       implementationClass="ch.qligier.jetbrains.plugin.hurlevent.language.highlight.HurlSyntaxHighlighterFactory"/>
     </extensions>
 
     <applicationListeners>

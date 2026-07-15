@@ -7,13 +7,7 @@ import com.intellij.psi.PsiElement;
 
 public interface HurlAssertsSection extends PsiElement {
 
-  @NotNull
-  List<HurlAssert> getAssertList();
-
-  @NotNull
-  List<HurlLineBreak> getLineBreakList();
-
-  @NotNull
-  PsiElement getTAssertsSection();
+  @Nullable
+  HurlAssertList getAssertList();
 
 }

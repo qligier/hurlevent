@@ -7,10 +7,7 @@ import com.intellij.psi.PsiElement;
 
 public interface HurlHeader extends PsiElement {
 
-  @NotNull
-  HurlKeyValue getKeyValue();
-
-  @NotNull
-  List<HurlLineBreak> getLineBreakList();
+  @Nullable
+  HurlHeaderVal getHeaderVal();
 
 }

@@ -7,7 +7,11 @@ import com.intellij.psi.PsiElement;
 
 public class HurlVisitor extends PsiElementVisitor {
 
-  public void visitAssert(@NotNull HurlAssert o) {
+  public void visitAssertEntry(@NotNull HurlAssertEntry o) {
+    visitPsiElement(o);
+  }
+
+  public void visitAssertList(@NotNull HurlAssertList o) {
     visitPsiElement(o);
   }
 
@@ -15,7 +19,7 @@ public class HurlVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
-  public void visitAwsSigv4Option(@NotNull HurlAwsSigv4Option o) {
+  public void visitBase64Body(@NotNull HurlBase64Body o) {
     visitPsiElement(o);
   }
 
@@ -27,19 +31,19 @@ public class HurlVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
-  public void visitBooleanOption(@NotNull HurlBooleanOption o) {
+  public void visitBodyQuery(@NotNull HurlBodyQuery o) {
     visitPsiElement(o);
   }
 
-  public void visitBytes(@NotNull HurlBytes o) {
+  public void visitBytesQuery(@NotNull HurlBytesQuery o) {
     visitPsiElement(o);
   }
 
-  public void visitCacertOption(@NotNull HurlCacertOption o) {
+  public void visitCaptureEntry(@NotNull HurlCaptureEntry o) {
     visitPsiElement(o);
   }
 
-  public void visitCapture(@NotNull HurlCapture o) {
+  public void visitCaptureList(@NotNull HurlCaptureList o) {
     visitPsiElement(o);
   }
 
@@ -47,19 +51,15 @@ public class HurlVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
-  public void visitCertOption(@NotNull HurlCertOption o) {
+  public void visitCertificateQuery(@NotNull HurlCertificateQuery o) {
     visitPsiElement(o);
   }
 
-  public void visitCompressedOption(@NotNull HurlCompressedOption o) {
+  public void visitContainsPredicate(@NotNull HurlContainsPredicate o) {
     visitPsiElement(o);
   }
 
-  public void visitConnectTimeoutOption(@NotNull HurlConnectTimeoutOption o) {
-    visitPsiElement(o);
-  }
-
-  public void visitConnectToOption(@NotNull HurlConnectToOption o) {
+  public void visitCookieQuery(@NotNull HurlCookieQuery o) {
     visitPsiElement(o);
   }
 
@@ -67,11 +67,19 @@ public class HurlVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
-  public void visitDelayOption(@NotNull HurlDelayOption o) {
+  public void visitCountFilter(@NotNull HurlCountFilter o) {
     visitPsiElement(o);
   }
 
-  public void visitDurationOption(@NotNull HurlDurationOption o) {
+  public void visitDecodeFilter(@NotNull HurlDecodeFilter o) {
+    visitPsiElement(o);
+  }
+
+  public void visitDurationQuery(@NotNull HurlDurationQuery o) {
+    visitPsiElement(o);
+  }
+
+  public void visitEndsWithPredicate(@NotNull HurlEndsWithPredicate o) {
     visitPsiElement(o);
   }
 
@@ -79,19 +87,15 @@ public class HurlVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
-  public void visitFilename(@NotNull HurlFilename o) {
+  public void visitEqualsPredicate(@NotNull HurlEqualsPredicate o) {
     visitPsiElement(o);
   }
 
-  public void visitFilenameParam(@NotNull HurlFilenameParam o) {
+  public void visitExistsPredicate(@NotNull HurlExistsPredicate o) {
     visitPsiElement(o);
   }
 
-  public void visitFilenamePassword(@NotNull HurlFilenamePassword o) {
-    visitPsiElement(o);
-  }
-
-  public void visitFilenameValue(@NotNull HurlFilenameValue o) {
+  public void visitFileBody(@NotNull HurlFileBody o) {
     visitPsiElement(o);
   }
 
@@ -99,11 +103,7 @@ public class HurlVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
-  public void visitFilterArg(@NotNull HurlFilterArg o) {
-    visitPsiElement(o);
-  }
-
-  public void visitFilterType(@NotNull HurlFilterType o) {
+  public void visitFilterList(@NotNull HurlFilterList o) {
     visitPsiElement(o);
   }
 
@@ -111,107 +111,119 @@ public class HurlVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
+  public void visitFormatFilter(@NotNull HurlFormatFilter o) {
+    visitPsiElement(o);
+  }
+
+  public void visitGreaterThanOrEqualsPredicate(@NotNull HurlGreaterThanOrEqualsPredicate o) {
+    visitPsiElement(o);
+  }
+
+  public void visitGreaterThanPredicate(@NotNull HurlGreaterThanPredicate o) {
+    visitPsiElement(o);
+  }
+
   public void visitHeader(@NotNull HurlHeader o) {
     visitPsiElement(o);
   }
 
-  public void visitHeaderOption(@NotNull HurlHeaderOption o) {
+  public void visitHeaderQuery(@NotNull HurlHeaderQuery o) {
     visitPsiElement(o);
   }
 
-  public void visitHttp10Option(@NotNull HurlHttp10Option o) {
+  public void visitHeaderVal(@NotNull HurlHeaderVal o) {
     visitPsiElement(o);
   }
 
-  public void visitHttp11Option(@NotNull HurlHttp11Option o) {
+  public void visitHexBody(@NotNull HurlHexBody o) {
     visitPsiElement(o);
   }
 
-  public void visitHttp2Option(@NotNull HurlHttp2Option o) {
+  public void visitHtmlEscapeFilter(@NotNull HurlHtmlEscapeFilter o) {
     visitPsiElement(o);
   }
 
-  public void visitHttp3Option(@NotNull HurlHttp3Option o) {
+  public void visitHtmlUnescapeFilter(@NotNull HurlHtmlUnescapeFilter o) {
     visitPsiElement(o);
   }
 
-  public void visitHttpVersion(@NotNull HurlHttpVersion o) {
+  public void visitIncludesPredicate(@NotNull HurlIncludesPredicate o) {
     visitPsiElement(o);
   }
 
-  public void visitInsecureOption(@NotNull HurlInsecureOption o) {
+  public void visitIsBooleanPredicate(@NotNull HurlIsBooleanPredicate o) {
     visitPsiElement(o);
   }
 
-  public void visitIntegerOption(@NotNull HurlIntegerOption o) {
+  public void visitIsCollectionPredicate(@NotNull HurlIsCollectionPredicate o) {
     visitPsiElement(o);
   }
 
-  public void visitIpv4Option(@NotNull HurlIpv4Option o) {
+  public void visitIsDatePredicate(@NotNull HurlIsDatePredicate o) {
     visitPsiElement(o);
   }
 
-  public void visitIpv6Option(@NotNull HurlIpv6Option o) {
+  public void visitIsEmptyPredicate(@NotNull HurlIsEmptyPredicate o) {
     visitPsiElement(o);
   }
 
-  public void visitJsonArray(@NotNull HurlJsonArray o) {
+  public void visitIsFloatPredicate(@NotNull HurlIsFloatPredicate o) {
     visitPsiElement(o);
   }
 
-  public void visitJsonMember(@NotNull HurlJsonMember o) {
+  public void visitIsIntegerPredicate(@NotNull HurlIsIntegerPredicate o) {
     visitPsiElement(o);
   }
 
-  public void visitJsonNumber(@NotNull HurlJsonNumber o) {
+  public void visitIsIsoDatePredicate(@NotNull HurlIsIsoDatePredicate o) {
     visitPsiElement(o);
   }
 
-  public void visitJsonObject(@NotNull HurlJsonObject o) {
+  public void visitIsNumberPredicate(@NotNull HurlIsNumberPredicate o) {
     visitPsiElement(o);
   }
 
-  public void visitJsonString(@NotNull HurlJsonString o) {
+  public void visitIsStringPredicate(@NotNull HurlIsStringPredicate o) {
     visitPsiElement(o);
   }
 
-  public void visitJsonValue(@NotNull HurlJsonValue o) {
+  public void visitJsonBody(@NotNull HurlJsonBody o) {
     visitPsiElement(o);
   }
 
-  public void visitKeyOption(@NotNull HurlKeyOption o) {
+  public void visitJsonContent(@NotNull HurlJsonContent o) {
     visitPsiElement(o);
   }
 
-  public void visitKeyString(@NotNull HurlKeyString o) {
+  public void visitJsonpathQuery(@NotNull HurlJsonpathQuery o) {
     visitPsiElement(o);
   }
 
-  public void visitKeyValue(@NotNull HurlKeyValue o) {
+  public void visitKeyValueList(@NotNull HurlKeyValueList o) {
     visitPsiElement(o);
   }
 
-  public void visitLimitRateOption(@NotNull HurlLimitRateOption o) {
+  public void visitKeyValuePair(@NotNull HurlKeyValuePair o) {
     visitPsiElement(o);
   }
 
-  public void visitLineBreak(@NotNull HurlLineBreak o) {
+  public void visitKvKey(@NotNull HurlKvKey o) {
     visitPsiElement(o);
   }
 
-  public void visitLocationOption(@NotNull HurlLocationOption o) {
+  public void visitLessThanOrEqualsPredicate(@NotNull HurlLessThanOrEqualsPredicate o) {
     visitPsiElement(o);
   }
 
-  public void visitLocationTrustedOption(@NotNull HurlLocationTrustedOption o) {
+  public void visitLessThanPredicate(@NotNull HurlLessThanPredicate o) {
     visitPsiElement(o);
   }
 
-  public void visitMaxRedirsOption(@NotNull HurlMaxRedirsOption o) {
+  public void visitMatchesPredicate(@NotNull HurlMatchesPredicate o) {
     visitPsiElement(o);
   }
 
-  public void visitMaxTimeOption(@NotNull HurlMaxTimeOption o) {
+  public void visitMd5Query(@NotNull HurlMd5Query o) {
     visitPsiElement(o);
   }
 
@@ -219,7 +231,11 @@ public class HurlVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
-  public void visitMultipartFormDataParam(@NotNull HurlMultipartFormDataParam o) {
+  public void visitMultilineContent(@NotNull HurlMultilineContent o) {
+    visitPsiElement(o);
+  }
+
+  public void visitMultilineStringBody(@NotNull HurlMultilineStringBody o) {
     visitPsiElement(o);
   }
 
@@ -227,23 +243,35 @@ public class HurlVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
-  public void visitNetrcFileOption(@NotNull HurlNetrcFileOption o) {
+  public void visitNotEqualsPredicate(@NotNull HurlNotEqualsPredicate o) {
     visitPsiElement(o);
   }
 
-  public void visitNetrcOption(@NotNull HurlNetrcOption o) {
+  public void visitNotPredicate(@NotNull HurlNotPredicate o) {
     visitPsiElement(o);
   }
 
-  public void visitNetrcOptionalOption(@NotNull HurlNetrcOptionalOption o) {
+  public void visitNthFilter(@NotNull HurlNthFilter o) {
     visitPsiElement(o);
   }
 
-  public void visitOption(@NotNull HurlOption o) {
+  public void visitOperatorPredicate(@NotNull HurlOperatorPredicate o) {
     visitPsiElement(o);
   }
 
-  public void visitOptionType(@NotNull HurlOptionType o) {
+  public void visitOptionEntry(@NotNull HurlOptionEntry o) {
+    visitPsiElement(o);
+  }
+
+  public void visitOptionKey(@NotNull HurlOptionKey o) {
+    visitPsiElement(o);
+  }
+
+  public void visitOptionList(@NotNull HurlOptionList o) {
+    visitPsiElement(o);
+  }
+
+  public void visitOptionValue(@NotNull HurlOptionValue o) {
     visitPsiElement(o);
   }
 
@@ -251,31 +279,15 @@ public class HurlVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
-  public void visitOutputOption(@NotNull HurlOutputOption o) {
-    visitPsiElement(o);
-  }
-
-  public void visitPathAsIsOption(@NotNull HurlPathAsIsOption o) {
-    visitPsiElement(o);
-  }
-
-  public void visitPinnedpubkeyOption(@NotNull HurlPinnedpubkeyOption o) {
-    visitPsiElement(o);
-  }
-
   public void visitPredicate(@NotNull HurlPredicate o) {
     visitPsiElement(o);
   }
 
-  public void visitPredicateType(@NotNull HurlPredicateType o) {
+  public void visitPredicateFunc(@NotNull HurlPredicateFunc o) {
     visitPsiElement(o);
   }
 
   public void visitPredicateValue(@NotNull HurlPredicateValue o) {
-    visitPsiElement(o);
-  }
-
-  public void visitProxyOption(@NotNull HurlProxyOption o) {
     visitPsiElement(o);
   }
 
@@ -287,15 +299,19 @@ public class HurlVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
-  public void visitQueryTarget(@NotNull HurlQueryTarget o) {
+  public void visitQuotedStringValue(@NotNull HurlQuotedStringValue o) {
     visitPsiElement(o);
   }
 
-  public void visitQueryType(@NotNull HurlQueryType o) {
+  public void visitRawBody(@NotNull HurlRawBody o) {
     visitPsiElement(o);
   }
 
-  public void visitRepeatOption(@NotNull HurlRepeatOption o) {
+  public void visitRegexQuery(@NotNull HurlRegexQuery o) {
+    visitPsiElement(o);
+  }
+
+  public void visitReplaceFilter(@NotNull HurlReplaceFilter o) {
     visitPsiElement(o);
   }
 
@@ -303,11 +319,11 @@ public class HurlVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
-  public void visitRequestSection(@NotNull HurlRequestSection o) {
+  public void visitRequestLine(@NotNull HurlRequestLine o) {
     visitPsiElement(o);
   }
 
-  public void visitResolveOption(@NotNull HurlResolveOption o) {
+  public void visitRequestSection(@NotNull HurlRequestSection o) {
     visitPsiElement(o);
   }
 
@@ -315,47 +331,47 @@ public class HurlVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
+  public void visitResponseLine(@NotNull HurlResponseLine o) {
+    visitPsiElement(o);
+  }
+
   public void visitResponseSection(@NotNull HurlResponseSection o) {
     visitPsiElement(o);
   }
 
-  public void visitRetryIntervalOption(@NotNull HurlRetryIntervalOption o) {
+  public void visitSha256Query(@NotNull HurlSha256Query o) {
     visitPsiElement(o);
   }
 
-  public void visitRetryOption(@NotNull HurlRetryOption o) {
+  public void visitSplitFilter(@NotNull HurlSplitFilter o) {
     visitPsiElement(o);
   }
 
-  public void visitSkipOption(@NotNull HurlSkipOption o) {
+  public void visitStartsWithPredicate(@NotNull HurlStartsWithPredicate o) {
     visitPsiElement(o);
   }
 
-  public void visitSpace(@NotNull HurlSpace o) {
+  public void visitStatusQuery(@NotNull HurlStatusQuery o) {
     visitPsiElement(o);
   }
 
-  public void visitStatus(@NotNull HurlStatus o) {
+  public void visitStatusValue(@NotNull HurlStatusValue o) {
     visitPsiElement(o);
   }
 
-  public void visitStringLiteral(@NotNull HurlStringLiteral o) {
+  public void visitTemplate(@NotNull HurlTemplate o) {
     visitPsiElement(o);
   }
 
-  public void visitStringPart(@NotNull HurlStringPart o) {
+  public void visitToDateFilter(@NotNull HurlToDateFilter o) {
     visitPsiElement(o);
   }
 
-  public void visitTemplateExpression(@NotNull HurlTemplateExpression o) {
+  public void visitToFloatFilter(@NotNull HurlToFloatFilter o) {
     visitPsiElement(o);
   }
 
-  public void visitTemplateVariable(@NotNull HurlTemplateVariable o) {
-    visitPsiElement(o);
-  }
-
-  public void visitUnixSocketOption(@NotNull HurlUnixSocketOption o) {
+  public void visitToIntFilter(@NotNull HurlToIntFilter o) {
     visitPsiElement(o);
   }
 
@@ -363,31 +379,31 @@ public class HurlVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
-  public void visitUserOption(@NotNull HurlUserOption o) {
+  public void visitUrlDecodeFilter(@NotNull HurlUrlDecodeFilter o) {
     visitPsiElement(o);
   }
 
-  public void visitValueString(@NotNull HurlValueString o) {
+  public void visitUrlEncodeFilter(@NotNull HurlUrlEncodeFilter o) {
     visitPsiElement(o);
   }
 
-  public void visitVariableDefinition(@NotNull HurlVariableDefinition o) {
+  public void visitUrlQuery(@NotNull HurlUrlQuery o) {
     visitPsiElement(o);
   }
 
-  public void visitVariableOption(@NotNull HurlVariableOption o) {
+  public void visitValueContent(@NotNull HurlValueContent o) {
     visitPsiElement(o);
   }
 
-  public void visitVariableValue(@NotNull HurlVariableValue o) {
+  public void visitVariableQuery(@NotNull HurlVariableQuery o) {
     visitPsiElement(o);
   }
 
-  public void visitVerboseOption(@NotNull HurlVerboseOption o) {
+  public void visitXmlBody(@NotNull HurlXmlBody o) {
     visitPsiElement(o);
   }
 
-  public void visitVeryVerboseOption(@NotNull HurlVeryVerboseOption o) {
+  public void visitXpathQuery(@NotNull HurlXpathQuery o) {
     visitPsiElement(o);
   }
 

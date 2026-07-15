@@ -7,12 +7,13 @@ import com.intellij.lang.ASTNode;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiElementVisitor;
 import com.intellij.psi.util.PsiTreeUtil;
-import static ch.qligier.jetbrains.plugin.hurlevent.language.psi.HurlElementTypes.*;
+import static ch.qligier.jetbrains.plugin.hurlevent.language.psi.HurlTypes.*;
+import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import ch.qligier.jetbrains.plugin.hurlevent.language.psi.*;
 
-public class HurlCapturesSectionImpl extends HurlPsiImplUtil implements HurlCapturesSection {
+public class HurlCapturesSectionImpl extends ASTWrapperPsiElement implements HurlCapturesSection {
 
-  public HurlCapturesSectionImpl(ASTNode node) {
+  public HurlCapturesSectionImpl(@NotNull ASTNode node) {
     super(node);
   }
 
@@ -27,21 +28,9 @@ public class HurlCapturesSectionImpl extends HurlPsiImplUtil implements HurlCapt
   }
 
   @Override
-  @NotNull
-  public List<HurlCapture> getCaptureList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, HurlCapture.class);
-  }
-
-  @Override
-  @NotNull
-  public List<HurlLineBreak> getLineBreakList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, HurlLineBreak.class);
-  }
-
-  @Override
-  @NotNull
-  public PsiElement getTCapturesSection() {
-    return findNotNullChildByType(T_CAPTURES_SECTION);
+  @Nullable
+  public HurlCaptureList getCaptureList() {
+    return findChildByClass(HurlCaptureList.class);
   }
 
 }

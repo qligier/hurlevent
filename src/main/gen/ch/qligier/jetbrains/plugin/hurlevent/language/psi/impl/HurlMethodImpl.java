@@ -7,12 +7,13 @@ import com.intellij.lang.ASTNode;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiElementVisitor;
 import com.intellij.psi.util.PsiTreeUtil;
-import static ch.qligier.jetbrains.plugin.hurlevent.language.psi.HurlElementTypes.*;
+import static ch.qligier.jetbrains.plugin.hurlevent.language.psi.HurlTypes.*;
+import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import ch.qligier.jetbrains.plugin.hurlevent.language.psi.*;
 
-public class HurlMethodImpl extends HurlPsiImplUtil implements HurlMethod {
+public class HurlMethodImpl extends ASTWrapperPsiElement implements HurlMethod {
 
-  public HurlMethodImpl(ASTNode node) {
+  public HurlMethodImpl(@NotNull ASTNode node) {
     super(node);
   }
 
@@ -24,12 +25,6 @@ public class HurlMethodImpl extends HurlPsiImplUtil implements HurlMethod {
   public void accept(@NotNull PsiElementVisitor visitor) {
     if (visitor instanceof HurlVisitor) accept((HurlVisitor)visitor);
     else super.accept(visitor);
-  }
-
-  @Override
-  @NotNull
-  public PsiElement getTMethod() {
-    return findNotNullChildByType(T_METHOD);
   }
 
 }

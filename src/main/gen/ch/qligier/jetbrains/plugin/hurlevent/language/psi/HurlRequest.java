@@ -11,21 +11,9 @@ public interface HurlRequest extends PsiElement {
   HurlBody getBody();
 
   @NotNull
-  List<HurlHeader> getHeaderList();
-
-  @NotNull
-  List<HurlLineBreak> getLineBreakList();
-
-  @NotNull
-  HurlMethod getMethod();
+  HurlRequestLine getRequestLine();
 
   @NotNull
   List<HurlRequestSection> getRequestSectionList();
-
-  @Nullable
-  HurlSpace getSpace();
-
-  @Nullable
-  HurlUrl getUrl();
 
 }

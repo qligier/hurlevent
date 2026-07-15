@@ -7,13 +7,7 @@ import com.intellij.psi.PsiElement;
 
 public interface HurlCapturesSection extends PsiElement {
 
-  @NotNull
-  List<HurlCapture> getCaptureList();
-
-  @NotNull
-  List<HurlLineBreak> getLineBreakList();
-
-  @NotNull
-  PsiElement getTCapturesSection();
+  @Nullable
+  HurlCaptureList getCaptureList();
 
 }

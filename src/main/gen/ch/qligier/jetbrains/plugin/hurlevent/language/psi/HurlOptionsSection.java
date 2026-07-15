@@ -7,13 +7,7 @@ import com.intellij.psi.PsiElement;
 
 public interface HurlOptionsSection extends PsiElement {
 
-  @NotNull
-  List<HurlLineBreak> getLineBreakList();
-
-  @NotNull
-  List<HurlOption> getOptionList();
-
-  @NotNull
-  PsiElement getTOptionsSection();
+  @Nullable
+  HurlOptionList getOptionList();
 
 }

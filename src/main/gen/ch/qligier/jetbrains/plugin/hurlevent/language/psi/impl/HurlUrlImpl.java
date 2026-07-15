@@ -7,12 +7,13 @@ import com.intellij.lang.ASTNode;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiElementVisitor;
 import com.intellij.psi.util.PsiTreeUtil;
-import static ch.qligier.jetbrains.plugin.hurlevent.language.psi.HurlElementTypes.*;
+import static ch.qligier.jetbrains.plugin.hurlevent.language.psi.HurlTypes.*;
+import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import ch.qligier.jetbrains.plugin.hurlevent.language.psi.*;
 
-public class HurlUrlImpl extends HurlPsiImplUtil implements HurlUrl {
+public class HurlUrlImpl extends ASTWrapperPsiElement implements HurlUrl {
 
-  public HurlUrlImpl(ASTNode node) {
+  public HurlUrlImpl(@NotNull ASTNode node) {
     super(node);
   }
 
@@ -27,15 +28,9 @@ public class HurlUrlImpl extends HurlPsiImplUtil implements HurlUrl {
   }
 
   @Override
-  @Nullable
-  public HurlValueString getValueString() {
-    return findChildByClass(HurlValueString.class);
-  }
-
-  @Override
-  @Nullable
-  public PsiElement getTUrl() {
-    return findChildByType(T_URL);
+  @NotNull
+  public List<HurlTemplate> getTemplateList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, HurlTemplate.class);
   }
 
 }

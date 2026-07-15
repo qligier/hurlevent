@@ -7,12 +7,13 @@ import com.intellij.lang.ASTNode;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiElementVisitor;
 import com.intellij.psi.util.PsiTreeUtil;
-import static ch.qligier.jetbrains.plugin.hurlevent.language.psi.HurlElementTypes.*;
+import static ch.qligier.jetbrains.plugin.hurlevent.language.psi.HurlTypes.*;
+import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import ch.qligier.jetbrains.plugin.hurlevent.language.psi.*;
 
-public class HurlOptionsSectionImpl extends HurlPsiImplUtil implements HurlOptionsSection {
+public class HurlOptionsSectionImpl extends ASTWrapperPsiElement implements HurlOptionsSection {
 
-  public HurlOptionsSectionImpl(ASTNode node) {
+  public HurlOptionsSectionImpl(@NotNull ASTNode node) {
     super(node);
   }
 
@@ -27,21 +28,9 @@ public class HurlOptionsSectionImpl extends HurlPsiImplUtil implements HurlOptio
   }
 
   @Override
-  @NotNull
-  public List<HurlLineBreak> getLineBreakList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, HurlLineBreak.class);
-  }
-
-  @Override
-  @NotNull
-  public List<HurlOption> getOptionList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, HurlOption.class);
-  }
-
-  @Override
-  @NotNull
-  public PsiElement getTOptionsSection() {
-    return findNotNullChildByType(T_OPTIONS_SECTION);
+  @Nullable
+  public HurlOptionList getOptionList() {
+    return findChildByClass(HurlOptionList.class);
   }
 
 }

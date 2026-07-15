@@ -7,12 +7,13 @@ import com.intellij.lang.ASTNode;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiElementVisitor;
 import com.intellij.psi.util.PsiTreeUtil;
-import static ch.qligier.jetbrains.plugin.hurlevent.language.psi.HurlElementTypes.*;
+import static ch.qligier.jetbrains.plugin.hurlevent.language.psi.HurlTypes.*;
+import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import ch.qligier.jetbrains.plugin.hurlevent.language.psi.*;
 
-public class HurlFilterImpl extends HurlPsiImplUtil implements HurlFilter {
+public class HurlFilterImpl extends ASTWrapperPsiElement implements HurlFilter {
 
-  public HurlFilterImpl(ASTNode node) {
+  public HurlFilterImpl(@NotNull ASTNode node) {
     super(node);
   }
 
@@ -28,20 +29,80 @@ public class HurlFilterImpl extends HurlPsiImplUtil implements HurlFilter {
 
   @Override
   @Nullable
-  public HurlFilterArg getFilterArg() {
-    return findChildByClass(HurlFilterArg.class);
+  public HurlCountFilter getCountFilter() {
+    return findChildByClass(HurlCountFilter.class);
   }
 
   @Override
-  @NotNull
-  public HurlFilterType getFilterType() {
-    return findNotNullChildByClass(HurlFilterType.class);
+  @Nullable
+  public HurlDecodeFilter getDecodeFilter() {
+    return findChildByClass(HurlDecodeFilter.class);
   }
 
   @Override
-  @NotNull
-  public HurlSpace getSpace() {
-    return findNotNullChildByClass(HurlSpace.class);
+  @Nullable
+  public HurlFormatFilter getFormatFilter() {
+    return findChildByClass(HurlFormatFilter.class);
+  }
+
+  @Override
+  @Nullable
+  public HurlHtmlEscapeFilter getHtmlEscapeFilter() {
+    return findChildByClass(HurlHtmlEscapeFilter.class);
+  }
+
+  @Override
+  @Nullable
+  public HurlHtmlUnescapeFilter getHtmlUnescapeFilter() {
+    return findChildByClass(HurlHtmlUnescapeFilter.class);
+  }
+
+  @Override
+  @Nullable
+  public HurlNthFilter getNthFilter() {
+    return findChildByClass(HurlNthFilter.class);
+  }
+
+  @Override
+  @Nullable
+  public HurlReplaceFilter getReplaceFilter() {
+    return findChildByClass(HurlReplaceFilter.class);
+  }
+
+  @Override
+  @Nullable
+  public HurlSplitFilter getSplitFilter() {
+    return findChildByClass(HurlSplitFilter.class);
+  }
+
+  @Override
+  @Nullable
+  public HurlToDateFilter getToDateFilter() {
+    return findChildByClass(HurlToDateFilter.class);
+  }
+
+  @Override
+  @Nullable
+  public HurlToFloatFilter getToFloatFilter() {
+    return findChildByClass(HurlToFloatFilter.class);
+  }
+
+  @Override
+  @Nullable
+  public HurlToIntFilter getToIntFilter() {
+    return findChildByClass(HurlToIntFilter.class);
+  }
+
+  @Override
+  @Nullable
+  public HurlUrlDecodeFilter getUrlDecodeFilter() {
+    return findChildByClass(HurlUrlDecodeFilter.class);
+  }
+
+  @Override
+  @Nullable
+  public HurlUrlEncodeFilter getUrlEncodeFilter() {
+    return findChildByClass(HurlUrlEncodeFilter.class);
   }
 
 }

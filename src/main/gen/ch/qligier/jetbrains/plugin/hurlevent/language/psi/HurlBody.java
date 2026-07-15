@@ -7,10 +7,25 @@ import com.intellij.psi.PsiElement;
 
 public interface HurlBody extends PsiElement {
 
-  @NotNull
-  HurlBytes getBytes();
+  @Nullable
+  HurlBase64Body getBase64Body();
 
-  @NotNull
-  List<HurlLineBreak> getLineBreakList();
+  @Nullable
+  HurlFileBody getFileBody();
+
+  @Nullable
+  HurlHexBody getHexBody();
+
+  @Nullable
+  HurlJsonBody getJsonBody();
+
+  @Nullable
+  HurlMultilineStringBody getMultilineStringBody();
+
+  @Nullable
+  HurlRawBody getRawBody();
+
+  @Nullable
+  HurlXmlBody getXmlBody();
 
 }

@@ -7,12 +7,13 @@ import com.intellij.lang.ASTNode;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiElementVisitor;
 import com.intellij.psi.util.PsiTreeUtil;
-import static ch.qligier.jetbrains.plugin.hurlevent.language.psi.HurlElementTypes.*;
+import static ch.qligier.jetbrains.plugin.hurlevent.language.psi.HurlTypes.*;
+import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import ch.qligier.jetbrains.plugin.hurlevent.language.psi.*;
 
-public class HurlQueryImpl extends HurlPsiImplUtil implements HurlQuery {
+public class HurlQueryImpl extends ASTWrapperPsiElement implements HurlQuery {
 
-  public HurlQueryImpl(ASTNode node) {
+  public HurlQueryImpl(@NotNull ASTNode node) {
     super(node);
   }
 
@@ -28,14 +29,86 @@ public class HurlQueryImpl extends HurlPsiImplUtil implements HurlQuery {
 
   @Override
   @Nullable
-  public HurlQueryTarget getQueryTarget() {
-    return findChildByClass(HurlQueryTarget.class);
+  public HurlBodyQuery getBodyQuery() {
+    return findChildByClass(HurlBodyQuery.class);
   }
 
   @Override
-  @NotNull
-  public HurlQueryType getQueryType() {
-    return findNotNullChildByClass(HurlQueryType.class);
+  @Nullable
+  public HurlBytesQuery getBytesQuery() {
+    return findChildByClass(HurlBytesQuery.class);
+  }
+
+  @Override
+  @Nullable
+  public HurlCertificateQuery getCertificateQuery() {
+    return findChildByClass(HurlCertificateQuery.class);
+  }
+
+  @Override
+  @Nullable
+  public HurlCookieQuery getCookieQuery() {
+    return findChildByClass(HurlCookieQuery.class);
+  }
+
+  @Override
+  @Nullable
+  public HurlDurationQuery getDurationQuery() {
+    return findChildByClass(HurlDurationQuery.class);
+  }
+
+  @Override
+  @Nullable
+  public HurlHeaderQuery getHeaderQuery() {
+    return findChildByClass(HurlHeaderQuery.class);
+  }
+
+  @Override
+  @Nullable
+  public HurlJsonpathQuery getJsonpathQuery() {
+    return findChildByClass(HurlJsonpathQuery.class);
+  }
+
+  @Override
+  @Nullable
+  public HurlMd5Query getMd5Query() {
+    return findChildByClass(HurlMd5Query.class);
+  }
+
+  @Override
+  @Nullable
+  public HurlRegexQuery getRegexQuery() {
+    return findChildByClass(HurlRegexQuery.class);
+  }
+
+  @Override
+  @Nullable
+  public HurlSha256Query getSha256Query() {
+    return findChildByClass(HurlSha256Query.class);
+  }
+
+  @Override
+  @Nullable
+  public HurlStatusQuery getStatusQuery() {
+    return findChildByClass(HurlStatusQuery.class);
+  }
+
+  @Override
+  @Nullable
+  public HurlUrlQuery getUrlQuery() {
+    return findChildByClass(HurlUrlQuery.class);
+  }
+
+  @Override
+  @Nullable
+  public HurlVariableQuery getVariableQuery() {
+    return findChildByClass(HurlVariableQuery.class);
+  }
+
+  @Override
+  @Nullable
+  public HurlXpathQuery getXpathQuery() {
+    return findChildByClass(HurlXpathQuery.class);
   }
 
 }

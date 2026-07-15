@@ -7,12 +7,13 @@ import com.intellij.lang.ASTNode;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiElementVisitor;
 import com.intellij.psi.util.PsiTreeUtil;
-import static ch.qligier.jetbrains.plugin.hurlevent.language.psi.HurlElementTypes.*;
+import static ch.qligier.jetbrains.plugin.hurlevent.language.psi.HurlTypes.*;
+import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import ch.qligier.jetbrains.plugin.hurlevent.language.psi.*;
 
-public class HurlRequestSectionImpl extends HurlPsiImplUtil implements HurlRequestSection {
+public class HurlRequestSectionImpl extends ASTWrapperPsiElement implements HurlRequestSection {
 
-  public HurlRequestSectionImpl(ASTNode node) {
+  public HurlRequestSectionImpl(@NotNull ASTNode node) {
     super(node);
   }
 
@@ -42,6 +43,12 @@ public class HurlRequestSectionImpl extends HurlPsiImplUtil implements HurlReque
   @Nullable
   public HurlFormParamsSection getFormParamsSection() {
     return findChildByClass(HurlFormParamsSection.class);
+  }
+
+  @Override
+  @Nullable
+  public HurlHeader getHeader() {
+    return findChildByClass(HurlHeader.class);
   }
 
   @Override

@@ -8,9 +8,6 @@ import com.intellij.psi.PsiElement;
 public interface HurlPredicateValue extends PsiElement {
 
   @Nullable
-  HurlJsonValue getJsonValue();
-
-  @Nullable
-  HurlStringLiteral getStringLiteral();
+  HurlTemplate getTemplate();
 
 }

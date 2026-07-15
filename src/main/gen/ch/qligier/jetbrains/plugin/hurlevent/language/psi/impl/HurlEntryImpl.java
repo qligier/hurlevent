@@ -7,12 +7,13 @@ import com.intellij.lang.ASTNode;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiElementVisitor;
 import com.intellij.psi.util.PsiTreeUtil;
-import static ch.qligier.jetbrains.plugin.hurlevent.language.psi.HurlElementTypes.*;
+import static ch.qligier.jetbrains.plugin.hurlevent.language.psi.HurlTypes.*;
+import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import ch.qligier.jetbrains.plugin.hurlevent.language.psi.*;
 
-public class HurlEntryImpl extends HurlPsiImplUtil implements HurlEntry {
+public class HurlEntryImpl extends ASTWrapperPsiElement implements HurlEntry {
 
-  public HurlEntryImpl(ASTNode node) {
+  public HurlEntryImpl(@NotNull ASTNode node) {
     super(node);
   }
 
@@ -24,12 +25,6 @@ public class HurlEntryImpl extends HurlPsiImplUtil implements HurlEntry {
   public void accept(@NotNull PsiElementVisitor visitor) {
     if (visitor instanceof HurlVisitor) accept((HurlVisitor)visitor);
     else super.accept(visitor);
-  }
-
-  @Override
-  @NotNull
-  public List<HurlLineBreak> getLineBreakList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, HurlLineBreak.class);
   }
 
   @Override

@@ -7,13 +7,7 @@ import com.intellij.psi.PsiElement;
 
 public interface HurlMultipartFormDataSection extends PsiElement {
 
-  @NotNull
-  List<HurlLineBreak> getLineBreakList();
-
-  @NotNull
-  List<HurlMultipartFormDataParam> getMultipartFormDataParamList();
-
-  @NotNull
-  PsiElement getTMultipartFormDataSection();
+  @Nullable
+  HurlKeyValueList getKeyValueList();
 
 }

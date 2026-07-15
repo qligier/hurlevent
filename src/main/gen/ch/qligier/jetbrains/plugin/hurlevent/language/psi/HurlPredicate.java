@@ -7,10 +7,10 @@ import com.intellij.psi.PsiElement;
 
 public interface HurlPredicate extends PsiElement {
 
-  @NotNull
-  HurlPredicateType getPredicateType();
-
   @Nullable
-  HurlPredicateValue getPredicateValue();
+  HurlNotPredicate getNotPredicate();
+
+  @NotNull
+  HurlPredicateFunc getPredicateFunc();
 
 }
