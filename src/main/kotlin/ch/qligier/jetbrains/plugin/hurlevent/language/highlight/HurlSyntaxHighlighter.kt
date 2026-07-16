@@ -17,6 +17,12 @@ import com.intellij.openapi.project.Project
 import com.intellij.openapi.vfs.VirtualFile
 import com.intellij.psi.tree.IElementType
 
+/**
+ * Syntax highlighter for Hurl files.
+ *
+ * @see [Syntax Highlighter and Color Settings Page](https://plugins.jetbrains.com/docs/intellij/syntax-highlighter-and-color-settings-page.html)
+ * @see [Syntax and Error Highlighting](https://plugins.jetbrains.com/docs/intellij/syntax-highlighting-and-error-highlighting.html)
+ */
 class HurlSyntaxHighlighter : SyntaxHighlighterBase() {
     companion object {
         val METHOD = createTextAttributesKey("HURL_METHOD", DefaultLanguageHighlighterColors.KEYWORD)
@@ -28,8 +34,8 @@ class HurlSyntaxHighlighter : SyntaxHighlighterBase() {
 
     override fun getHighlightingLexer() = HurlLexerAdapter()
 
-    override fun getTokenHighlights(tokenType: IElementType?): Array<out TextAttributesKey> {
-        return when {
+    override fun getTokenHighlights(tokenType: IElementType?): Array<out TextAttributesKey> =
+        when {
             HurlTokenSets.METHODS.contains(tokenType) -> arrayOf(METHOD)
             tokenType == HurlTypes.HTTP_VERSION -> arrayOf(HTTP_VERSION)
             tokenType == HurlTypes.STATUS_CODE -> arrayOf(STATUS_CODE)
@@ -37,9 +43,11 @@ class HurlSyntaxHighlighter : SyntaxHighlighterBase() {
             tokenType == HurlTypes.COMMENT -> arrayOf(COMMENT)
             else -> emptyArray<TextAttributesKey>()
         }
-    }
 }
 
 class HurlSyntaxHighlighterFactory : SyntaxHighlighterFactory() {
-    override fun getSyntaxHighlighter(project: Project?, virtualFile: VirtualFile?): SyntaxHighlighter = HurlSyntaxHighlighter()
+    override fun getSyntaxHighlighter(
+        project: Project?,
+        virtualFile: VirtualFile?,
+    ): SyntaxHighlighter = HurlSyntaxHighlighter()
 }

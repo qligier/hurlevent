@@ -1,0 +1,10 @@
+<!--
+  ~ Copyright 2026 Quentin Ligier. Use of this source code is governed by the MIT license.
+  -->
+
+<!-- This configuration file is only loaded when the JSON plugin is available. -->
+<idea-plugin>
+    <extensions defaultExtensionNs="com.intellij">
+        <multiHostInjector implementation="ch.qligier.jetbrains.plugin.hurlevent.language.injector.JsonInjector" />
+    </extensions>
+</idea-plugin>

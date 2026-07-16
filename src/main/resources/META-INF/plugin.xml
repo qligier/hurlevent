@@ -29,6 +29,7 @@
          Read more: https://plugins.jetbrains.com/docs/intellij/plugin-compatibility.html -->
     <depends>com.intellij.modules.platform</depends>
     <depends>com.intellij.modules.lang</depends>
+    <depends optional="true" config-file="plugin_with_json.xml">com.intellij.modules.json</depends>
 
     <actions>
     </actions>
@@ -37,11 +38,22 @@
         <fileIconProvider implementation="ch.qligier.jetbrains.plugin.hurlevent.language.HurlFileIconProvider"/>
 
         <!-- The Hurl language -->
-        <fileType name="Hurl" language="hurl" extensions="hurl" implementationClass="ch.qligier.jetbrains.plugin.hurlevent.language.HurlFileType"/>
+        <fileType name="Hurl" language="hurl" extensions="hurl"
+                  implementationClass="ch.qligier.jetbrains.plugin.hurlevent.language.HurlFileType"/>
         <lang.parserDefinition language="hurl"
                                implementationClass="ch.qligier.jetbrains.plugin.hurlevent.language.parser.HurlParserDefinition"/>
         <lang.syntaxHighlighterFactory language="hurl"
                                        implementationClass="ch.qligier.jetbrains.plugin.hurlevent.language.highlight.HurlSyntaxHighlighterFactory"/>
+        <lang.commenter language="hurl"
+                        implementationClass="ch.qligier.jetbrains.plugin.hurlevent.language.editor.HurlCommenter"/>
+        <lang.foldingBuilder language="hurl"
+                             implementationClass="ch.qligier.jetbrains.plugin.hurlevent.language.editor.HurlFoldingBuilder"/>
+        <lang.psiStructureViewFactory language="hurl"
+                                      implementationClass="ch.qligier.jetbrains.plugin.hurlevent.language.structure.HurlStructureViewFactory"/>
+        <breadcrumbsInfoProvider
+                implementation="ch.qligier.jetbrains.plugin.hurlevent.language.editor.HurlBreadcrumbsProvider"/>
+
+        <multiHostInjector implementation="ch.qligier.jetbrains.plugin.hurlevent.language.injector.XmlInjector" />
     </extensions>
 
     <applicationListeners>

@@ -307,10 +307,15 @@ body ::= json_body | xml_body | multiline_string_body | file_body | base64_body 
 
 json_body ::= LBRACE json_content* RBRACE {
   pin = 1
+  implements = "com.intellij.psi.PsiLanguageInjectionHost"
+  mixin = "ch.qligier.jetbrains.plugin.hurlevent.language.psi.impl.HurlLanguageInjectionHostImpl"
 }
 json_content ::= JSON_TEXT | template
 
-xml_body ::= XML_TEXT+
+xml_body ::= XML_TEXT+ {
+    implements = "com.intellij.psi.PsiLanguageInjectionHost"
+    mixin = "ch.qligier.jetbrains.plugin.hurlevent.language.psi.impl.HurlLanguageInjectionHostImpl"
+}
 
 multiline_string_body ::= MULTILINE_STRING_OPEN multiline_content* MULTILINE_STRING_CLOSE {
   pin = 1

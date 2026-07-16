@@ -8,9 +8,8 @@ import com.intellij.lang.Language
 import com.intellij.openapi.util.NlsSafe
 
 /**
- * Hurlevent
- *
- * @author Quentin Ligier
+ * The Hurl language definition for the IntelliJ Platform.
+ * @see [Language and File Type](https://plugins.jetbrains.com/docs/intellij/language-and-filetype.html)
  **/
 object HurlLanguage : Language("hurl") {
     private fun readResolve(): Any = HurlLanguage

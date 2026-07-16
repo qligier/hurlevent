@@ -21,6 +21,9 @@ dependencies {
     intellijPlatform {
         intellijIdea("2025.3")
         testFramework(TestFrameworkType.Platform)
+
+        // Plugin Dependencies
+        bundledPlugin("com.intellij.modules.json")
     }
 }
 

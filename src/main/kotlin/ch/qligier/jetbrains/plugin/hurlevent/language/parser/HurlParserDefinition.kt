@@ -20,6 +20,11 @@ import com.intellij.psi.PsiFile
 import com.intellij.psi.tree.IFileElementType
 import com.intellij.psi.tree.TokenSet
 
+/**
+ * Defines the implementation of a parser for the Hurl language.
+ *
+ * @see [Define a Parser](https://plugins.jetbrains.com/docs/intellij/lexer-and-parser-definition.html#define-a-parser)
+ */
 class HurlParserDefinition : ParserDefinition {
     companion object {
         val FILE: IFileElementType = IFileElementType(HurlLanguage)
@@ -35,6 +40,8 @@ class HurlParserDefinition : ParserDefinition {
 
     override fun getStringLiteralElements(): TokenSet = HurlTokenSets.STRINGS
 
+    // The whitespace tokens are used to identify and handle whitespace characters in the source code.
+    // This is important because the IDE will skip these tokens when parsing (after lexing).
     override fun getWhitespaceTokens(): TokenSet = HurlTokenSets.WHITESPACES
 
     override fun createElement(node: ASTNode?): PsiElement = HurlTypes.Factory.createElement(node)

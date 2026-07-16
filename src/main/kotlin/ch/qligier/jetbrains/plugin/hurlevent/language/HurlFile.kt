@@ -11,14 +11,11 @@ import com.intellij.openapi.fileTypes.LanguageFileType
 import com.intellij.psi.FileViewProvider
 import javax.swing.Icon
 
-class HurlFile(
-    viewProvider: FileViewProvider,
-) : PsiFileBase(viewProvider, HurlLanguage) {
-    override fun getFileType(): FileType = HurlFileType
-
-    override fun toString(): String = "Hurl file"
-}
-
+/**
+ * Definition of the Hurl file type.
+ *
+ * @see [Language and File Type](https://plugins.jetbrains.com/docs/intellij/language-and-filetype.html)
+ */
 object HurlFileType : LanguageFileType(HurlLanguage) {
     override fun getName(): String = "Hurl file"
 
@@ -27,4 +24,12 @@ object HurlFileType : LanguageFileType(HurlLanguage) {
     override fun getDefaultExtension(): String = "hurl"
 
     override fun getIcon(): Icon = Icons.HURL_ICON
+}
+
+class HurlFile(
+    viewProvider: FileViewProvider,
+) : PsiFileBase(viewProvider, HurlLanguage) {
+    override fun getFileType(): FileType = HurlFileType
+
+    override fun toString(): String = "Hurl file"
 }
