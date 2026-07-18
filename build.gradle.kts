@@ -24,6 +24,11 @@ dependencies {
 
         // Plugin Dependencies
         bundledPlugin("com.intellij.modules.json")
+        bundledPlugin("com.intellij.jsonpath")
+        bundledPlugin("XPathView")
+        bundledModule("intellij.spellchecker")
+        // GraphQL versions: https://plugins.jetbrains.com/plugin/8097-graphql/versions/stable/1102341
+        plugin("com.intellij.lang.jsgraphql:253.28294.51")
     }
 }
 

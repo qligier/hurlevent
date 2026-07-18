@@ -303,19 +303,38 @@ MULTILINE_CLOSE = "```"
     "isInteger"                { return KW_IS_INTEGER; }
 
     // Filter keywords
+    "base64Decode"             { return KW_BASE64_DECODE; }
+    "base64Encode"             { return KW_BASE64_ENCODE; }
+    "base64UrlSafeDecode"      { return KW_BASE64_URL_SAFE_DECODE; }
+    "base64UrlSafeEncode"      { return KW_BASE64_URL_SAFE_ENCODE; }
+    "charsetDecode"            { return KW_CHARSET_DECODE; }
     "count"                    { return KW_COUNT; }
+    "dateFormat"               { return KW_DATE_FORMAT; }
+    "daysAfterNow"             { return KW_DAYS_AFTER_NOW; }
+    "daysBeforeNow"            { return KW_DAYS_BEFORE_NOW; }
+    "first"                    { return KW_FIRST; }
+    "format"                   { return KW_FORMAT; } // Deprecated, will be removed in a future version
+    "htmlEscape"               { return KW_HTML_ESCAPE; }
+    "htmlUnescape"             { return KW_HTML_UNESCAPE; }
+    "jsonpath"                 { return KW_JSONPATH; }
+    "last"                     { return KW_LAST; }
+    "location"                 { return KW_LOCATION; }
     "nth"                      { return KW_NTH; }
+    "regex"                    { return KW_REGEX; }
     "replace"                  { return KW_REPLACE; }
+    "replaceRegex"             { return KW_REPLACE_REGEX; }
     "split"                    { return KW_SPLIT; }
     "toDate"                   { return KW_TO_DATE; }
     "toFloat"                  { return KW_TO_FLOAT; }
+    "toHex"                    { return KW_TO_HEX; }
     "toInt"                    { return KW_TO_INT; }
-    "decode"                   { return KW_DECODE; }
-    "format"                   { return KW_FORMAT; }
-    "htmlEscape"               { return KW_HTML_ESCAPE; }
-    "htmlUnescape"             { return KW_HTML_UNESCAPE; }
-    "urlEncode"                { return KW_URL_ENCODE; }
+    "toString"                 { return KW_TO_STRING; }
     "urlDecode"                { return KW_URL_DECODE; }
+    "urlEncode"                { return KW_URL_ENCODE; }
+    "urlQueryParam"            { return KW_URL_QUERY_PARAM; }
+    "utf8Decode"               { return KW_UTF8_DECODE; }
+    "utf8Encode"               { return KW_UTF8_ENCODE; }
+    "xpath"                    { return KW_XPATH; }
 
     // Operators
     "=="                       { return EQUALS_OP; }
@@ -392,7 +411,6 @@ MULTILINE_CLOSE = "```"
     "toDate"                   { return KW_TO_DATE; }
     "toFloat"                  { return KW_TO_FLOAT; }
     "toInt"                    { return KW_TO_INT; }
-    "decode"                   { return KW_DECODE; }
     "format"                   { return KW_FORMAT; }
     "htmlEscape"               { return KW_HTML_ESCAPE; }
     "htmlUnescape"             { return KW_HTML_UNESCAPE; }

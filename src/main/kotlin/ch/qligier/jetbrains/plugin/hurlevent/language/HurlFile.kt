@@ -17,7 +17,7 @@ import javax.swing.Icon
  * @see [Language and File Type](https://plugins.jetbrains.com/docs/intellij/language-and-filetype.html)
  */
 object HurlFileType : LanguageFileType(HurlLanguage) {
-    override fun getName(): String = "Hurl file"
+    override fun getName(): String = "Hurl"
 
     override fun getDescription(): String = "Hurl HTTP testing file"
 
@@ -31,5 +31,5 @@ class HurlFile(
 ) : PsiFileBase(viewProvider, HurlLanguage) {
     override fun getFileType(): FileType = HurlFileType
 
-    override fun toString(): String = "Hurl file"
+    override fun toString(): String = "Hurl"
 }

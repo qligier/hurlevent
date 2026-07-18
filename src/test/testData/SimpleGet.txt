@@ -1,4 +1,4 @@
-Hurl file(0,41)
+Hurl(0,41)
   HurlEntryImpl(HurlElementType.ENTRY)(0,41)
     HurlRequestImpl(HurlElementType.REQUEST)(0,33)
       HurlRequestLineImpl(HurlElementType.REQUEST_LINE)(0,32)

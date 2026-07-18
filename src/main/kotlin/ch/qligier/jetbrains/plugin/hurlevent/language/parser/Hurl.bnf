@@ -235,28 +235,52 @@ md5_query ::= KW_MD5
 bytes_query ::= KW_BYTES
 certificate_query ::= KW_CERTIFICATE quoted_string_value
 
-quoted_string_value ::= QUOTED_STRING | BACKTICK_STRING
+quoted_string_value ::= QUOTED_STRING | BACKTICK_STRING {
+  implements = "com.intellij.psi.PsiLanguageInjectionHost"
+  mixin = "ch.qligier.jetbrains.plugin.hurlevent.language.psi.impl.HurlLanguageInjectionHostImpl"
+}
 
 // Filters
 filter_list ::= filter+
-filter ::= count_filter | nth_filter | replace_filter | split_filter
-         | to_date_filter | to_float_filter | to_int_filter | decode_filter
-         | format_filter | html_escape_filter | html_unescape_filter
-         | url_encode_filter | url_decode_filter
+filter ::= base64_decode_filter | base64_encode_filter | base64_url_safe_decode_filter | base64_url_safe_encode_filter
+         | charset_decode_filter | count_filter | date_format_filter | days_after_now_filter | days_before_now_filter
+         | first_filter | format_filter | html_escape_filter | html_unescape_filter | jsonpath_filter | last_filter
+         | location_filter | nth_filter | regex_filter | replace_filter | replace_regex_filter | split_filter
+         | to_date_filter | to_float_filter| to_hex_filter | to_int_filter | to_string_filter | url_encode_filter
+         | url_decode_filter | url_query_param_filter | utf8_decode_filter | utf8_encode_filter | xpath_filter
 
+base64_decode_filter ::= KW_BASE64_DECODE
+base64_encode_filter ::= KW_BASE64_ENCODE
+base64_url_safe_decode_filter ::= KW_BASE64_URL_SAFE_DECODE
+base64_url_safe_encode_filter ::= KW_BASE64_URL_SAFE_ENCODE
+charset_decode_filter ::= KW_CHARSET_DECODE quoted_string_value
 count_filter ::= KW_COUNT
-nth_filter ::= KW_NTH NUMBER
-replace_filter ::= KW_REPLACE quoted_string_value quoted_string_value
-split_filter ::= KW_SPLIT quoted_string_value
-to_date_filter ::= KW_TO_DATE quoted_string_value
-to_float_filter ::= KW_TO_FLOAT
-to_int_filter ::= KW_TO_INT
-decode_filter ::= KW_DECODE quoted_string_value
+date_format_filter ::= KW_DATE_FORMAT quoted_string_value
+days_after_now_filter ::= KW_DAYS_AFTER_NOW NUMBER
+days_before_now_filter ::= KW_DAYS_BEFORE_NOW NUMBER
+first_filter ::= KW_FIRST
 format_filter ::= KW_FORMAT quoted_string_value
 html_escape_filter ::= KW_HTML_ESCAPE
 html_unescape_filter ::= KW_HTML_UNESCAPE
+jsonpath_filter ::= KW_JSONPATH quoted_string_value
+last_filter ::= KW_LAST
+location_filter ::= KW_LOCATION
+nth_filter ::= KW_NTH NUMBER
+regex_filter ::= KW_REGEX quoted_string_value
+replace_filter ::= KW_REPLACE quoted_string_value quoted_string_value
+replace_regex_filter ::= KW_REPLACE_REGEX quoted_string_value quoted_string_value
+split_filter ::= KW_SPLIT quoted_string_value
+to_date_filter ::= KW_TO_DATE quoted_string_value
+to_float_filter ::= KW_TO_FLOAT
+to_hex_filter ::= KW_TO_HEX
+to_int_filter ::= KW_TO_INT
+to_string_filter ::= KW_TO_STRING
 url_encode_filter ::= KW_URL_ENCODE
 url_decode_filter ::= KW_URL_DECODE
+url_query_param_filter ::= KW_URL_QUERY_PARAM quoted_string_value
+utf8_decode_filter ::= KW_UTF8_DECODE
+utf8_encode_filter ::= KW_UTF8_ENCODE
+xpath_filter ::= KW_XPATH quoted_string_value
 
 // Predicates
 predicate ::= not_predicate? predicate_func
@@ -319,6 +343,8 @@ xml_body ::= XML_TEXT+ {
 
 multiline_string_body ::= MULTILINE_STRING_OPEN multiline_content* MULTILINE_STRING_CLOSE {
   pin = 1
+  implements = "com.intellij.psi.PsiLanguageInjectionHost"
+  mixin = "ch.qligier.jetbrains.plugin.hurlevent.language.psi.impl.HurlLanguageInjectionHostImpl"
 }
 multiline_content ::= MULTILINE_STRING_CONTENT | template
 

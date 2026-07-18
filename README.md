@@ -37,3 +37,10 @@ License 2.0 - see the [LICENSE](https://github.com/cwoskoski/hurlex/blob/main/LI
 ### Notice
 
 This plugin uses icons that are derived from the Hurl logo.
+
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<a>
+    <b/>
+</a>
+```
