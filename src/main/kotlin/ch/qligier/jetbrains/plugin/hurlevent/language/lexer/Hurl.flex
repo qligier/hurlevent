@@ -36,7 +36,7 @@ STATUS_CODE_VAL = [1-5] {DIGIT} {DIGIT}
 // Strings
 QUOTED_STRING_CONTENT = \" ([^\"\\\r\n] | \\.)* \"
 BACKTICK_STRING_CONTENT = ` ([^`\\\r\n] | \\.)* `
-REGEX_STRING_CONTENT = \/ ([^/\\\r\n] | \\.)* \/
+REGEX_STRING_CONTENT = \/ ([^\/\\\r\n] | \\.)* \/
 
 // URL
 URL_CHAR = [^ \t\r\n\#{}]

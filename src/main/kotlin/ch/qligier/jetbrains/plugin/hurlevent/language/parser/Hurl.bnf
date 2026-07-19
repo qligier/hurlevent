@@ -205,40 +205,38 @@ assert_entry ::= query filter_list? predicate NEWLINE? {
 }
 
 // Queries
-query ::= status_query
-        | url_query
-        | header_query
-        | cookie_query
-        | body_query
-        | xpath_query
-        | jsonpath_query
-        | regex_query
-        | variable_query
-        | duration_query
-        | sha256_query
-        | md5_query
-        | bytes_query
-        | certificate_query
+query ::= body_query | bytes_query | certificate_query | cookie_query | duration_query
+       | header_query | ip_query | jsonpath_query | md5_query
+       | rawbytes_query | redirects_query | regex_query | sha256_query
+       | status_query | url_query | variable_query | xpath_query
 
-status_query ::= KW_STATUS
-url_query ::= KW_URL
-header_query ::= KW_HEADER quoted_string_value
-cookie_query ::= KW_COOKIE quoted_string_value
 body_query ::= KW_BODY
-xpath_query ::= KW_XPATH quoted_string_value
-jsonpath_query ::= KW_JSONPATH quoted_string_value
-regex_query ::= KW_REGEX quoted_string_value
-variable_query ::= KW_VARIABLE quoted_string_value
-duration_query ::= KW_DURATION
-sha256_query ::= KW_SHA256
-md5_query ::= KW_MD5
 bytes_query ::= KW_BYTES
 certificate_query ::= KW_CERTIFICATE quoted_string_value
+cookie_query ::= KW_COOKIE quoted_string_value
+duration_query ::= KW_DURATION
+header_query ::= KW_HEADER quoted_string_value
+ip_query ::= KW_IP
+jsonpath_query ::= KW_JSONPATH quoted_string_value
+md5_query ::= KW_MD5
+rawbytes_query ::= KW_RAWBYTES
+redirects_query ::= KW_REDIRECTS
+regex_query ::= KW_REGEX quoted_or_regex_string_value_
+sha256_query ::= KW_SHA256
+status_query ::= KW_STATUS
+url_query ::= KW_URL
+variable_query ::= KW_VARIABLE quoted_string_value
+xpath_query ::= KW_XPATH quoted_string_value
 
 quoted_string_value ::= QUOTED_STRING | BACKTICK_STRING {
   implements = "com.intellij.psi.PsiLanguageInjectionHost"
   mixin = "ch.qligier.jetbrains.plugin.hurlevent.language.psi.impl.HurlLanguageInjectionHostImpl"
 }
+regex_string_value ::= REGEX_STRING {
+  implements = "com.intellij.psi.PsiLanguageInjectionHost"
+  mixin = "ch.qligier.jetbrains.plugin.hurlevent.language.psi.impl.HurlLanguageInjectionHostImpl"
+}
+private quoted_or_regex_string_value_ ::= quoted_string_value | regex_string_value
 
 // Filters
 filter_list ::= filter+
@@ -268,9 +266,9 @@ jsonpath_filter ::= KW_JSONPATH quoted_string_value
 last_filter ::= KW_LAST
 location_filter ::= KW_LOCATION
 nth_filter ::= KW_NTH NUMBER
-regex_filter ::= KW_REGEX (quoted_string_value | REGEX_STRING)
+regex_filter ::= KW_REGEX quoted_or_regex_string_value_
 replace_filter ::= KW_REPLACE quoted_string_value quoted_string_value
-replace_regex_filter ::= KW_REPLACE_REGEX (quoted_string_value | REGEX_STRING) quoted_string_value
+replace_regex_filter ::= KW_REPLACE_REGEX quoted_or_regex_string_value_ quoted_string_value
 split_filter ::= KW_SPLIT quoted_string_value
 to_date_filter ::= KW_TO_DATE quoted_string_value
 to_float_filter ::= KW_TO_FLOAT

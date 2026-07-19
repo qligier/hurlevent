@@ -22,4 +22,7 @@ class SimpleGetParsingTest : ParsingTestCase("", "hurl", HurlParserDefinition())
 
     // Parses the SimpleGet.hurl file and compares its PSI tree to SimpleGet.txt
     fun testSimpleGet() = doTest(true)
+
+    // Parses the Filters.hurl file and compares its PSI tree to Filters.txt
+    fun testFilters() = doTest(true)
 }

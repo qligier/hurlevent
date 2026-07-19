@@ -67,7 +67,9 @@
         <multiHostInjector implementation="ch.qligier.jetbrains.plugin.hurlevent.language.injector.XmlBodyInjector"/>
         <multiHostInjector
                 implementation="ch.qligier.jetbrains.plugin.hurlevent.language.injector.XmlFencedBodyInjector"/>
-        <multiHostInjector implementation="ch.qligier.jetbrains.plugin.hurlevent.language.injector.RegexInjector"/>
+        <multiHostInjector implementation="ch.qligier.jetbrains.plugin.hurlevent.language.injector.RegexStringValueInjector"/>
+        <multiHostInjector
+                implementation="ch.qligier.jetbrains.plugin.hurlevent.language.injector.RegexQuotedStringValueInjector"/>
         <spellchecker.support language="hurl"
                               implementationClass="ch.qligier.jetbrains.plugin.hurlevent.language.editor.HurlSpellcheckingStrategy"/>
     </extensions>
