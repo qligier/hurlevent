@@ -101,11 +101,9 @@ jobs:
       # Publish JUnit test results
       - name: Publish Tests Results
         if: ${{ always() }}
-        uses: dorny/test-reporter@v1
+        uses: test-summary/action@v2
         with:
-          name: Java JUnit Tests
-          path: ${{ github.workspace }}/build/test-results/test/*.xml
-          reporter: java-junit
+          paths: 'build/test-results/test/*.xml'
 
       # Collect Tests Result of failed tests
       - name: Collect Tests Result
