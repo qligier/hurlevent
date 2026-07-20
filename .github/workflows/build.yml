@@ -98,6 +98,15 @@ jobs:
       - name: Run Tests
         run: ./gradlew check
 
+      # Publish JUnit test results
+      - name: Publish Tests Results
+        if: ${{ always() }}
+        uses: dorny/test-reporter@v1
+        with:
+          name: Java JUnit Tests
+          path: ${{ github.workspace }}/build/test-results/test/*.xml
+          reporter: java-junit
+
       # Collect Tests Result of failed tests
       - name: Collect Tests Result
         if: ${{ failure() }}

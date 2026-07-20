@@ -55,6 +55,13 @@ tasks.named<GenerateParserTask>("generateParser") {
 }
 
 tasks {
+    withType<Test> {
+        reports {
+            html.required.set(true)
+            junitXml.required.set(true)
+        }
+    }
+
     withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
         dependsOn("generateLexer", "generateParser")
     }
