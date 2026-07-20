@@ -27,12 +27,19 @@ internal class HurlColorSettingsPage :
     companion object {
         private val ATTRIBUTES_DESCRIPTORS =
             arrayOf(
-                AttributesDescriptor("Method", HurlSyntaxHighlighter.METHOD),
-                AttributesDescriptor("HTTP version", HurlSyntaxHighlighter.HTTP_VERSION),
-                AttributesDescriptor("Status code", HurlSyntaxHighlighter.STATUS_CODE),
-                AttributesDescriptor("Section", HurlSyntaxHighlighter.SECTION),
-                AttributesDescriptor("Comment", HurlSyntaxHighlighter.COMMENT),
-                AttributesDescriptor("URL", HurlSyntaxHighlighter.URL),
+                AttributesDescriptor("Method", HurlSyntaxHighlighter.TAK_METHOD),
+                AttributesDescriptor("HTTP version", HurlSyntaxHighlighter.TAK_HTTP_VERSION),
+                AttributesDescriptor("Status code", HurlSyntaxHighlighter.TAK_STATUS_CODE),
+                AttributesDescriptor("Section", HurlSyntaxHighlighter.TAK_SECTION),
+                AttributesDescriptor("Comment", HurlSyntaxHighlighter.TAK_COMMENT),
+                AttributesDescriptor("URL", HurlSyntaxHighlighter.TAK_URL),
+                AttributesDescriptor("Predicate", HurlSyntaxHighlighter.TAK_PREDICATE),
+                AttributesDescriptor("Filter", HurlSyntaxHighlighter.TAK_FILTER),
+                AttributesDescriptor("Query", HurlSyntaxHighlighter.TAK_QUERY),
+                AttributesDescriptor("Number", HurlSyntaxHighlighter.TAK_NUMBER),
+                AttributesDescriptor("Template variable", HurlSyntaxHighlighter.TAK_TEMPLATE_VARIABLE),
+                AttributesDescriptor("Capture name", HurlSyntaxHighlighter.TAK_CAPTURE_NAME),
+                AttributesDescriptor("Header name", HurlSyntaxHighlighter.TAK_HEADER_NAME),
             )
     }
 

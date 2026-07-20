@@ -46,6 +46,10 @@ URL = ({ALPHA}+ "://" | "/") {URL_CHAR}*
 KEY_CHAR = [a-zA-Z0-9\-_.]
 KEY = {ALPHA} {KEY_CHAR}*
 
+// [HTTP_METHOD_LIST]
+HTTP_METHODS = "GET" | "POST" | "PUT" | "DELETE" | "PATCH" | "HEAD" | "OPTIONS" | "CONNECT" | "TRACE" | "LINK"
+  | "UNLINK" | "PURGE" | "LOCK" | "UNLOCK" | "PROPFIND" | "PROPPATCH" | "COPY" | "MOVE" | "MKCOL" | "REPORT" | "SEARCH"
+
 // HTTP Version
 HTTP_VERSION_VAL = "HTTP" | ("HTTP/" ("1.0" | "1.1" | "2" | "3" | "*"))
 
@@ -91,40 +95,21 @@ MULTILINE_CLOSE = "```"
     {WS}                       { return WHITE_SPACE; }
 
     // HTTP Methods -> transition to URL
-    "GET"                      { yybegin(URL_STATE); return GET; }
-    "POST"                     { yybegin(URL_STATE); return POST; }
-    "PUT"                      { yybegin(URL_STATE); return PUT; }
-    "DELETE"                   { yybegin(URL_STATE); return DELETE; }
-    "PATCH"                    { yybegin(URL_STATE); return PATCH; }
-    "HEAD"                     { yybegin(URL_STATE); return HEAD; }
-    "OPTIONS"                  { yybegin(URL_STATE); return OPTIONS; }
-    "CONNECT"                  { yybegin(URL_STATE); return CONNECT; }
-    "TRACE"                    { yybegin(URL_STATE); return TRACE; }
-    "LINK"                     { yybegin(URL_STATE); return LINK; }
-    "UNLINK"                   { yybegin(URL_STATE); return UNLINK; }
-    "PURGE"                    { yybegin(URL_STATE); return PURGE; }
-    "LOCK"                     { yybegin(URL_STATE); return LOCK; }
-    "UNLOCK"                   { yybegin(URL_STATE); return UNLOCK; }
-    "PROPFIND"                 { yybegin(URL_STATE); return PROPFIND; }
-    "PROPPATCH"                { yybegin(URL_STATE); return PROPPATCH; }
-    "COPY"                     { yybegin(URL_STATE); return COPY; }
-    "MOVE"                     { yybegin(URL_STATE); return MOVE; }
-    "MKCOL"                    { yybegin(URL_STATE); return MKCOL; }
-    "REPORT"                   { yybegin(URL_STATE); return REPORT; }
-    "SEARCH"                   { yybegin(URL_STATE); return SEARCH; }
+    {HTTP_METHODS}             { yybegin(URL_STATE); return HTTP_METHOD; }
 
     // HTTP Version (response line start)
     {HTTP_VERSION_VAL}         { yybegin(STATUS_LINE_STATE); return HTTP_VERSION; }
 
     // Sections
-    "[QueryStringParams]"      { yybegin(KEY_VALUE_STATE); return SECTION_QUERY_STRING_PARAMS; }
+    // [SECTION_LIST]
+    "[Asserts]"                { yybegin(ASSERT_STATE); return SECTION_ASSERTS; }
+    "[BasicAuth]"              { yybegin(KEY_VALUE_STATE); return SECTION_BASIC_AUTH; }
+    "[Captures]"               { yybegin(CAPTURE_KEY_STATE); return SECTION_CAPTURES; }
+    "[Cookies]"                { yybegin(KEY_VALUE_STATE); return SECTION_COOKIES; }
     "[FormParams]"             { yybegin(KEY_VALUE_STATE); return SECTION_FORM_PARAMS; }
     "[MultipartFormData]"      { yybegin(KEY_VALUE_STATE); return SECTION_MULTIPART_FORM_DATA; }
-    "[Cookies]"                { yybegin(KEY_VALUE_STATE); return SECTION_COOKIES; }
-    "[BasicAuth]"              { yybegin(KEY_VALUE_STATE); return SECTION_BASIC_AUTH; }
     "[Options]"                { yybegin(OPTIONS_STATE); return SECTION_OPTIONS; }
-    "[Captures]"               { yybegin(CAPTURE_KEY_STATE); return SECTION_CAPTURES; }
-    "[Asserts]"                { yybegin(ASSERT_STATE); return SECTION_ASSERTS; }
+    "[QueryStringParams]"      { yybegin(KEY_VALUE_STATE); return SECTION_QUERY_STRING_PARAMS; }
 
     // Body markers
     {MULTILINE_OPEN}           { yybegin(MULTILINE_STRING_STATE); return MULTILINE_STRING_OPEN; }
@@ -191,23 +176,18 @@ MULTILINE_CLOSE = "```"
     {TEMPLATE_OPEN}            { stateBeforeTemplate = KEY_VALUE_STATE; yybegin(TEMPLATE_STATE); return LBRACE2; }
 
     // Detect transition out of section
-    "GET" / {WS}               { yybegin(URL_STATE); return GET; }
-    "POST" / {WS}              { yybegin(URL_STATE); return POST; }
-    "PUT" / {WS}               { yybegin(URL_STATE); return PUT; }
-    "DELETE" / {WS}            { yybegin(URL_STATE); return DELETE; }
-    "PATCH" / {WS}             { yybegin(URL_STATE); return PATCH; }
-    "HEAD" / {WS}              { yybegin(URL_STATE); return HEAD; }
-    "OPTIONS" / {WS}           { yybegin(URL_STATE); return OPTIONS; }
+    {HTTP_METHODS} / {WS}      { yybegin(URL_STATE); return HTTP_METHOD; }
     {HTTP_VERSION_VAL}         { yybegin(STATUS_LINE_STATE); return HTTP_VERSION; }
 
-    "[QueryStringParams]"      { return SECTION_QUERY_STRING_PARAMS; }
+    // [SECTION_LIST]
+    "[Asserts]"                { yybegin(ASSERT_STATE); return SECTION_ASSERTS; }
+    "[BasicAuth]"              { return SECTION_BASIC_AUTH; }
+    "[Captures]"               { yybegin(CAPTURE_KEY_STATE); return SECTION_CAPTURES; }
+    "[Cookies]"                { return SECTION_COOKIES; }
     "[FormParams]"             { return SECTION_FORM_PARAMS; }
     "[MultipartFormData]"      { return SECTION_MULTIPART_FORM_DATA; }
-    "[Cookies]"                { return SECTION_COOKIES; }
-    "[BasicAuth]"              { return SECTION_BASIC_AUTH; }
     "[Options]"                { yybegin(OPTIONS_STATE); return SECTION_OPTIONS; }
-    "[Captures]"               { yybegin(CAPTURE_KEY_STATE); return SECTION_CAPTURES; }
-    "[Asserts]"                { yybegin(ASSERT_STATE); return SECTION_ASSERTS; }
+    "[QueryStringParams]"      { return SECTION_QUERY_STRING_PARAMS; }
 
     // Multiline body in section context
     {MULTILINE_OPEN}           { yybegin(MULTILINE_STRING_STATE); return MULTILINE_STRING_OPEN; }
@@ -238,7 +218,7 @@ MULTILINE_CLOSE = "```"
     "false"                    { return FALSE; }
     "null"                     { return NULL; }
     {FLOAT}                    { return FLOAT_NUMBER; }
-    {INTEGER}                  { return NUMBER; }
+    {INTEGER}                  { return INT_NUMBER; }
     "file,"                    { return FILE_PREFIX; }
     {NONWS_VALUE_CHAR}+        { return VALUE_STRING; }
 }
@@ -250,25 +230,21 @@ MULTILINE_CLOSE = "```"
     {TEMPLATE_OPEN}            { stateBeforeTemplate = ASSERT_STATE; yybegin(TEMPLATE_STATE); return LBRACE2; }
 
     // Exit assert on method/version/section
-    "GET" / {WS}               { yybegin(URL_STATE); return GET; }
-    "POST" / {WS}              { yybegin(URL_STATE); return POST; }
-    "PUT" / {WS}               { yybegin(URL_STATE); return PUT; }
-    "DELETE" / {WS}            { yybegin(URL_STATE); return DELETE; }
-    "PATCH" / {WS}             { yybegin(URL_STATE); return PATCH; }
-    "HEAD" / {WS}              { yybegin(URL_STATE); return HEAD; }
-    "OPTIONS" / {WS}           { yybegin(URL_STATE); return OPTIONS; }
+    {HTTP_METHODS} / {WS}      { yybegin(URL_STATE); return HTTP_METHOD; }
     {HTTP_VERSION_VAL}         { yybegin(STATUS_LINE_STATE); return HTTP_VERSION; }
 
-    "[QueryStringParams]"      { yybegin(KEY_VALUE_STATE); return SECTION_QUERY_STRING_PARAMS; }
+    // [SECTION_LIST]
+    "[Asserts]"                { return SECTION_ASSERTS; }
+    "[BasicAuth]"              { yybegin(KEY_VALUE_STATE); return SECTION_BASIC_AUTH; }
+    "[Captures]"               { yybegin(CAPTURE_KEY_STATE); return SECTION_CAPTURES; }
+    "[Cookies]"                { yybegin(KEY_VALUE_STATE); return SECTION_COOKIES; }
     "[FormParams]"             { yybegin(KEY_VALUE_STATE); return SECTION_FORM_PARAMS; }
     "[MultipartFormData]"      { yybegin(KEY_VALUE_STATE); return SECTION_MULTIPART_FORM_DATA; }
-    "[Cookies]"                { yybegin(KEY_VALUE_STATE); return SECTION_COOKIES; }
-    "[BasicAuth]"              { yybegin(KEY_VALUE_STATE); return SECTION_BASIC_AUTH; }
     "[Options]"                { yybegin(OPTIONS_STATE); return SECTION_OPTIONS; }
-    "[Captures]"               { yybegin(CAPTURE_KEY_STATE); return SECTION_CAPTURES; }
-    "[Asserts]"                { return SECTION_ASSERTS; }
+    "[QueryStringParams]"      { yybegin(KEY_VALUE_STATE); return SECTION_QUERY_STRING_PARAMS; }
 
     // Query keywords
+    // [QUERY_LIST]
     "body"                     { return KW_BODY; }
     "bytes"                    { return KW_BYTES; }
     "certificate"              { return KW_CERTIFICATE; }
@@ -288,30 +264,37 @@ MULTILINE_CLOSE = "```"
     "xpath"                    { return KW_XPATH; }
 
     // Predicate keywords
-    "not"                      { return KW_NOT; }
-    "equals"                   { return KW_EQUALS; }
-    "notEquals"                { return KW_NOT_EQUALS; }
-    "greaterThan"              { return KW_GREATER_THAN; }
-    "greaterThanOrEquals"      { return KW_GREATER_THAN_OR_EQUALS; }
-    "lessThan"                 { return KW_LESS_THAN; }
-    "lessThanOrEquals"         { return KW_LESS_THAN_OR_EQUALS; }
-    "startsWith"               { return KW_STARTS_WITH; }
-    "endsWith"                 { return KW_ENDS_WITH; }
+    // [PREDICATE_LIST]
     "contains"                 { return KW_CONTAINS; }
-    "includes"                 { return KW_INCLUDES; }
-    "matches"                  { return KW_MATCHES; }
+    "endsWith"                 { return KW_ENDS_WITH; }
     "exists"                   { return KW_EXISTS; }
-    "isEmpty"                  { return KW_IS_EMPTY; }
-    "isNumber"                 { return KW_IS_NUMBER; }
-    "isString"                 { return KW_IS_STRING; }
+    "includes"                 { return KW_INCLUDES; }
     "isBoolean"                { return KW_IS_BOOLEAN; }
     "isCollection"             { return KW_IS_COLLECTION; }
     "isDate"                   { return KW_IS_DATE; }
-    "isIsoDate"                { return KW_IS_ISO_DATE; }
+    "isEmpty"                  { return KW_IS_EMPTY; }
     "isFloat"                  { return KW_IS_FLOAT; }
     "isInteger"                { return KW_IS_INTEGER; }
+    "isIpv4"                   { return KW_IS_IPV4; }
+    "isIpv6"                   { return KW_IS_IPV6; }
+    "isIsoDate"                { return KW_IS_ISO_DATE; }
+    "isList"                   { return KW_IS_LIST; }
+    "isNumber"                 { return KW_IS_NUMBER; }
+    "isObject"                 { return KW_IS_OBJECT; }
+    "isString"                 { return KW_IS_STRING; }
+    "isUuid"                   { return KW_IS_UUID; }
+    "matches"                  { return KW_MATCHES; }
+    "not"                      { return KW_NOT; }
+    "startsWith"               { return KW_STARTS_WITH; }
+    "=="                       { return KW_EQUALS; }
+    "!="                       { return KW_NOT_EQUALS; }
+    ">="                       { return KW_GREATER_THAN_OR_EQUALS; }
+    ">"                        { return KW_GREATER_THAN; }
+    "<="                       { return KW_LESS_THAN_OR_EQUALS; }
+    "<"                        { return KW_LESS_THAN; }
 
     // Filter keywords
+    // [FILTER_LIST]
     "base64Decode"             { return KW_BASE64_DECODE; }
     "base64Encode"             { return KW_BASE64_ENCODE; }
     "base64UrlSafeDecode"      { return KW_BASE64_URL_SAFE_DECODE; }
@@ -346,20 +329,12 @@ MULTILINE_CLOSE = "```"
     "utf8Encode"               { return KW_UTF8_ENCODE; }
     "xpath"                    { return KW_XPATH; }
 
-    // Operators
-    "=="                       { return EQUALS_OP; }
-    "!="                       { return NOT_EQUALS_OP; }
-    ">="                       { return GREATER_THAN_OR_EQUALS_OP; }
-    ">"                        { return GREATER_THAN_OP; }
-    "<="                       { return LESS_THAN_OR_EQUALS_OP; }
-    "<"                        { return LESS_THAN_OP; }
-
     // Literals
     "true"                     { return TRUE; }
     "false"                    { return FALSE; }
     "null"                     { return NULL; }
     {FLOAT}                    { return FLOAT_NUMBER; }
-    {INTEGER}                  { return NUMBER; }
+    {INTEGER}                  { return INT_NUMBER; }
 
     // Strings
     {QUOTED_STRING_CONTENT}    { return QUOTED_STRING; }
@@ -379,28 +354,23 @@ MULTILINE_CLOSE = "```"
 <CAPTURE_KEY_STATE> {
     {COMMENT_LINE}             { return COMMENT; }
     {NEWLINE}                  { return NEWLINE; }
-    {KEY}                      { return KEY_STRING; }
+    {KEY}                      { return CAPTURE_KEY_STRING; }
     {WS}                       { return WHITE_SPACE; }
     ":"                        { yybegin(CAPTURE_STATE); return COLON; }
 
     // Exit capture on method/version/section
-    "GET" / {WS}               { yybegin(URL_STATE); return GET; }
-    "POST" / {WS}              { yybegin(URL_STATE); return POST; }
-    "PUT" / {WS}               { yybegin(URL_STATE); return PUT; }
-    "DELETE" / {WS}            { yybegin(URL_STATE); return DELETE; }
-    "PATCH" / {WS}             { yybegin(URL_STATE); return PATCH; }
-    "HEAD" / {WS}              { yybegin(URL_STATE); return HEAD; }
-    "OPTIONS" / {WS}           { yybegin(URL_STATE); return OPTIONS; }
+    {HTTP_METHODS} / {WS}      { yybegin(URL_STATE); return HTTP_METHOD; }
     {HTTP_VERSION_VAL}         { yybegin(STATUS_LINE_STATE); return HTTP_VERSION; }
 
-    "[QueryStringParams]"      { yybegin(KEY_VALUE_STATE); return SECTION_QUERY_STRING_PARAMS; }
+    // [SECTION_LIST]
+    "[Asserts]"                { yybegin(ASSERT_STATE); return SECTION_ASSERTS; }
+    "[BasicAuth]"              { yybegin(KEY_VALUE_STATE); return SECTION_BASIC_AUTH; }
+    "[Captures]"               { return SECTION_CAPTURES; }
+    "[Cookies]"                { yybegin(KEY_VALUE_STATE); return SECTION_COOKIES; }
     "[FormParams]"             { yybegin(KEY_VALUE_STATE); return SECTION_FORM_PARAMS; }
     "[MultipartFormData]"      { yybegin(KEY_VALUE_STATE); return SECTION_MULTIPART_FORM_DATA; }
-    "[Cookies]"                { yybegin(KEY_VALUE_STATE); return SECTION_COOKIES; }
-    "[BasicAuth]"              { yybegin(KEY_VALUE_STATE); return SECTION_BASIC_AUTH; }
     "[Options]"                { yybegin(OPTIONS_STATE); return SECTION_OPTIONS; }
-    "[Captures]"               { return SECTION_CAPTURES; }
-    "[Asserts]"                { yybegin(ASSERT_STATE); return SECTION_ASSERTS; }
+    "[QueryStringParams]"      { yybegin(KEY_VALUE_STATE); return SECTION_QUERY_STRING_PARAMS; }
 
     .                          { return BAD_CHARACTER; }
 }
@@ -413,42 +383,41 @@ MULTILINE_CLOSE = "```"
     {TEMPLATE_OPEN}            { stateBeforeTemplate = CAPTURE_STATE; yybegin(TEMPLATE_STATE); return LBRACE2; }
 
     // Exit capture on method/version/section
-    "GET" / {WS}               { yybegin(URL_STATE); return GET; }
-    "POST" / {WS}              { yybegin(URL_STATE); return POST; }
-    "PUT" / {WS}               { yybegin(URL_STATE); return PUT; }
-    "DELETE" / {WS}            { yybegin(URL_STATE); return DELETE; }
-    "PATCH" / {WS}             { yybegin(URL_STATE); return PATCH; }
-    "HEAD" / {WS}              { yybegin(URL_STATE); return HEAD; }
-    "OPTIONS" / {WS}           { yybegin(URL_STATE); return OPTIONS; }
+    {HTTP_METHODS} / {WS}      { yybegin(URL_STATE); return HTTP_METHOD; }
     {HTTP_VERSION_VAL}         { yybegin(STATUS_LINE_STATE); return HTTP_VERSION; }
 
-    "[QueryStringParams]"      { yybegin(KEY_VALUE_STATE); return SECTION_QUERY_STRING_PARAMS; }
+    // [SECTION_LIST]
+    "[Asserts]"                { yybegin(ASSERT_STATE); return SECTION_ASSERTS; }
+    "[BasicAuth]"              { yybegin(KEY_VALUE_STATE); return SECTION_BASIC_AUTH; }
+    "[Captures]"               { return SECTION_CAPTURES; }
+    "[Cookies]"                { yybegin(KEY_VALUE_STATE); return SECTION_COOKIES; }
     "[FormParams]"             { yybegin(KEY_VALUE_STATE); return SECTION_FORM_PARAMS; }
     "[MultipartFormData]"      { yybegin(KEY_VALUE_STATE); return SECTION_MULTIPART_FORM_DATA; }
-    "[Cookies]"                { yybegin(KEY_VALUE_STATE); return SECTION_COOKIES; }
-    "[BasicAuth]"              { yybegin(KEY_VALUE_STATE); return SECTION_BASIC_AUTH; }
     "[Options]"                { yybegin(OPTIONS_STATE); return SECTION_OPTIONS; }
-    "[Captures]"               { return SECTION_CAPTURES; }
-    "[Asserts]"                { yybegin(ASSERT_STATE); return SECTION_ASSERTS; }
+    "[QueryStringParams]"      { yybegin(KEY_VALUE_STATE); return SECTION_QUERY_STRING_PARAMS; }
 
     // Query keywords
-    "status"                   { return KW_STATUS; }
-    "url"                      { return KW_URL; }
-    "header"                   { return KW_HEADER; }
-    "cookie"                   { return KW_COOKIE; }
+    // [QUERY_LIST]
     "body"                     { return KW_BODY; }
-    "xpath"                    { return KW_XPATH; }
-    "jsonpath"                 { return KW_JSONPATH; }
-    "regex"                    { return KW_REGEX; }
-    "variable"                 { return KW_VARIABLE; }
-    "duration"                 { return KW_DURATION; }
-    "sha256"                   { return KW_SHA256; }
-    "md5"                      { return KW_MD5; }
     "bytes"                    { return KW_BYTES; }
     "certificate"              { return KW_CERTIFICATE; }
+    "cookie"                   { return KW_COOKIE; }
+    "duration"                 { return KW_DURATION; }
+    "header"                   { return KW_HEADER; }
+    "ip"                       { return KW_IP; }
+    "jsonpath"                 { return KW_JSONPATH; }
+    "md5"                      { return KW_MD5; }
+    "rawbytes"                 { return KW_RAWBYTES; }
+    "redirects"                { return KW_REDIRECTS; }
+    "regex"                    { return KW_REGEX; }
+    "sha256"                   { return KW_SHA256; }
+    "status"                   { return KW_STATUS; }
+    "url"                      { return KW_URL; }
+    "variable"                 { return KW_VARIABLE; }
+    "xpath"                    { return KW_XPATH; }
 
     // Filter keywords (used in captures)
-    // Note: that list SHALL be the same as in ASSERT_STATE!
+    // [FILTER_LIST]
     "base64Decode"             { return KW_BASE64_DECODE; }
     "base64Encode"             { return KW_BASE64_ENCODE; }
     "base64UrlSafeDecode"      { return KW_BASE64_URL_SAFE_DECODE; }
@@ -504,23 +473,18 @@ MULTILINE_CLOSE = "```"
     {TEMPLATE_OPEN}            { stateBeforeTemplate = OPTIONS_STATE; yybegin(TEMPLATE_STATE); return LBRACE2; }
 
     // Exit options on method/version/section
-    "GET" / {WS}               { yybegin(URL_STATE); return GET; }
-    "POST" / {WS}              { yybegin(URL_STATE); return POST; }
-    "PUT" / {WS}               { yybegin(URL_STATE); return PUT; }
-    "DELETE" / {WS}            { yybegin(URL_STATE); return DELETE; }
-    "PATCH" / {WS}             { yybegin(URL_STATE); return PATCH; }
-    "HEAD" / {WS}              { yybegin(URL_STATE); return HEAD; }
-    "OPTIONS" / {WS}           { yybegin(URL_STATE); return OPTIONS; }
+    {HTTP_METHODS} / {WS}      { yybegin(URL_STATE); return HTTP_METHOD; }
     {HTTP_VERSION_VAL}         { yybegin(STATUS_LINE_STATE); return HTTP_VERSION; }
 
-    "[QueryStringParams]"      { yybegin(KEY_VALUE_STATE); return SECTION_QUERY_STRING_PARAMS; }
+    // [SECTION_LIST]
+    "[Asserts]"                { yybegin(ASSERT_STATE); return SECTION_ASSERTS; }
+    "[BasicAuth]"              { yybegin(KEY_VALUE_STATE); return SECTION_BASIC_AUTH; }
+    "[Captures]"               { yybegin(CAPTURE_KEY_STATE); return SECTION_CAPTURES; }
+    "[Cookies]"                { yybegin(KEY_VALUE_STATE); return SECTION_COOKIES; }
     "[FormParams]"             { yybegin(KEY_VALUE_STATE); return SECTION_FORM_PARAMS; }
     "[MultipartFormData]"      { yybegin(KEY_VALUE_STATE); return SECTION_MULTIPART_FORM_DATA; }
-    "[Cookies]"                { yybegin(KEY_VALUE_STATE); return SECTION_COOKIES; }
-    "[BasicAuth]"              { yybegin(KEY_VALUE_STATE); return SECTION_BASIC_AUTH; }
     "[Options]"                { return SECTION_OPTIONS; }
-    "[Captures]"               { yybegin(CAPTURE_KEY_STATE); return SECTION_CAPTURES; }
-    "[Asserts]"                { yybegin(ASSERT_STATE); return SECTION_ASSERTS; }
+    "[QueryStringParams]"      { yybegin(KEY_VALUE_STATE); return SECTION_QUERY_STRING_PARAMS; }
 
     // Option keys
     "aws-sigv4"                { return KW_AWS_SIGV4; }
@@ -574,7 +538,7 @@ MULTILINE_CLOSE = "```"
     "false"                    { return FALSE; }
     "null"                     { return NULL; }
     {FLOAT}                    { return FLOAT_NUMBER; }
-    {INTEGER}                  { return NUMBER; }
+    {INTEGER}                  { return INT_NUMBER; }
     {NONWS_VALUE_CHAR}+        { return VALUE_STRING; }
 }
 

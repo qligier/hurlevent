@@ -19,6 +19,7 @@
 
   tokens = [
     // Methods
+    // [HTTP_METHOD_LIST]
     GET="GET"
     POST="POST"
     PUT="PUT"
@@ -76,7 +77,7 @@ hurlFile ::= (entry_ | COMMENT | NEWLINE)*
 private entry_ ::= !<<eof>> entry {
   recoverWhile = entry_recover
 }
-private entry_recover ::= !(method | HTTP_VERSION | NEWLINE)
+private entry_recover ::= !(HTTP_METHOD | HTTP_VERSION | NEWLINE)
 
 entry ::= request NEWLINE* response? {
   pin = 1
@@ -87,13 +88,9 @@ request ::= request_line NEWLINE* request_section* body? {
   pin = 1
 }
 
-request_line ::= method url {
+request_line ::= HTTP_METHOD url {
   pin = 1
 }
-
-method ::= GET | POST | PUT | DELETE | PATCH | HEAD | OPTIONS
-         | CONNECT | TRACE | LINK | UNLINK | PURGE | LOCK | UNLOCK
-         | PROPFIND | PROPPATCH | COPY | MOVE | MKCOL | REPORT | SEARCH
 
 url ::= url_content+
 private url_content ::= URL_VALUE | template
@@ -117,6 +114,7 @@ header ::= HEADER_KEY COLON header_val? {
 header_val ::= (HEADER_VALUE | template)+
 
 // Sections
+// [SECTION_LIST]
 request_section ::= header NEWLINE
                    | query_string_params_section
                    | form_params_section
@@ -173,7 +171,7 @@ key_value_pair ::= kv_key COLON value_content NEWLINE? {
 
 kv_key ::= KEY_STRING | QUOTED_STRING | BACKTICK_STRING
 
-value_content ::= (VALUE_STRING | QUOTED_STRING | BACKTICK_STRING | NUMBER | FLOAT_NUMBER
+value_content ::= (VALUE_STRING | QUOTED_STRING | BACKTICK_STRING | number
                   | TRUE | FALSE | NULL | template | FILE_PREFIX FILENAME?)+
 
 // Options
@@ -190,11 +188,11 @@ option_key ::= KW_AWS_SIGV4 | KW_CACERT | KW_CERT | KW_COMPRESSED | KW_CONNECT_T
              | KW_UNIX_SOCKET | KW_USER | KW_VERBOSE | KW_VERY_VERBOSE | KW_VARIABLE
              | KEY_STRING
 
-option_value ::= (VALUE_STRING | QUOTED_STRING | NUMBER | FLOAT_NUMBER | TRUE | FALSE | template)+
+option_value ::= (VALUE_STRING | QUOTED_STRING | number | TRUE | FALSE | template)+
 
 // Captures
 capture_list ::= (capture_entry | COMMENT NEWLINE? | NEWLINE)*
-capture_entry ::= KEY_STRING COLON query filter_list? KW_REDACT? NEWLINE? {
+capture_entry ::= CAPTURE_KEY_STRING COLON query filter_list? KW_REDACT? NEWLINE? {
   pin = 2
 }
 
@@ -205,6 +203,7 @@ assert_entry ::= query filter_list? predicate NEWLINE? {
 }
 
 // Queries
+// [QUERY_LIST]
 query ::= body_query | bytes_query | certificate_query | cookie_query | duration_query
        | header_query | ip_query | jsonpath_query | md5_query
        | rawbytes_query | redirects_query | regex_query | sha256_query
@@ -239,6 +238,7 @@ regex_string_value ::= REGEX_STRING {
 private quoted_or_regex_string_value_ ::= quoted_string_value | regex_string_value
 
 // Filters
+// [FILTER_LIST]
 filter_list ::= filter+
 filter ::= base64_decode_filter | base64_encode_filter | base64_url_safe_decode_filter | base64_url_safe_encode_filter
          | charset_decode_filter | count_filter | date_format_filter | days_after_now_filter | days_before_now_filter
@@ -265,7 +265,7 @@ html_unescape_filter ::= KW_HTML_UNESCAPE
 jsonpath_filter ::= KW_JSONPATH quoted_string_value
 last_filter ::= KW_LAST
 location_filter ::= KW_LOCATION
-nth_filter ::= KW_NTH NUMBER
+nth_filter ::= KW_NTH INT_NUMBER
 regex_filter ::= KW_REGEX quoted_or_regex_string_value_
 replace_filter ::= KW_REPLACE quoted_string_value quoted_string_value
 replace_regex_filter ::= KW_REPLACE_REGEX quoted_or_regex_string_value_ quoted_string_value
@@ -283,48 +283,51 @@ utf8_encode_filter ::= KW_UTF8_ENCODE
 xpath_filter ::= KW_XPATH quoted_string_value
 
 // Predicates
+// [PREDICATE_LIST]
 predicate ::= not_predicate? predicate_func
 
 not_predicate ::= KW_NOT
 
-predicate_func ::= equals_predicate | not_equals_predicate
-                 | greater_than_predicate | greater_than_or_equals_predicate
+predicate_func ::= contains_predicate | ends_with_predicate | equals_predicate | exists_predicate
+                 | greater_than_predicate | greater_than_or_equals_predicate | includes_predicate
+                 | is_boolean_predicate | is_collection_predicate | is_date_predicate
+                 | is_empty_predicate | is_float_predicate | is_integer_predicate
+                 | is_ipv4_predicate | is_ipv6_predicate | is_iso_date_predicate
+                 | is_list_predicate | is_number_predicate | is_object_predicate
+                 | is_string_predicate | is_uuid_predicate
                  | less_than_predicate | less_than_or_equals_predicate
-                 | starts_with_predicate | ends_with_predicate
-                 | contains_predicate | includes_predicate | matches_predicate
-                 | exists_predicate | is_empty_predicate
-                 | is_number_predicate | is_string_predicate | is_boolean_predicate
-                 | is_collection_predicate | is_date_predicate | is_iso_date_predicate
-                 | is_float_predicate | is_integer_predicate
-                 | operator_predicate
+                 | matches_predicate | not_equals_predicate | starts_with_predicate
 
+contains_predicate ::= KW_CONTAINS QUOTED_STRING
+ends_with_predicate ::= KW_ENDS_WITH (QUOTED_STRING | oneline_hex_value | oneline_base64_value)
 equals_predicate ::= KW_EQUALS predicate_value
-not_equals_predicate ::= KW_NOT_EQUALS predicate_value
-greater_than_predicate ::= KW_GREATER_THAN predicate_value
-greater_than_or_equals_predicate ::= KW_GREATER_THAN_OR_EQUALS predicate_value
-less_than_predicate ::= KW_LESS_THAN predicate_value
-less_than_or_equals_predicate ::= KW_LESS_THAN_OR_EQUALS predicate_value
-starts_with_predicate ::= KW_STARTS_WITH predicate_value
-ends_with_predicate ::= KW_ENDS_WITH predicate_value
-contains_predicate ::= KW_CONTAINS predicate_value
-includes_predicate ::= KW_INCLUDES predicate_value
-matches_predicate ::= KW_MATCHES predicate_value
 exists_predicate ::= KW_EXISTS
-is_empty_predicate ::= KW_IS_EMPTY
-is_number_predicate ::= KW_IS_NUMBER
-is_string_predicate ::= KW_IS_STRING
+greater_than_predicate ::= KW_GREATER_THAN (number | QUOTED_STRING | template)
+greater_than_or_equals_predicate ::= KW_GREATER_THAN_OR_EQUALS (number | QUOTED_STRING | template)
+includes_predicate ::= KW_INCLUDES predicate_value
 is_boolean_predicate ::= KW_IS_BOOLEAN
 is_collection_predicate ::= KW_IS_COLLECTION
 is_date_predicate ::= KW_IS_DATE
-is_iso_date_predicate ::= KW_IS_ISO_DATE
+is_empty_predicate ::= KW_IS_EMPTY
 is_float_predicate ::= KW_IS_FLOAT
 is_integer_predicate ::= KW_IS_INTEGER
+is_ipv4_predicate ::= KW_IS_IPV4
+is_ipv6_predicate ::= KW_IS_IPV6
+is_iso_date_predicate ::= KW_IS_ISO_DATE
+is_list_predicate ::= KW_IS_LIST
+is_number_predicate ::= KW_IS_NUMBER
+is_object_predicate ::= KW_IS_OBJECT
+is_string_predicate ::= KW_IS_STRING
+is_uuid_predicate ::= KW_IS_UUID
+less_than_predicate ::= KW_LESS_THAN (number | QUOTED_STRING | template)
+less_than_or_equals_predicate ::= KW_LESS_THAN_OR_EQUALS (number | QUOTED_STRING | template)
+matches_predicate ::= KW_MATCHES (QUOTED_STRING | REGEX_STRING)
+not_equals_predicate ::= KW_NOT_EQUALS predicate_value
+starts_with_predicate ::= KW_STARTS_WITH (QUOTED_STRING | oneline_hex_value | oneline_base64_value)
 
-operator_predicate ::= (EQUALS_OP | NOT_EQUALS_OP | GREATER_THAN_OP | GREATER_THAN_OR_EQUALS_OP
-                       | LESS_THAN_OP | LESS_THAN_OR_EQUALS_OP) predicate_value
-
-predicate_value ::= QUOTED_STRING | BACKTICK_STRING | NUMBER | FLOAT_NUMBER
-                   | TRUE | FALSE | NULL | template | hex_value
+// TODO: add oneline-string, oneline-file
+predicate_value ::= QUOTED_STRING | BACKTICK_STRING | number
+                   | TRUE | FALSE | NULL | template | oneline_hex_value | oneline_base64_value
 
 // Body
 body ::= json_body | xml_body | multiline_string_body | file_body | base64_body | hex_body | raw_body
@@ -353,9 +356,12 @@ base64_body ::= BASE64_PREFIX BASE64_DATA?
 hex_body ::= HEX_PREFIX HEX_DATA?
 raw_body ::= BODY_DATA+
 
-hex_value ::= HEX_PREFIX HEX_DATA? SEMICOLON
+oneline_hex_value ::= HEX_PREFIX HEX_DATA? SEMICOLON
+oneline_base64_value ::= BASE64_PREFIX BASE64_DATA? SEMICOLON
 
 // Template variable
 template ::= LBRACE2 TEMPLATE_VAR RBRACE2 {
   pin = 1
 }
+
+number ::= INT_NUMBER | FLOAT_NUMBER

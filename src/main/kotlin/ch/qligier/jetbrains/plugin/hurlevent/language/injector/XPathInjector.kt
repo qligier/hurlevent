@@ -4,11 +4,14 @@
 
 package ch.qligier.jetbrains.plugin.hurlevent.language.injector
 
+import ch.qligier.jetbrains.plugin.hurlevent.language.psi.HurlXpathFilter
 import ch.qligier.jetbrains.plugin.hurlevent.language.psi.HurlXpathQuery
 import org.intellij.lang.xpath.XPath2Language
 
 internal class XPathInjector :
-    AbstractQuotedStringQueryInjector<HurlXpathQuery>(
+    AbstractFirstArgumentQuotedStringInjector(
+        { parent ->
+            parent is HurlXpathQuery || parent is HurlXpathFilter
+        },
         XPath2Language.findInstance(XPath2Language::class.java),
-        HurlXpathQuery::class,
     )

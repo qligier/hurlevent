@@ -4,11 +4,14 @@
 
 package ch.qligier.jetbrains.plugin.hurlevent.language.injector
 
+import ch.qligier.jetbrains.plugin.hurlevent.language.psi.HurlJsonpathFilter
 import ch.qligier.jetbrains.plugin.hurlevent.language.psi.HurlJsonpathQuery
 import com.intellij.jsonpath.JsonPathLanguage
 
 internal class JsonPathInjector :
-    AbstractQuotedStringQueryInjector<HurlJsonpathQuery>(
+    AbstractFirstArgumentQuotedStringInjector(
+        parentPredicate = { parent ->
+            parent is HurlJsonpathFilter || parent is HurlJsonpathQuery
+        },
         JsonPathLanguage.INSTANCE,
-        HurlJsonpathQuery::class,
     )

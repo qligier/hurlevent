@@ -42,40 +42,11 @@ internal class RegexStringValueInjector :
  * This injects the RegExp language into the HurlQuotedStringValue PSI element (e.g. `"regex"`).
  */
 internal class RegexQuotedStringValueInjector :
-    MultiHostInjector,
-    DumbAware {
-    override fun getLanguagesToInject(
-        registrar: MultiHostRegistrar,
-        context: PsiElement,
-    ) {
-        if (context is HurlQuotedStringValue &&
-            (
-                context.parent is HurlRegexQuery ||
-                    context.parent is HurlRegexFilter ||
-                    context.parent is HurlReplaceRegexFilter
-            ) &&
-            elementIsParentFirstArgument(context)
-        ) {
-            val text = context.node.text
-            // We need to exclude the quotes at the beginning and end of the regex string value
-            val range = TextRange(1, text.length - 1)
-            registrar
-                .startInjecting(RegExpLanguage.INSTANCE)
-                .addPlace(null, null, context as PsiLanguageInjectionHost, range)
-                .doneInjecting()
-        }
-    }
-
-    override fun elementsToInjectIn(): @Unmodifiable List<Class<out PsiElement>> = listOf(HurlQuotedStringValue::class.java)
-
-    /**
-     * Verify if the given element is the first argument (third child) of its parent.
-     * The first child is the filter/query name (`regex` or `replaceRegex`).
-     * The second child is a whitespace.
-     */
-    private fun elementIsParentFirstArgument(element: PsiElement): Boolean {
-        val parent = element.parent ?: return false
-        val thirdChild = parent.firstChild?.nextSibling?.nextSibling ?: return false
-        return thirdChild == element
-    }
-}
+    AbstractFirstArgumentQuotedStringInjector(
+        { parent ->
+            parent is HurlRegexQuery ||
+                parent is HurlRegexFilter ||
+                parent is HurlReplaceRegexFilter
+        },
+        RegExpLanguage.INSTANCE,
+    )

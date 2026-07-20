@@ -34,9 +34,6 @@
     <depends optional="true" config-file="plugin_with_jsonpath.xml">com.intellij.jsonpath</depends>
     <depends optional="true" config-file="plugin_with_xpath.xml">XPathView</depends>
 
-    <actions>
-    </actions>
-
     <extensions defaultExtensionNs="com.intellij">
         <fileIconProvider implementation="ch.qligier.jetbrains.plugin.hurlevent.language.HurlFileIconProvider"/>
         <colorSettingsPage
@@ -45,6 +42,8 @@
         <!-- The Hurl language -->
         <fileType name="Hurl" language="hurl" extensions="hurl"
                   implementationClass="ch.qligier.jetbrains.plugin.hurlevent.language.HurlFileType"/>
+        <lang.documentationProvider language="hurl"
+                                    implementationClass="ch.qligier.jetbrains.plugin.hurlevent.language.documentation.HurlFilterDocumentationProvider"/>
         <lang.parserDefinition language="hurl"
                                implementationClass="ch.qligier.jetbrains.plugin.hurlevent.language.parser.HurlParserDefinition"/>
         <lang.syntaxHighlighterFactory language="hurl"
@@ -58,11 +57,11 @@
                                       implementationClass="ch.qligier.jetbrains.plugin.hurlevent.language.structure.HurlStructureViewFactory"/>
         <breadcrumbsInfoProvider
                 implementation="ch.qligier.jetbrains.plugin.hurlevent.language.editor.HurlBreadcrumbsProvider"/>
-        <platform.backend.documentation.psiTargetProvider
-                implementation="ch.qligier.jetbrains.plugin.hurlevent.language.documentation.HurlPsiDocumentationProvider"/>
 
         <annotator language="hurl"
                    implementationClass="ch.qligier.jetbrains.plugin.hurlevent.language.inspection.DeprecatedFilterAnnotator"/>
+        <annotator language="hurl"
+                   implementationClass="ch.qligier.jetbrains.plugin.hurlevent.language.inspection.UnknownCharsetAnnotator"/>
 
         <multiHostInjector implementation="ch.qligier.jetbrains.plugin.hurlevent.language.injector.XmlBodyInjector"/>
         <multiHostInjector
@@ -76,4 +75,13 @@
 
     <applicationListeners>
     </applicationListeners>
+
+    <actions>
+        <action id="Hurl.NewFile"
+                class="ch.qligier.jetbrains.plugin.hurlevent.language.action.CreateHurlFileAction"
+                text="Hurl File"
+                description="Creates a new Hurl file">
+            <add-to-group group-id="NewGroup" anchor="last"/>
+        </action>
+    </actions>
 </idea-plugin>
