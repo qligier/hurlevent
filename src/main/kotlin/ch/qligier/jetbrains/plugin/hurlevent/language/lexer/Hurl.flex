@@ -106,10 +106,13 @@ MULTILINE_CLOSE = "```"
     "[BasicAuth]"              { yybegin(KEY_VALUE_STATE); return SECTION_BASIC_AUTH; }
     "[Captures]"               { yybegin(CAPTURE_KEY_STATE); return SECTION_CAPTURES; }
     "[Cookies]"                { yybegin(KEY_VALUE_STATE); return SECTION_COOKIES; }
-    "[FormParams]"             { yybegin(KEY_VALUE_STATE); return SECTION_FORM_PARAMS; }
-    "[MultipartFormData]"      { yybegin(KEY_VALUE_STATE); return SECTION_MULTIPART_FORM_DATA; }
+    "[Form]"                   { yybegin(KEY_VALUE_STATE); return SECTION_FORM; }
+    "[FormParams]"             { yybegin(KEY_VALUE_STATE); return SECTION_FORM; }
+    "[Multipart]"              { yybegin(KEY_VALUE_STATE); return SECTION_MULTIPART; }
+    "[MultipartFormData]"      { yybegin(KEY_VALUE_STATE); return SECTION_MULTIPART; }
     "[Options]"                { yybegin(OPTIONS_STATE); return SECTION_OPTIONS; }
-    "[QueryStringParams]"      { yybegin(KEY_VALUE_STATE); return SECTION_QUERY_STRING_PARAMS; }
+    "[Query]"                  { yybegin(KEY_VALUE_STATE); return SECTION_QUERY; }
+    "[QueryStringParams]"      { yybegin(KEY_VALUE_STATE); return SECTION_QUERY; }
 
     // Body markers
     {MULTILINE_OPEN}           { yybegin(MULTILINE_STRING_STATE); return MULTILINE_STRING_OPEN; }
@@ -184,10 +187,13 @@ MULTILINE_CLOSE = "```"
     "[BasicAuth]"              { return SECTION_BASIC_AUTH; }
     "[Captures]"               { yybegin(CAPTURE_KEY_STATE); return SECTION_CAPTURES; }
     "[Cookies]"                { return SECTION_COOKIES; }
-    "[FormParams]"             { return SECTION_FORM_PARAMS; }
-    "[MultipartFormData]"      { return SECTION_MULTIPART_FORM_DATA; }
+    "[Form]"                   { return SECTION_FORM; }
+    "[FormParams]"             { return SECTION_FORM; }
+    "[Multipart]"              { return SECTION_MULTIPART; }
+    "[MultipartFormData]"      { return SECTION_MULTIPART; }
     "[Options]"                { yybegin(OPTIONS_STATE); return SECTION_OPTIONS; }
-    "[QueryStringParams]"      { return SECTION_QUERY_STRING_PARAMS; }
+    "[Query]"                  { return SECTION_QUERY; }
+    "[QueryStringParams]"      { return SECTION_QUERY; }
 
     // Multiline body in section context
     {MULTILINE_OPEN}           { yybegin(MULTILINE_STRING_STATE); return MULTILINE_STRING_OPEN; }
@@ -238,10 +244,13 @@ MULTILINE_CLOSE = "```"
     "[BasicAuth]"              { yybegin(KEY_VALUE_STATE); return SECTION_BASIC_AUTH; }
     "[Captures]"               { yybegin(CAPTURE_KEY_STATE); return SECTION_CAPTURES; }
     "[Cookies]"                { yybegin(KEY_VALUE_STATE); return SECTION_COOKIES; }
-    "[FormParams]"             { yybegin(KEY_VALUE_STATE); return SECTION_FORM_PARAMS; }
-    "[MultipartFormData]"      { yybegin(KEY_VALUE_STATE); return SECTION_MULTIPART_FORM_DATA; }
+    "[Form]"                   { yybegin(KEY_VALUE_STATE); return SECTION_FORM; }
+    "[FormParams]"             { yybegin(KEY_VALUE_STATE); return SECTION_FORM; }
+    "[Multipart]"              { yybegin(KEY_VALUE_STATE); return SECTION_MULTIPART; }
+    "[MultipartFormData]"      { yybegin(KEY_VALUE_STATE); return SECTION_MULTIPART; }
     "[Options]"                { yybegin(OPTIONS_STATE); return SECTION_OPTIONS; }
-    "[QueryStringParams]"      { yybegin(KEY_VALUE_STATE); return SECTION_QUERY_STRING_PARAMS; }
+    "[Query]"                  { yybegin(KEY_VALUE_STATE); return SECTION_QUERY; }
+    "[QueryStringParams]"      { yybegin(KEY_VALUE_STATE); return SECTION_QUERY; }
 
     // Query keywords
     // [QUERY_LIST]
@@ -367,10 +376,13 @@ MULTILINE_CLOSE = "```"
     "[BasicAuth]"              { yybegin(KEY_VALUE_STATE); return SECTION_BASIC_AUTH; }
     "[Captures]"               { return SECTION_CAPTURES; }
     "[Cookies]"                { yybegin(KEY_VALUE_STATE); return SECTION_COOKIES; }
-    "[FormParams]"             { yybegin(KEY_VALUE_STATE); return SECTION_FORM_PARAMS; }
-    "[MultipartFormData]"      { yybegin(KEY_VALUE_STATE); return SECTION_MULTIPART_FORM_DATA; }
+    "[Form]"                   { yybegin(KEY_VALUE_STATE); return SECTION_FORM; }
+    "[FormParams]"             { yybegin(KEY_VALUE_STATE); return SECTION_FORM; }
+    "[Multipart]"              { yybegin(KEY_VALUE_STATE); return SECTION_MULTIPART; }
+    "[MultipartFormData]"      { yybegin(KEY_VALUE_STATE); return SECTION_MULTIPART; }
     "[Options]"                { yybegin(OPTIONS_STATE); return SECTION_OPTIONS; }
-    "[QueryStringParams]"      { yybegin(KEY_VALUE_STATE); return SECTION_QUERY_STRING_PARAMS; }
+    "[Query]"                  { yybegin(KEY_VALUE_STATE); return SECTION_QUERY; }
+    "[QueryStringParams]"      { yybegin(KEY_VALUE_STATE); return SECTION_QUERY; }
 
     .                          { return BAD_CHARACTER; }
 }
@@ -391,10 +403,13 @@ MULTILINE_CLOSE = "```"
     "[BasicAuth]"              { yybegin(KEY_VALUE_STATE); return SECTION_BASIC_AUTH; }
     "[Captures]"               { return SECTION_CAPTURES; }
     "[Cookies]"                { yybegin(KEY_VALUE_STATE); return SECTION_COOKIES; }
-    "[FormParams]"             { yybegin(KEY_VALUE_STATE); return SECTION_FORM_PARAMS; }
-    "[MultipartFormData]"      { yybegin(KEY_VALUE_STATE); return SECTION_MULTIPART_FORM_DATA; }
+    "[Form]"                   { yybegin(KEY_VALUE_STATE); return SECTION_FORM; }
+    "[FormParams]"             { yybegin(KEY_VALUE_STATE); return SECTION_FORM; }
+    "[Multipart]"              { yybegin(KEY_VALUE_STATE); return SECTION_MULTIPART; }
+    "[MultipartFormData]"      { yybegin(KEY_VALUE_STATE); return SECTION_MULTIPART; }
     "[Options]"                { yybegin(OPTIONS_STATE); return SECTION_OPTIONS; }
-    "[QueryStringParams]"      { yybegin(KEY_VALUE_STATE); return SECTION_QUERY_STRING_PARAMS; }
+    "[Query]"                  { yybegin(KEY_VALUE_STATE); return SECTION_QUERY; }
+    "[QueryStringParams]"      { yybegin(KEY_VALUE_STATE); return SECTION_QUERY; }
 
     // Query keywords
     // [QUERY_LIST]
@@ -481,10 +496,13 @@ MULTILINE_CLOSE = "```"
     "[BasicAuth]"              { yybegin(KEY_VALUE_STATE); return SECTION_BASIC_AUTH; }
     "[Captures]"               { yybegin(CAPTURE_KEY_STATE); return SECTION_CAPTURES; }
     "[Cookies]"                { yybegin(KEY_VALUE_STATE); return SECTION_COOKIES; }
-    "[FormParams]"             { yybegin(KEY_VALUE_STATE); return SECTION_FORM_PARAMS; }
-    "[MultipartFormData]"      { yybegin(KEY_VALUE_STATE); return SECTION_MULTIPART_FORM_DATA; }
+    "[Form]"                   { yybegin(KEY_VALUE_STATE); return SECTION_FORM; }
+    "[FormParams]"             { yybegin(KEY_VALUE_STATE); return SECTION_FORM; }
+    "[Multipart]"              { yybegin(KEY_VALUE_STATE); return SECTION_MULTIPART; }
+    "[MultipartFormData]"      { yybegin(KEY_VALUE_STATE); return SECTION_MULTIPART; }
     "[Options]"                { return SECTION_OPTIONS; }
-    "[QueryStringParams]"      { yybegin(KEY_VALUE_STATE); return SECTION_QUERY_STRING_PARAMS; }
+    "[Query]"                  { yybegin(KEY_VALUE_STATE); return SECTION_QUERY; }
+    "[QueryStringParams]"      { yybegin(KEY_VALUE_STATE); return SECTION_QUERY; }
 
     // Option keys
     "aws-sigv4"                { return KW_AWS_SIGV4; }

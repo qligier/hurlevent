@@ -48,6 +48,8 @@
                                implementationClass="ch.qligier.jetbrains.plugin.hurlevent.language.parser.HurlParserDefinition"/>
         <lang.syntaxHighlighterFactory language="hurl"
                                        implementationClass="ch.qligier.jetbrains.plugin.hurlevent.language.highlight.HurlSyntaxHighlighterFactory"/>
+        <lang.braceMatcher language="hurl"
+                           implementationClass="ch.qligier.jetbrains.plugin.hurlevent.language.editor.HurlBraceMatcher"/>"
         <annotator language="hurl" implementationClass="ch.qligier.jetbrains.plugin.hurlevent.language.highlight.HurlSyntaxAnnotator"/>
         <lang.commenter language="hurl"
                         implementationClass="ch.qligier.jetbrains.plugin.hurlevent.language.editor.HurlCommenter"/>

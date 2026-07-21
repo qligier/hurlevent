@@ -53,7 +53,7 @@ internal class HurlFoldingBuilder :
         val elementType = node.elementType
 
         // Fold entries (request + response blocks)
-        if (elementType.toString() == "ENTRY") {
+        if (elementType == HurlTypes.ENTRY) {
             val range = element.textRange
             if (range.length > 1 && spanMultipleLines(range, document)) {
                 val firstLine = document.getLineNumber(range.startOffset)
@@ -89,7 +89,7 @@ internal class HurlFoldingBuilder :
         // Fold JSON bodies
         if (elementType == HurlTypes.LBRACE) {
             val parent = element.parent
-            if (parent != null && parent.node.elementType.toString() == "JSON_BODY") {
+            if (parent != null && parent.node.elementType == HurlTypes.JSON_BODY) {
                 val range = parent.textRange
                 if (range.length > 2 && spanMultipleLines(range, document)) {
                     descriptors.add(FoldingDescriptor(parent.node, range))

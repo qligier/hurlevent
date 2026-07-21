@@ -7,6 +7,7 @@ package ch.qligier.jetbrains.plugin.hurlevent.language.editor
 import ch.qligier.jetbrains.plugin.hurlevent.language.psi.HurlTypes
 import com.intellij.lang.BracePair
 import com.intellij.lang.PairedBraceMatcher
+import com.intellij.openapi.project.DumbAware
 import com.intellij.psi.PsiFile
 import com.intellij.psi.tree.IElementType
 
@@ -15,7 +16,9 @@ import com.intellij.psi.tree.IElementType
  *
  * @see [Brace Matching](https://plugins.jetbrains.com/docs/intellij/additional-minor-features.html#brace-matching)
  **/
-class HurlBraceMatcher : PairedBraceMatcher {
+internal class HurlBraceMatcher :
+    PairedBraceMatcher,
+    DumbAware {
     override fun getPairs(): Array<out BracePair> = PAIRS
 
     override fun isPairedBracesAllowedBeforeType(

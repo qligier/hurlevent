@@ -12,17 +12,16 @@ import ch.qligier.jetbrains.plugin.hurlevent.language.psi.HurlTypes
  * @author Quentin Ligier
  **/
 object HurlElementSets {
-    val SECTIONS =
+    // Sections that are marked with a section header.
+    val MARKED_SECTIONS =
         setOf(
             HurlTypes.ASSERTS_SECTION,
             HurlTypes.BASIC_AUTH_SECTION,
             HurlTypes.CAPTURES_SECTION,
             HurlTypes.COOKIES_SECTION,
-            HurlTypes.FORM_PARAMS_SECTION,
-            HurlTypes.MULTIPART_FORM_DATA_SECTION,
+            HurlTypes.FORM_SECTION,
+            HurlTypes.MULTIPART_SECTION,
             HurlTypes.OPTIONS_SECTION,
-            HurlTypes.QUERY_STRING_PARAMS_SECTION,
-            HurlTypes.REQUEST_SECTION,
-            HurlTypes.RESPONSE_SECTION,
+            HurlTypes.QUERY_SECTION,
         )
 }

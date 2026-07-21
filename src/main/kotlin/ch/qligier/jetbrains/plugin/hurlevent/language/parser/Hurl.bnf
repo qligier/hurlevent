@@ -72,19 +72,21 @@
 }
 
 // Root rule
-hurlFile ::= (entry_ | COMMENT | NEWLINE)*
+hurlFile ::= (COMMENT | NEWLINE | entry_)*
 
 private entry_ ::= !<<eof>> entry {
   recoverWhile = entry_recover
 }
-private entry_recover ::= !(HTTP_METHOD | HTTP_VERSION | NEWLINE)
+// COMMENT is also a synchronization point so that a comment line between two entries isn't
+// swallowed by the recovery mechanism into the preceding entry_.
+private entry_recover ::= !(HTTP_METHOD | HTTP_VERSION | NEWLINE | COMMENT)
 
-entry ::= request NEWLINE* response? {
+entry ::= request response? {
   pin = 1
 }
 
 // Request
-request ::= request_line NEWLINE* request_section* body? {
+request ::= request_line request_section* body? {
   pin = 1
 }
 
@@ -96,8 +98,10 @@ url ::= url_content+
 private url_content ::= URL_VALUE | template
 
 // Response
-response ::= response_line NEWLINE* response_section* body? {
-  pin = 1
+// The leading lt_ absorbs any blank lines and comments between the request and the response,
+// instead of them being swallowed as trailing content of the request (see lt_ below).
+response ::= lt_ response_line response_section* body? {
+  pin = 2
 }
 
 response_line ::= HTTP_VERSION status_value {
@@ -113,33 +117,36 @@ header ::= HEADER_KEY COLON header_val? {
 
 header_val ::= (HEADER_VALUE | template)+
 
+// A run of blank lines and/or comment-only lines. It is always used as a *leading* separator on
+// whatever construct can follow it, never as a trailing one. This way, a run of blank lines or
+// comments that isn't actually followed by more content of the current entry (e.g. because the
+// entry has ended) fails to match here, rolls back, and is left for the enclosing rule to consume
+// instead of being absorbed into the current entry.
+private lt_ ::= (COMMENT NEWLINE? | NEWLINE)*
+
 // Sections
 // [SECTION_LIST]
-request_section ::= header NEWLINE
-                   | query_string_params_section
-                   | form_params_section
-                   | multipart_form_data_section
-                   | cookies_section
-                   | basic_auth_section
-                   | options_section
-                   | NEWLINE
-                   | COMMENT NEWLINE?
+request_section ::= lt_ (header NEWLINE
+                        | query_section
+                        | form_section
+                        | multipart_section
+                        | cookies_section
+                        | basic_auth_section
+                        | options_section)
 
-response_section ::= captures_section
-                    | asserts_section
-                    | header NEWLINE
-                    | NEWLINE
-                    | COMMENT NEWLINE?
+response_section ::= lt_ (captures_section
+                         | asserts_section
+                         | header NEWLINE)
 
-query_string_params_section ::= SECTION_QUERY_STRING_PARAMS NEWLINE key_value_list {
+query_section ::= SECTION_QUERY NEWLINE key_value_list {
   pin = 1
 }
 
-form_params_section ::= SECTION_FORM_PARAMS NEWLINE key_value_list {
+form_section ::= SECTION_FORM NEWLINE key_value_list {
   pin = 1
 }
 
-multipart_form_data_section ::= SECTION_MULTIPART_FORM_DATA NEWLINE key_value_list {
+multipart_section ::= SECTION_MULTIPART NEWLINE key_value_list {
   pin = 1
 }
 
@@ -164,7 +171,7 @@ asserts_section ::= SECTION_ASSERTS NEWLINE assert_list {
 }
 
 // Key-Value pairs
-key_value_list ::= (key_value_pair | COMMENT NEWLINE? | NEWLINE)*
+key_value_list ::= (lt_ key_value_pair)*
 key_value_pair ::= kv_key COLON value_content NEWLINE? {
   pin = 2
 }
@@ -175,7 +182,7 @@ value_content ::= (VALUE_STRING | QUOTED_STRING | BACKTICK_STRING | number
                   | TRUE | FALSE | NULL | template | FILE_PREFIX FILENAME?)+
 
 // Options
-option_list ::= (option_entry | COMMENT NEWLINE? | NEWLINE)*
+option_list ::= (lt_ option_entry)*
 option_entry ::= option_key COLON option_value NEWLINE? {
   pin = 2
 }
@@ -191,13 +198,13 @@ option_key ::= KW_AWS_SIGV4 | KW_CACERT | KW_CERT | KW_COMPRESSED | KW_CONNECT_T
 option_value ::= (VALUE_STRING | QUOTED_STRING | number | TRUE | FALSE | template)+
 
 // Captures
-capture_list ::= (capture_entry | COMMENT NEWLINE? | NEWLINE)*
+capture_list ::= (lt_ capture_entry)*
 capture_entry ::= CAPTURE_KEY_STRING COLON query filter_list? KW_REDACT? NEWLINE? {
   pin = 2
 }
 
 // Asserts
-assert_list ::= (assert_entry | COMMENT NEWLINE? | NEWLINE)*
+assert_list ::= (lt_ assert_entry)*
 assert_entry ::= query filter_list? predicate NEWLINE? {
   pin = 1
 }
@@ -330,7 +337,7 @@ predicate_value ::= QUOTED_STRING | BACKTICK_STRING | number
                    | TRUE | FALSE | NULL | template | oneline_hex_value | oneline_base64_value
 
 // Body
-body ::= json_body | xml_body | multiline_string_body | file_body | base64_body | hex_body | raw_body
+body ::= lt_ (json_body | xml_body | multiline_string_body | file_body | base64_body | hex_body | raw_body)
 
 json_body ::= LBRACE json_content* RBRACE {
   pin = 1

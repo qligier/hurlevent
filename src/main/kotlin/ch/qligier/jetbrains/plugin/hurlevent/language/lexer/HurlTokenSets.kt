@@ -20,10 +20,10 @@ object HurlTokenSets {
             HurlTypes.SECTION_BASIC_AUTH,
             HurlTypes.SECTION_CAPTURES,
             HurlTypes.SECTION_COOKIES,
-            HurlTypes.SECTION_FORM_PARAMS,
-            HurlTypes.SECTION_MULTIPART_FORM_DATA,
+            HurlTypes.SECTION_FORM,
+            HurlTypes.SECTION_MULTIPART,
             HurlTypes.SECTION_OPTIONS,
-            HurlTypes.SECTION_QUERY_STRING_PARAMS,
+            HurlTypes.SECTION_QUERY,
         )
 
     // [QUERY_LIST]

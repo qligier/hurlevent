@@ -5,6 +5,7 @@
 package ch.qligier.jetbrains.plugin.hurlevent.language.editor
 
 import com.intellij.lang.Commenter
+import com.intellij.openapi.project.DumbAware
 
 /**
  * Defines the support for "Comment with Line Comment" in the Hurl language.
@@ -12,7 +13,9 @@ import com.intellij.lang.Commenter
  * @see [Comment Code](https://plugins.jetbrains.com/docs/intellij/additional-minor-features.html.comment-code)
  * @see [Commenter](https://plugins.jetbrains.com/docs/intellij/commenter.html)
  */
-internal class HurlCommenter : Commenter {
+internal class HurlCommenter :
+    Commenter,
+    DumbAware {
     override fun getLineCommentPrefix(): String = "#"
 
     override fun getBlockCommentPrefix(): String? = null

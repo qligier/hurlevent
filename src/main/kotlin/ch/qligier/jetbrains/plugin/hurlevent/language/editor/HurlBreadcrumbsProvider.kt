@@ -5,9 +5,11 @@
 package ch.qligier.jetbrains.plugin.hurlevent.language.editor
 
 import ch.qligier.jetbrains.plugin.hurlevent.language.HurlLanguage
+import ch.qligier.jetbrains.plugin.hurlevent.language.lexer.HurlTokenSets
 import ch.qligier.jetbrains.plugin.hurlevent.language.parser.HurlElementSets
 import ch.qligier.jetbrains.plugin.hurlevent.language.psi.HurlTypes
 import com.intellij.lang.Language
+import com.intellij.openapi.project.DumbAware
 import com.intellij.openapi.util.NlsSafe
 import com.intellij.psi.PsiElement
 import com.intellij.psi.tree.IElementType
@@ -18,7 +20,9 @@ import com.intellij.ui.breadcrumbs.BreadcrumbsProvider
  *
  * @see [Breadcrumbs](https://plugins.jetbrains.com/docs/intellij/additional-minor-features.html#reader-mode)
  **/
-class HurlBreadcrumbsProvider : BreadcrumbsProvider {
+internal class HurlBreadcrumbsProvider :
+    BreadcrumbsProvider,
+    DumbAware {
     override fun getLanguages(): Array<out Language> = arrayOf(HurlLanguage)
 
     override fun acceptElement(element: PsiElement): Boolean {
@@ -26,7 +30,7 @@ class HurlBreadcrumbsProvider : BreadcrumbsProvider {
         return type == HurlTypes.ENTRY ||
             type == HurlTypes.REQUEST ||
             type == HurlTypes.RESPONSE ||
-            type in HurlElementSets.SECTIONS
+            type in HurlElementSets.MARKED_SECTIONS
     }
 
     /**
@@ -47,10 +51,10 @@ class HurlBreadcrumbsProvider : BreadcrumbsProvider {
                 "Response"
             }
 
-            /*in HurlElementSets.SECTIONS -> {
+            in HurlElementSets.MARKED_SECTIONS -> {
                 val sectionToken = element.children.firstOrNull { it.node?.elementType in HurlTokenSets.SECTIONS }
                 sectionToken?.text ?: type.sectionTypeToHumanDisplay()
-            }*/
+            }
 
             else -> {
                 element.text.take(30)
@@ -66,8 +70,7 @@ class HurlBreadcrumbsProvider : BreadcrumbsProvider {
             ?.take(n)
 
     private fun IElementType.sectionTypeToHumanDisplay(): String =
-        this
-            .toString()
+        this.debugName
             .removeSuffix("_SECTION")
             .replace('_', ' ')
             .lowercase()
