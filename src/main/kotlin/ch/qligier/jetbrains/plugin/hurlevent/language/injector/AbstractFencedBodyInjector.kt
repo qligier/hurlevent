@@ -14,9 +14,8 @@ import com.intellij.psi.PsiElement
 import org.jetbrains.annotations.Unmodifiable
 
 /**
- * Hurlevent
+ * A language injector for Hurl fenced bodies.
  *
- * @author Quentin Ligier
  * @see [Language Injection](https://plugins.jetbrains.com/docs/intellij/language-injection.html)
  **/
 abstract class AbstractFencedBodyInjector :

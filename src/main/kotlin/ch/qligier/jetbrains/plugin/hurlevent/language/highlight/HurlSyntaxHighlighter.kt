@@ -24,7 +24,7 @@ import com.intellij.psi.tree.IElementType
  * @see [Syntax Highlighter and Color Settings Page](https://plugins.jetbrains.com/docs/intellij/syntax-highlighter-and-color-settings-page.html)
  * @see [Syntax and Error Highlighting](https://plugins.jetbrains.com/docs/intellij/syntax-highlighting-and-error-highlighting.html)
  */
-class HurlSyntaxHighlighter :
+internal class HurlSyntaxHighlighter :
     SyntaxHighlighterBase(),
     DumbAware {
     companion object {

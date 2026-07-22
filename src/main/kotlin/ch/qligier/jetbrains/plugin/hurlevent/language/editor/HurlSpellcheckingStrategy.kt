@@ -23,9 +23,11 @@ internal class HurlSpellcheckingStrategy :
         val tokenType = element.node?.elementType
 
         return when (tokenType) {
-            HurlTypes.COMMENT -> TEXT_TOKENIZER
-            HurlTypes.QUOTED_STRING -> TEXT_TOKENIZER
-            HurlTypes.MULTILINE_STRING_CONTENT -> TEXT_TOKENIZER
+            HurlTypes.COMMENT,
+            HurlTypes.QUOTED_STRING,
+            HurlTypes.MULTILINE_STRING_CONTENT,
+            -> TEXT_TOKENIZER
+
             else -> EMPTY_TOKENIZER
         }
     }

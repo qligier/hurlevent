@@ -7,6 +7,7 @@ package ch.qligier.jetbrains.plugin.hurlevent.language.editor
 import ch.qligier.jetbrains.plugin.hurlevent.language.HurlLanguage
 import ch.qligier.jetbrains.plugin.hurlevent.language.lexer.HurlTokenSets
 import ch.qligier.jetbrains.plugin.hurlevent.language.parser.HurlElementSets
+import ch.qligier.jetbrains.plugin.hurlevent.language.psi.HurlElementType
 import ch.qligier.jetbrains.plugin.hurlevent.language.psi.HurlTypes
 import com.intellij.lang.Language
 import com.intellij.openapi.project.DumbAware
@@ -30,14 +31,18 @@ internal class HurlBreadcrumbsProvider :
         return type == HurlTypes.ENTRY ||
             type == HurlTypes.REQUEST ||
             type == HurlTypes.RESPONSE ||
-            type in HurlElementSets.MARKED_SECTIONS
+            type in HurlElementSets.MARKED_SECTIONS ||
+            type == HurlTypes.KEY_VALUE_PAIR ||
+            type == HurlTypes.OPTION_ENTRY ||
+            type == HurlTypes.CAPTURE_ENTRY ||
+            type == HurlTypes.HEADER
     }
 
     /**
      * When adding a new element to the breadcrumbs, also update the `acceptElement` method to include the new element type.
      */
     override fun getElementInfo(element: PsiElement): @NlsSafe String {
-        val type = element.node?.elementType ?: return ""
+        val type = element.node?.elementType as? HurlElementType ?: return ""
         return when (type) {
             HurlTypes.ENTRY -> {
                 element.text.takeNOfFirstLine(50) ?: "Entry"
@@ -52,8 +57,23 @@ internal class HurlBreadcrumbsProvider :
             }
 
             in HurlElementSets.MARKED_SECTIONS -> {
-                val sectionToken = element.children.firstOrNull { it.node?.elementType in HurlTokenSets.SECTIONS }
-                sectionToken?.text ?: type.sectionTypeToHumanDisplay()
+                breadcrumbSection(element, type)
+            }
+
+            HurlTypes.KEY_VALUE_PAIR -> {
+                getTextOfChildOfType(element, HurlTypes.KV_KEY)
+            }
+
+            HurlTypes.OPTION_ENTRY -> {
+                getTextOfChildOfType(element, HurlTypes.OPTION_KEY)
+            }
+
+            HurlTypes.CAPTURE_ENTRY -> {
+                getTextOfChildOfType(element, HurlTypes.CAPTURE_KEY_STRING)
+            }
+
+            HurlTypes.HEADER -> {
+                getTextOfChildOfType(element, HurlTypes.HEADER_KEY)
             }
 
             else -> {
@@ -69,10 +89,25 @@ internal class HurlBreadcrumbsProvider :
             ?.trim()
             ?.take(n)
 
-    private fun IElementType.sectionTypeToHumanDisplay(): String =
-        this.debugName
-            .removeSuffix("_SECTION")
-            .replace('_', ' ')
-            .lowercase()
-            .replaceFirstChar { it.uppercase() }
+    private fun breadcrumbSection(
+        element: PsiElement,
+        type: HurlElementType,
+    ): String {
+        val sectionToken = element.children.firstOrNull { it.node?.elementType in HurlTokenSets.SECTIONS }
+        val sectionName =
+            sectionToken?.text ?: type.humanName
+                .removeSuffix("_SECTION")
+                .replace('_', ' ')
+                .lowercase()
+                .replaceFirstChar { it.uppercase() }
+        return sectionName
+    }
+
+    private fun getTextOfChildOfType(
+        element: PsiElement,
+        type: IElementType,
+    ): String {
+        val child = element.node.findChildByType(type)
+        return child?.text?.takeNOfFirstLine(30) ?: ""
+    }
 }

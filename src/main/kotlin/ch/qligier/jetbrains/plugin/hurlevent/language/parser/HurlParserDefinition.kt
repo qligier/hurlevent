@@ -25,7 +25,7 @@ import com.intellij.psi.tree.TokenSet
  *
  * @see [Define a Parser](https://plugins.jetbrains.com/docs/intellij/lexer-and-parser-definition.html#define-a-parser)
  */
-class HurlParserDefinition : ParserDefinition {
+internal class HurlParserDefinition : ParserDefinition {
     companion object {
         val FILE: IFileElementType = IFileElementType(HurlLanguage)
     }

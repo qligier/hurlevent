@@ -11,7 +11,7 @@
   psiImplClassSuffix="Impl"
   psiPackage="ch.qligier.jetbrains.plugin.hurlevent.language.psi"
   psiImplPackage="ch.qligier.jetbrains.plugin.hurlevent.language.psi.impl"
-  psiImplUtilClass="ch.qligier.jetbrains.plugin.hurlevent.language.psi.impl.HurlPsiImplUtil"
+  //psiImplUtilClass="ch.qligier.jetbrains.plugin.hurlevent.language.psi.impl.HurlPsiImplUtil"
 
   elementTypeHolderClass="ch.qligier.jetbrains.plugin.hurlevent.language.psi.HurlTypes"
   elementTypeClass="ch.qligier.jetbrains.plugin.hurlevent.language.psi.HurlElementType"

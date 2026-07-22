@@ -43,14 +43,13 @@
         <fileType name="Hurl" language="hurl" extensions="hurl"
                   implementationClass="ch.qligier.jetbrains.plugin.hurlevent.language.HurlFileType"/>
         <lang.documentationProvider language="hurl"
-                                    implementationClass="ch.qligier.jetbrains.plugin.hurlevent.language.documentation.HurlFilterDocumentationProvider"/>
+                implementationClass="ch.qligier.jetbrains.plugin.hurlevent.language.documentation.HurlFilterDocumentationProvider" />
         <lang.parserDefinition language="hurl"
                                implementationClass="ch.qligier.jetbrains.plugin.hurlevent.language.parser.HurlParserDefinition"/>
         <lang.syntaxHighlighterFactory language="hurl"
                                        implementationClass="ch.qligier.jetbrains.plugin.hurlevent.language.highlight.HurlSyntaxHighlighterFactory"/>
         <lang.braceMatcher language="hurl"
                            implementationClass="ch.qligier.jetbrains.plugin.hurlevent.language.editor.HurlBraceMatcher"/>"
-        <annotator language="hurl" implementationClass="ch.qligier.jetbrains.plugin.hurlevent.language.highlight.HurlSyntaxAnnotator"/>
         <lang.commenter language="hurl"
                         implementationClass="ch.qligier.jetbrains.plugin.hurlevent.language.editor.HurlCommenter"/>
         <lang.foldingBuilder language="hurl"
@@ -64,6 +63,8 @@
                    implementationClass="ch.qligier.jetbrains.plugin.hurlevent.language.inspection.DeprecatedFilterAnnotator"/>
         <annotator language="hurl"
                    implementationClass="ch.qligier.jetbrains.plugin.hurlevent.language.inspection.UnknownCharsetAnnotator"/>
+        <annotator language="hurl"
+                   implementationClass="ch.qligier.jetbrains.plugin.hurlevent.language.inspection.DuplicateSectionAnnotator"/>
 
         <multiHostInjector implementation="ch.qligier.jetbrains.plugin.hurlevent.language.injector.XmlBodyInjector"/>
         <multiHostInjector

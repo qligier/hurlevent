@@ -11,7 +11,7 @@ import com.intellij.ide.util.treeView.smartTree.Sorter
 import com.intellij.openapi.editor.Editor
 import com.intellij.psi.PsiFile
 
-class HurlStructureViewModel(
+internal class HurlStructureViewModel(
     psiFile: PsiFile,
     editor: Editor?,
 ) : StructureViewModelBase(psiFile, editor, HurlStructureViewElement(psiFile)),

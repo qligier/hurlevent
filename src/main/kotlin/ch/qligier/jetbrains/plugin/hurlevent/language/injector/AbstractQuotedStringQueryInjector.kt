@@ -17,6 +17,8 @@ import kotlin.reflect.KClass
 /**
  * An injector specialized in injecting a specific language into quoted string values of a specific parent type.
  * This works for XPath and JSONPath queries.
+ *
+ * @see [Language Injection](https://plugins.jetbrains.com/docs/intellij/language-injection.html)
  **/
 abstract class AbstractQuotedStringQueryInjector<T : PsiElement>(
     private val language: Language,

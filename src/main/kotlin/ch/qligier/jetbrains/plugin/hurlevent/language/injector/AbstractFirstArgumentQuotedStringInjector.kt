@@ -1,3 +1,7 @@
+/*
+ * Copyright 2026 Quentin Ligier. Use of this source code is governed by the MIT license.
+ */
+
 package ch.qligier.jetbrains.plugin.hurlevent.language.injector
 
 import ch.qligier.jetbrains.plugin.hurlevent.language.psi.HurlQuotedStringValue
@@ -10,6 +14,12 @@ import com.intellij.psi.PsiElement
 import com.intellij.psi.PsiLanguageInjectionHost
 import org.jetbrains.annotations.Unmodifiable
 
+/**
+ * An injector specialized in injecting a specific language into the first quoted string argument of a specific parent
+ * type (a filter or a query).
+ *
+ * @see [Language Injection](https://plugins.jetbrains.com/docs/intellij/language-injection.html)
+ **/
 abstract class AbstractFirstArgumentQuotedStringInjector(
     private val parentPredicate: (PsiElement) -> Boolean,
     private val language: Language,

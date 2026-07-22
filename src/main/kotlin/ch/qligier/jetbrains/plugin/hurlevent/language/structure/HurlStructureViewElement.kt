@@ -12,6 +12,7 @@ import com.intellij.ide.structureView.StructureViewTreeElement
 import com.intellij.ide.util.treeView.smartTree.SortableTreeElement
 import com.intellij.ide.util.treeView.smartTree.TreeElement
 import com.intellij.navigation.ItemPresentation
+import com.intellij.openapi.project.DumbAware
 import com.intellij.platform.backend.navigation.NavigationRequest
 import com.intellij.pom.Navigatable
 import com.intellij.psi.NavigatablePsiElement
@@ -22,11 +23,12 @@ import com.intellij.psi.PsiElement
  *
  * @see [Structure View Factory](https://plugins.jetbrains.com/docs/intellij/structure-view-factory.html)
  **/
-class HurlStructureViewElement(
+internal class HurlStructureViewElement(
     private val element: NavigatablePsiElement,
 ) : StructureViewTreeElement,
     SortableTreeElement,
-    Navigatable by element {
+    Navigatable by element,
+    DumbAware {
     override fun getValue(): Any = element
 
     override fun getPresentation(): ItemPresentation {

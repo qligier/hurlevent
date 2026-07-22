@@ -18,7 +18,6 @@ import kotlin.reflect.KClass
  * An abstract implementation of a simple injector that only takes a PSI element type and a language to inject.
  * It is used to avoid boilerplate code in the injector classes.
  *
- * @author Quentin Ligier
  * @see [Language Injection](https://plugins.jetbrains.com/docs/intellij/language-injection.html)
  **/
 abstract class AbstractSimpleInjector<T : PsiElement>(

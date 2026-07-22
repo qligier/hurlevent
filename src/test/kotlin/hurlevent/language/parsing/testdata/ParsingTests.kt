@@ -2,7 +2,7 @@
  * Copyright 2026 Quentin Ligier. Use of this source code is governed by the MIT license.
  */
 
-package hurlevent.parsing.testdata
+package hurlevent.language.parsing.testdata
 
 import ch.qligier.jetbrains.plugin.hurlevent.language.parser.HurlParserDefinition
 import com.intellij.testFramework.ParsingTestCase
@@ -14,7 +14,7 @@ import com.intellij.testFramework.ParsingTestCase
  * For example, the method `testSimpleGet` will parse the file `SimpleGet.hurl` and compare the resulting PSI tree with
  * the expected output in `SimpleGet.txt`.
  */
-class SimpleGetParsingTest : ParsingTestCase("", "hurl", HurlParserDefinition()) {
+class ParsingTests : ParsingTestCase("", "hurl", HurlParserDefinition()) {
     // The directory in which the test data files are located.
     override fun getTestDataPath(): String = "src/test/testData"
 

@@ -8,6 +8,9 @@ import ch.qligier.jetbrains.plugin.hurlevent.language.psi.HurlXpathFilter
 import ch.qligier.jetbrains.plugin.hurlevent.language.psi.HurlXpathQuery
 import org.intellij.lang.xpath.XPath2Language
 
+/**
+ * We inject XPath2 language into the query and filter of the same name.
+ */
 internal class XPathInjector :
     AbstractFirstArgumentQuotedStringInjector(
         { parent ->

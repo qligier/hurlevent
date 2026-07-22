@@ -13,4 +13,10 @@ class HurlElementType(
     @NonNls @NotNull debugName: String,
 ) : IElementType(debugName, HurlLanguage) {
     override fun toString(): String = "HurlElementType.${super.toString()}"
+
+    /**
+     * An accessor to `IElementType.debugName` that is not flagged as `@Internal`.
+     */
+    val humanName: String
+        get() = super.toString()
 }
