@@ -2,7 +2,7 @@
 
 # Hurlevent
 
-## [Unreleased]
+## [0.1.0] - 2026-07-27
 
 ### Added
 
@@ -21,3 +21,5 @@
 - Language injection for GraphQL bodies (requires the GraphQL plugin)
 - Language injection for JSONPath and XPath query expressions (require the bundled JSONPath and XPathView plugins)
 - Language injection for regular expressions in string values
+
+[0.1.0]: https://github.com/olivierlacan/keep-a-changelog/releases/tag/v0.1.0
