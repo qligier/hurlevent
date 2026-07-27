@@ -4,19 +4,20 @@
 
 import org.jetbrains.intellij.platform.gradle.extensions.intellijPlatform
 
-rootProject.name = "Hurlevent"
+rootProject.name = "hurlevent"
 
 pluginManagement {
     plugins {
-        id("org.jetbrains.kotlin.jvm") version "2.1.20"
+        id("org.jetbrains.kotlin.jvm") version "2.3.20"
         id("org.jetbrains.changelog") version "2.5.0"
         id("org.jetbrains.intellij.platform.grammarkit") version "2.18.1"
+        id("org.jetbrains.qodana") version "2026.1.3"
     }
 }
 
 plugins {
     id("org.gradle.toolchains.foojay-resolver-convention") version "1.0.0"
-    id("org.jetbrains.intellij.platform.settings") version "2.16.0"
+    id("org.jetbrains.intellij.platform.settings") version "2.18.1"
 }
 
 @Suppress("UnstableApiUsage")

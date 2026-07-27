@@ -19,7 +19,7 @@ dependencies {
 
     // IntelliJ Platform Gradle Plugin Dependencies Extension - read more: https://plugins.jetbrains.com/docs/intellij/tools-intellij-platform-gradle-plugin-dependencies-extension.html
     intellijPlatform {
-        intellijIdea("2025.3")
+        intellijIdea("2025.3.5")
         testFramework(TestFrameworkType.Platform)
         testFramework(TestFrameworkType.Plugin.Java)
 
@@ -41,8 +41,9 @@ sourceSets {
 
 tasks.named<GenerateLexerTask>("generateLexer") {
     sourceFile.set(file("src/main/kotlin/ch/qligier/jetbrains/plugin/hurlevent/language/lexer/Hurl.flex"))
-    targetRootOutputDir.set(file("src/main/gen/ch/qligier/jetbrains/plugin/hurlevent/language/lexer"))
+    targetRootOutputDir.set(file("src/main/gen/"))
     purgeOldFiles.set(true)
+    outputs.upToDateWhen { false }
 }
 
 tasks.named<GenerateParserTask>("generateParser") {
@@ -107,12 +108,8 @@ intellijPlatform {
             // the storage used by the downloaded IDEs. This is especially important for GitHub actions, which have
             // limited resources.
             // https://github.com/JetBrains/intellij-platform-plugin-template/issues/462#issuecomment-4172769399
-            create(
-                ProductReleasesValueSource().map {
-                    listOf(it.first(), it.last()).distinct()
-                },
-            )
-            // In the future, we'll be able to reuse the current IDE: create(current())
+            current()
+            latest()
         }
     }
 }
