@@ -15,14 +15,46 @@
     <vendor url="https://github.com/qligier/">Quentin Ligier</vendor>
 
     <!-- Description of the plugin displayed on the Plugin Page and IDE Plugin Manager.
-         Simple HTML elements (text formatting, paragraphs, and lists) can be added inside of <![CDATA[ ]]> tag.
+         Simple HTML elements (text formatting, paragraphs, and lists) can be added inside <![CDATA[ ]]> tag.
          Guidelines: https://plugins.jetbrains.com/docs/marketplace/plugin-overview-page.html#plugin-description -->
     <description><![CDATA[
-    A plugin that adds support for the <a href="https://hurl.dev/">hurl</a> language.
+    Language support for <a href="https://hurl.dev/">Hurl</a>, the plain-text file format for running and testing HTTP
+    requests. Hurlevent recognizes <code>.hurl</code> files and adds editor features, code inspections, and embedded
+    language support so you can write, read, and navigate Hurl files directly in your JetBrains IDE.
 
-    <a href="https://github.com/qligier/hurlevent">Source code</a> |
-    <a href="https://github.com/qligier/hurlevent/issues">Issues</a> |
-    <a href="https://www.linkedin.com/in/qligier/">LinkedIn</a>
+    <p><b>Editing</b></p>
+    <ul>
+      <li>Syntax highlighting with a customizable color scheme (Settings | Editor | Color Scheme | Hurl)</li>
+      <li>Code folding, brace matching, and line commenting</li>
+      <li>Structure view and breadcrumbs to navigate requests and their sections</li>
+      <li>Spell checking in comments and strings</li>
+      <li>Quick documentation for filters, linked to the official Hurl reference</li>
+      <li>A New Hurl File action in the New menu</li>
+    </ul>
+
+    <p><b>Inspections</b></p>
+    <ul>
+      <li>Warnings for deprecated filters</li>
+      <li>Warnings for unknown charsets</li>
+      <li>Detection of duplicate sections</li>
+    </ul>
+
+    <p><b>Embedded languages</b></p>
+    <p>Request and response bodies and query expressions are highlighted and validated with the IDE's native language
+    support:</p>
+    <ul>
+      <li>JSON and XML bodies</li>
+      <li>GraphQL bodies (requires the GraphQL plugin)</li>
+      <li>JSONPath and XPath query expressions (require the bundled JSONPath and XPathView plugins)</li>
+      <li>Regular expressions in string values</li>
+    </ul>
+
+    <p>Based on the Hurl 8.0.1 specification.</p>
+
+    <p>
+      <a href="https://github.com/qligier/hurlevent">Source code</a> |
+      <a href="https://github.com/qligier/hurlevent/issues">Issues</a>
+    </p>
   ]]></description>
 
     <!-- Product and plugin compatibility requirements.
