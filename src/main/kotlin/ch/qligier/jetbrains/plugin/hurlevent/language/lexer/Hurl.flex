@@ -63,6 +63,11 @@ VALUE_CHAR = [^\r\n\#{}]
 // Non-whitespace value characters (for value states that also match keywords)
 NONWS_VALUE_CHAR = [^\r\n\#{} \t]
 
+// Non-whitespace XML body characters. Whitespace is excluded (and handled separately) so that a
+// bare HTTP_METHODS/HTTP_VERSION_VAL word has the same match length as a run of XML_TEXT_CHAR,
+// letting the method/version rules win the tie and terminate the body without a blank line.
+XML_TEXT_CHAR = [^\r\n{ \t]
+
 // Hex data
 HEX_DIGIT = [0-9a-fA-F]
 
@@ -86,6 +91,7 @@ MULTILINE_CLOSE = "```"
 %state KEY_VALUE_STATE
 %state BODY_STATE
 %state HEX_VALUE_STATE
+%state XML_BODY_STATE
 
 %%
 
@@ -120,6 +126,9 @@ MULTILINE_CLOSE = "```"
     // JSON body detection
     "{"                        { braceDepth = 1; yybegin(JSON_BODY_STATE); return LBRACE; }
     "["                        { yybegin(BODY_STATE); return LBRACKET; }
+
+    // XML body detection (unfenced, e.g. "<?xml ...?>" or "<root>...")
+    "<"                        { yypushback(1); yybegin(XML_BODY_STATE); }
 
     // File/base64/hex body
     "file,"                    { return FILE_PREFIX; }
@@ -613,6 +622,24 @@ MULTILINE_CLOSE = "```"
     {NEWLINE}                  { return BODY_DATA; }
     [^\r\n{]+                  { return BODY_DATA; }
     "{" / [^{]                 { return BODY_DATA; }
+}
+
+// ==================== XML_BODY_STATE ====================
+// Unfenced XML body: raw text starting with "<". It ends on a blank line, or as soon as the next
+// entry's request line or the current entry's response line starts (no blank line required),
+// mirroring how other raw states like ASSERT_STATE/KEY_VALUE_STATE detect these without a
+// separator. It doesn't end on a section marker since no section can follow a body.
+<XML_BODY_STATE> {
+    {TEMPLATE_OPEN}            { stateBeforeTemplate = XML_BODY_STATE; yybegin(TEMPLATE_STATE); return LBRACE2; }
+
+    {NEWLINE} / {NEWLINE}      { yybegin(YYINITIAL); return NEWLINE; }
+    {HTTP_METHODS} / {WS}      { yybegin(URL_STATE); return HTTP_METHOD; }
+    {HTTP_VERSION_VAL}         { yybegin(STATUS_LINE_STATE); return HTTP_VERSION; }
+
+    {NEWLINE}                  { return XML_TEXT; }
+    {WS}                       { return XML_TEXT; }
+    {XML_TEXT_CHAR}+           { return XML_TEXT; }
+    "{" / [^{]                 { return XML_TEXT; }
 }
 
 // Fallback for any state

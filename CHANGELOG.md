@@ -2,6 +2,12 @@
 
 # Hurlevent
 
+## [Unreleased]
+
+### Fixed
+
+- XML body without fenced block was not parsed correctly, resulting in a syntax error
+
 ## [0.1.0] - 2026-07-27
 
 ### Added

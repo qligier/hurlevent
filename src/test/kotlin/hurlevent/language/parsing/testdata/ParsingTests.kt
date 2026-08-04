@@ -28,4 +28,7 @@ class ParsingTests : ParsingTestCase("", "hurl", HurlParserDefinition()) {
 
     // Parses the EntrySeparators.hurl file and compares its PSI tree to EntrySeparators.txt
     fun testEntrySeparators() = doTest(true)
+
+    // Parses the XmlBody.hurl file and compares its PSI tree to XmlBody.txt
+    fun testXmlBody() = doTest(true)
 }
