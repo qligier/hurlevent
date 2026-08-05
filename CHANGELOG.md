@@ -6,7 +6,8 @@
 
 ### Fixed
 
-- XML body without fenced block was not parsed correctly, resulting in a syntax error
+- Improved the parser, notably for unfenced JSON and XML bodies
+- Fixed the documentation provider
 
 ## [0.1.0] - 2026-07-27
 
@@ -28,4 +29,5 @@
 - Language injection for JSONPath and XPath query expressions (require the bundled JSONPath and XPathView plugins)
 - Language injection for regular expressions in string values
 
-[0.1.0]: https://github.com/olivierlacan/keep-a-changelog/releases/tag/v0.1.0
+[Unreleased]: https://github.com/qligier/hurlevent/compare/v0.1.0...HEAD
+[0.1.0]: https://github.com/qligier/hurlevent/commits/v0.1.0
