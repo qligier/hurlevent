@@ -81,7 +81,7 @@
         <lang.syntaxHighlighterFactory language="hurl"
                                        implementationClass="ch.qligier.jetbrains.plugin.hurlevent.language.highlight.HurlSyntaxHighlighterFactory"/>
         <lang.braceMatcher language="hurl"
-                           implementationClass="ch.qligier.jetbrains.plugin.hurlevent.language.editor.HurlBraceMatcher"/>"
+                           implementationClass="ch.qligier.jetbrains.plugin.hurlevent.language.editor.HurlBraceMatcher"/>
         <lang.commenter language="hurl"
                         implementationClass="ch.qligier.jetbrains.plugin.hurlevent.language.editor.HurlCommenter"/>
         <lang.foldingBuilder language="hurl"
