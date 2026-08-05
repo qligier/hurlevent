@@ -27,7 +27,7 @@ internal class HurlColorSettingsPage :
     companion object {
         private val ATTRIBUTES_DESCRIPTORS =
             arrayOf(
-                AttributesDescriptor("Method", HurlSyntaxHighlighter.TAK_METHOD),
+                AttributesDescriptor("HTTP method", HurlSyntaxHighlighter.TAK_HTTP_METHOD),
                 AttributesDescriptor("HTTP version", HurlSyntaxHighlighter.TAK_HTTP_VERSION),
                 AttributesDescriptor("Status code", HurlSyntaxHighlighter.TAK_STATUS_CODE),
                 AttributesDescriptor("Section", HurlSyntaxHighlighter.TAK_SECTION),

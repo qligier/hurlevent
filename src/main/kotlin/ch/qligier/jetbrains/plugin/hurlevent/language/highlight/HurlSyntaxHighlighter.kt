@@ -28,7 +28,7 @@ internal class HurlSyntaxHighlighter :
     SyntaxHighlighterBase(),
     DumbAware {
     companion object {
-        val TAK_METHOD = createTextAttributesKey("HURL_METHOD", DefaultLanguageHighlighterColors.KEYWORD)
+        val TAK_HTTP_METHOD = createTextAttributesKey("HURL_HTTP_METHOD", DefaultLanguageHighlighterColors.KEYWORD)
         val TAK_HTTP_VERSION = createTextAttributesKey("HURL_HTTP_VERSION", DefaultLanguageHighlighterColors.KEYWORD)
         val TAK_STATUS_CODE = createTextAttributesKey("HURL_STATUS_CODE", DefaultLanguageHighlighterColors.NUMBER)
         val TAK_SECTION = createTextAttributesKey("HURL_SECTION", DefaultLanguageHighlighterColors.METADATA)
@@ -49,7 +49,7 @@ internal class HurlSyntaxHighlighter :
 
     override fun getTokenHighlights(tokenType: IElementType?): Array<out TextAttributesKey> =
         when (tokenType) {
-            HTTP_METHOD -> arrayOf(TAK_METHOD)
+            HTTP_METHOD -> arrayOf(TAK_HTTP_METHOD)
             HTTP_VERSION -> arrayOf(TAK_HTTP_VERSION)
             STATUS_CODE -> arrayOf(TAK_STATUS_CODE)
             COMMENT -> arrayOf(TAK_COMMENT)
