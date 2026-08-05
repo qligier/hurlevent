@@ -31,4 +31,7 @@ class ParsingTests : ParsingTestCase("", "hurl", HurlParserDefinition()) {
 
     // Parses the XmlBody.hurl file and compares its PSI tree to XmlBody.txt
     fun testXmlBody() = doTest(true)
+
+    // Parses the JsonBody.hurl file and compares its PSI tree to JsonBody.txt
+    fun testJsonBody() = doTest(true)
 }

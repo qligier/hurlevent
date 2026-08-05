@@ -17,6 +17,7 @@ import static ch.qligier.jetbrains.plugin.hurlevent.language.psi.HurlTypes.*;
 
 %{
   private int braceDepth = 0;
+  private int bracketDepth = 0;
   private int stateBeforeTemplate = YYINITIAL;
   private int stateAfterValue = YYINITIAL;
 %}
@@ -92,6 +93,7 @@ MULTILINE_CLOSE = "```"
 %state BODY_STATE
 %state HEX_VALUE_STATE
 %state XML_BODY_STATE
+%state JSON_ARRAY_BODY_STATE
 
 %%
 
@@ -125,7 +127,7 @@ MULTILINE_CLOSE = "```"
 
     // JSON body detection
     "{"                        { braceDepth = 1; yybegin(JSON_BODY_STATE); return LBRACE; }
-    "["                        { yybegin(BODY_STATE); return LBRACKET; }
+    "["                        { bracketDepth = 1; yybegin(JSON_ARRAY_BODY_STATE); return LBRACKET; }
 
     // XML body detection (unfenced, e.g. "<?xml ...?>" or "<root>...")
     "<"                        { yypushback(1); yybegin(XML_BODY_STATE); }
@@ -602,6 +604,27 @@ MULTILINE_CLOSE = "```"
                                    return JSON_TEXT;
                                }
     [^\r\n{}]+                 { return JSON_TEXT; }
+    {NEWLINE}                  { return JSON_TEXT; }
+}
+
+// ==================== JSON_ARRAY_BODY_STATE ====================
+// Unfenced JSON body whose root value is an array rather than an object. Mirrors JSON_BODY_STATE
+// but tracks bracket depth instead of brace depth, since the root delimiters are "[" and "]".
+// A lone "{" (not starting a "{{" template) is just passed through as content since braces aren't
+// balanced here (nested objects inside the array don't need to affect the bracket depth).
+<JSON_ARRAY_BODY_STATE> {
+    {TEMPLATE_OPEN}            { stateBeforeTemplate = JSON_ARRAY_BODY_STATE; yybegin(TEMPLATE_STATE); return LBRACE2; }
+    "["                        { bracketDepth++; return JSON_TEXT; }
+    "]"                        {
+                                   bracketDepth--;
+                                   if (bracketDepth <= 0) {
+                                       yybegin(YYINITIAL);
+                                       return RBRACKET;
+                                   }
+                                   return JSON_TEXT;
+                               }
+    [^\r\n\[\]{]+              { return JSON_TEXT; }
+    "{" / [^{]                 { return JSON_TEXT; }
     {NEWLINE}                  { return JSON_TEXT; }
 }
 
