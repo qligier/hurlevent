@@ -59,8 +59,9 @@ TEMPLATE_OPEN = "{{"
 TEMPLATE_CLOSE = "}}"
 TEMPLATE_VAR_NAME = [a-zA-Z_] [a-zA-Z0-9_\-]*
 
-// Value characters (everything except newline/comment/template)
-VALUE_CHAR = [^\r\n\#{}]
+// Value characters (everything except newline/comment, and "{" since a run of two of them ("{{")
+// starts a template; a single "{" is still valid content, handled separately via a lookahead rule)
+VALUE_CHAR = [^\r\n\#{]
 // Non-whitespace value characters (for value states that also match keywords)
 NONWS_VALUE_CHAR = [^\r\n\#{} \t]
 
@@ -167,6 +168,7 @@ MULTILINE_CLOSE = "```"
     {WS}                       { return WHITE_SPACE; }
     {TEMPLATE_OPEN}            { stateBeforeTemplate = HEADER_VALUE_STATE; yybegin(TEMPLATE_STATE); return LBRACE2; }
     {VALUE_CHAR}+              { return HEADER_VALUE; }
+    "{" / [^{]                 { return HEADER_VALUE; }
     {COMMENT_LINE}             { return COMMENT; }
     {NEWLINE}                  { yybegin(YYINITIAL); return NEWLINE; }
 }
