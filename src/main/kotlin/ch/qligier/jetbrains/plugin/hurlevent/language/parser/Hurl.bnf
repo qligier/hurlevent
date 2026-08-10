@@ -406,7 +406,10 @@ oneline_hex_value ::= HEX_PREFIX HEX_DATA? SEMICOLON
 oneline_base64_value ::= BASE64_PREFIX BASE64_DATA? SEMICOLON
 
 // Template variable
-template ::= LBRACE2 TEMPLATE_VAR RBRACE2 {
+template_variable ::= TEMPLATE_VAR {
+  mixin = "ch.qligier.jetbrains.plugin.hurlevent.language.psi.impl.HurlTemplateVariableMixin"
+}
+template ::= LBRACE2 template_variable RBRACE2 {
   pin = 1
 }
 

@@ -31,7 +31,8 @@ class DocumentationProviderTest : BasePlatformTestCase() {
             """.trimIndent(),
         )
 
-        // Step 1: the legacy-API hook must let DocumentationManager resolve the keyword as a target at all.
+        // Step 1: HurlFilterMixin's self-resolving reference must let DocumentationManager resolve the keyword as a
+        // target at all.
         val docManager = DocumentationManager.getInstance(project)
         val targetElement = docManager.findTargetElement(myFixture.editor, myFixture.file)
         assertNotNull("Quick Documentation should find a target element for a filter keyword", targetElement)

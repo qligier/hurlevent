@@ -4,6 +4,10 @@
 
 ## [Unreleased]
 
+### Added
+
+- Resolves template variables that are defined in a previous capture section
+
 ### Fixed
 
 - Improved the parser, notably for unfenced JSON and XML bodies
