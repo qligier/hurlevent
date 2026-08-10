@@ -8,7 +8,7 @@ import ch.qligier.jetbrains.plugin.hurlevent.common.Icons
 import ch.qligier.jetbrains.plugin.hurlevent.specs.HurlFilter
 import com.intellij.model.Pointer
 import com.intellij.openapi.diagnostic.Logger
-import com.intellij.openapi.util.NlsContexts
+import com.intellij.openapi.diagnostic.trace
 import com.intellij.platform.backend.documentation.DocumentationResult
 import com.intellij.platform.backend.documentation.DocumentationTarget
 import com.intellij.platform.backend.presentation.TargetPresentation
@@ -24,7 +24,7 @@ internal class HurlFilterDocumentationTarget(
     private val element: PsiElement,
     private val filter: HurlFilter,
 ) : DocumentationTarget {
-    private val LOG = Logger.getInstance(HurlFilterDocumentationTarget::class.java)
+    private val logger = Logger.getInstance(HurlFilterDocumentationTarget::class.java)
 
     override fun createPointer(): Pointer<out DocumentationTarget> =
         Pointer {
@@ -44,18 +44,15 @@ internal class HurlFilterDocumentationTarget(
             .presentation()
 
     override fun computeDocumentation(): DocumentationResult {
-        LOG.info("Computing documentation for filter: ${filter.name} at element: ${element.text}")
+        logger.trace { "Computing documentation for filter: ${filter.name} at element: ${element.text}" }
         return DocumentationResult.documentation(
             """
-            <b>${filter.name}</b><br/>
-            ${filter.description}<br/>
-            <a href="${filter.documentationUrl}">Documentation</a>
+            <b>Filter <code>${filter.name}</code></b>
+            <br/><br/>
+            ${filter.description}
+            <br/><br/>
+            <a href="${filter.documentationUrl}"><code>${filter.name}</code> documentation on hurl.dev</a>
             """.trimIndent(),
         )
-    }
-
-    override fun computeDocumentationHint(): @NlsContexts.HintText String? {
-        LOG.info("Computing documentation hint for filter: ${filter.name} at element: ${element.text}")
-        return null
     }
 }

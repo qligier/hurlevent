@@ -17,6 +17,9 @@
   elementTypeClass="ch.qligier.jetbrains.plugin.hurlevent.language.psi.HurlElementType"
   tokenTypeClass="ch.qligier.jetbrains.plugin.hurlevent.language.lexer.HurlTokenType"
 
+  // Apply a common mixin to all filter keywords
+  mixin(".*_filter_keyword")="ch.qligier.jetbrains.plugin.hurlevent.language.psi.impl.HurlFilterMixin"
+
   tokens = [
     // Methods
     // [HTTP_METHOD_LIST]
@@ -255,39 +258,72 @@ filter ::= base64_decode_filter | base64_encode_filter | base64_url_safe_decode_
          | url_encode_filter | url_decode_filter | url_query_param_filter | utf8_decode_filter | utf8_encode_filter
          | xpath_filter
 
-base64_decode_filter ::= KW_BASE64_DECODE
-base64_encode_filter ::= KW_BASE64_ENCODE
-base64_url_safe_decode_filter ::= KW_BASE64_URL_SAFE_DECODE
-base64_url_safe_encode_filter ::= KW_BASE64_URL_SAFE_ENCODE
-charset_decode_filter ::= KW_CHARSET_DECODE quoted_string_value
-count_filter ::= KW_COUNT
-date_format_filter ::= KW_DATE_FORMAT quoted_string_value
-days_after_now_filter ::= KW_DAYS_AFTER_NOW
-days_before_now_filter ::= KW_DAYS_BEFORE_NOW
-decode_filter ::= KW_DECODE quoted_string_value
-first_filter ::= KW_FIRST
-format_filter ::= KW_FORMAT quoted_string_value
-html_escape_filter ::= KW_HTML_ESCAPE
-html_unescape_filter ::= KW_HTML_UNESCAPE
-jsonpath_filter ::= KW_JSONPATH quoted_string_value
-last_filter ::= KW_LAST
-location_filter ::= KW_LOCATION
-nth_filter ::= KW_NTH INT_NUMBER
-regex_filter ::= KW_REGEX quoted_or_regex_string_value_
-replace_filter ::= KW_REPLACE quoted_string_value quoted_string_value
-replace_regex_filter ::= KW_REPLACE_REGEX quoted_or_regex_string_value_ quoted_string_value
-split_filter ::= KW_SPLIT quoted_string_value
-to_date_filter ::= KW_TO_DATE quoted_string_value
-to_float_filter ::= KW_TO_FLOAT
-to_hex_filter ::= KW_TO_HEX
-to_int_filter ::= KW_TO_INT
-to_string_filter ::= KW_TO_STRING
-url_encode_filter ::= KW_URL_ENCODE
-url_decode_filter ::= KW_URL_DECODE
-url_query_param_filter ::= KW_URL_QUERY_PARAM quoted_string_value
-utf8_decode_filter ::= KW_UTF8_DECODE
-utf8_encode_filter ::= KW_UTF8_ENCODE
-xpath_filter ::= KW_XPATH quoted_string_value
+base64_decode_filter_keyword ::= KW_BASE64_DECODE
+base64_decode_filter ::= base64_decode_filter_keyword
+base64_encode_filter_keyword ::= KW_BASE64_ENCODE
+base64_encode_filter ::= base64_encode_filter_keyword
+base64_url_safe_decode_filter_keyword ::= KW_BASE64_URL_SAFE_DECODE
+base64_url_safe_decode_filter ::= base64_url_safe_decode_filter_keyword
+base64_url_safe_encode_filter_keyword ::= KW_BASE64_URL_SAFE_ENCODE
+base64_url_safe_encode_filter ::= base64_url_safe_encode_filter_keyword
+charset_decode_filter_keyword ::= KW_CHARSET_DECODE
+charset_decode_filter ::= charset_decode_filter_keyword quoted_string_value
+count_filter_keyword ::= KW_COUNT
+count_filter ::= count_filter_keyword
+date_format_filter_keyword ::= KW_DATE_FORMAT
+date_format_filter ::= date_format_filter_keyword quoted_string_value
+days_after_now_filter_keyword ::= KW_DAYS_AFTER_NOW
+days_after_now_filter ::= days_after_now_filter_keyword
+days_before_now_filter_keyword ::= KW_DAYS_BEFORE_NOW
+days_before_now_filter ::= days_before_now_filter_keyword
+decode_filter_keyword ::= KW_DECODE
+decode_filter ::= decode_filter_keyword quoted_string_value
+first_filter_keyword ::= KW_FIRST
+first_filter ::= first_filter_keyword
+format_filter_keyword ::= KW_FORMAT
+format_filter ::= format_filter_keyword quoted_string_value
+html_escape_filter_keyword ::= KW_HTML_ESCAPE
+html_escape_filter ::= html_escape_filter_keyword
+html_unescape_filter_keyword ::= KW_HTML_UNESCAPE
+html_unescape_filter ::= html_unescape_filter_keyword
+jsonpath_filter_keyword ::= KW_JSONPATH
+jsonpath_filter ::= jsonpath_filter_keyword quoted_string_value
+last_filter_keyword ::= KW_LAST
+last_filter ::= last_filter_keyword
+location_filter_keyword ::= KW_LOCATION
+location_filter ::= location_filter_keyword
+nth_filter_keyword ::= KW_NTH
+nth_filter ::= nth_filter_keyword INT_NUMBER
+regex_filter_keyword ::= KW_REGEX
+regex_filter ::= regex_filter_keyword quoted_or_regex_string_value_
+replace_filter_keyword ::= KW_REPLACE
+replace_filter ::= replace_filter_keyword quoted_string_value quoted_string_value
+replace_regex_filter_keyword ::= KW_REPLACE_REGEX
+replace_regex_filter ::= replace_regex_filter_keyword quoted_or_regex_string_value_ quoted_string_value
+split_filter_keyword ::= KW_SPLIT
+split_filter ::= split_filter_keyword quoted_string_value
+to_date_filter_keyword ::= KW_TO_DATE
+to_date_filter ::= to_date_filter_keyword quoted_string_value
+to_float_filter_keyword ::= KW_TO_FLOAT
+to_float_filter ::= to_float_filter_keyword
+to_hex_filter_keyword ::= KW_TO_HEX
+to_hex_filter ::= to_hex_filter_keyword
+to_int_filter_keyword ::= KW_TO_INT
+to_int_filter ::= to_int_filter_keyword
+to_string_filter_keyword ::= KW_TO_STRING
+to_string_filter ::= to_string_filter_keyword
+url_encode_filter_keyword ::= KW_URL_ENCODE
+url_encode_filter ::= url_encode_filter_keyword
+url_decode_filter_keyword ::= KW_URL_DECODE
+url_decode_filter ::= url_decode_filter_keyword
+url_query_param_filter_keyword ::= KW_URL_QUERY_PARAM
+url_query_param_filter ::= url_query_param_filter_keyword quoted_string_value
+utf8_decode_filter_keyword ::= KW_UTF8_DECODE
+utf8_decode_filter ::= utf8_decode_filter_keyword
+utf8_encode_filter_keyword ::= KW_UTF8_ENCODE
+utf8_encode_filter ::= utf8_encode_filter_keyword
+xpath_filter_keyword ::= KW_XPATH
+xpath_filter ::= xpath_filter_keyword quoted_string_value
 
 // Predicates
 // [PREDICATE_LIST]
