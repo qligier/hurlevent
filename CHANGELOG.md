@@ -2,7 +2,7 @@
 
 # Hurlevent
 
-## [Unreleased]
+## [0.2.0] - 2026-08-11
 
 ### Added
 
@@ -33,5 +33,6 @@
 - Language injection for JSONPath and XPath query expressions (require the bundled JSONPath and XPathView plugins)
 - Language injection for regular expressions in string values
 
-[Unreleased]: https://github.com/qligier/hurlevent/compare/v0.1.0...HEAD
+[Unreleased]: https://github.com/qligier/hurlevent/compare/v0.2.0...HEAD
+[0.2.0]: https://github.com/qligier/hurlevent/compare/v0.1.0...v0.2.0
 [0.1.0]: https://github.com/qligier/hurlevent/commits/v0.1.0
