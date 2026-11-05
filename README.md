@@ -36,6 +36,8 @@ parser generated from the Hurl grammar.
 - Warnings for **deprecated filters**
 - Warnings for **unknown charsets**
 - Detection of **duplicate sections**
+- Errors for **invalid option values** in the `[Options]` section, with a description of the expected type (boolean,
+  count, integer, duration, verbosity or variable definition)
 
 ### Embedded language support
 

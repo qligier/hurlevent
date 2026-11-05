@@ -37,6 +37,8 @@
       <li>Warnings for deprecated filters</li>
       <li>Warnings for unknown charsets</li>
       <li>Detection of duplicate sections</li>
+      <li>Errors for invalid option values in the Options section, with a description of the expected type (boolean,
+          count, integer, duration, verbosity or variable definition)</li>
     </ul>
 
     <p><b>Embedded languages</b></p>
@@ -95,6 +97,8 @@
                    implementationClass="ch.qligier.jetbrains.plugin.hurlevent.language.inspection.DeprecatedFilterAnnotator"/>
         <annotator language="hurl"
                    implementationClass="ch.qligier.jetbrains.plugin.hurlevent.language.inspection.UnknownCharsetAnnotator"/>
+        <annotator language="hurl"
+                   implementationClass="ch.qligier.jetbrains.plugin.hurlevent.language.inspection.OptionValueTypeAnnotator"/>
         <annotator language="hurl"
                    implementationClass="ch.qligier.jetbrains.plugin.hurlevent.language.inspection.DuplicateSectionAnnotator"/>
 

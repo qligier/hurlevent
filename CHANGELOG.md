@@ -9,7 +9,8 @@
 - Add support for the Hurl 8.1.0 grammar, including the new options: `digest`, `fail-with-body`, 
   `http2-prior-knowledge`, `negotiate`, `no-header`, `no-jsonpath-coercion`, `ntlm`, `tls-max`, `tls-min`, 
   `variables-file` and `verbosity`
-  
+- Inspection: error when the value of an option in the `[Options]` section doesn't match the type expected by the
+  option (boolean, count, integer, duration, verbosity or variable definition)
 
 ### Fixed
 
