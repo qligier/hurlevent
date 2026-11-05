@@ -522,31 +522,51 @@ MULTILINE_CLOSE = "```"
     "cacert"                   { return KW_CACERT; }
     "cert"                     { return KW_CERT; }
     "compressed"               { return KW_COMPRESSED; }
+    "connect-timeout"          { return KW_CONNECT_TIMEOUT; }
     "connect-to"               { return KW_CONNECT_TO; }
     "delay"                    { return KW_DELAY; }
+    "digest"                   { return KW_DIGEST; }
+    "fail-with-body"           { return KW_FAIL_WITH_BODY; }
+    "header"                   { return KW_HEADER; }
     "http1.0"                  { return KW_HTTP10; }
     "http1.1"                  { return KW_HTTP11; }
     "http2"                    { return KW_HTTP2; }
+    "http2-prior-knowledge"    { return KW_HTTP2_PRIOR_KNOWLEDGE; }
     "http3"                    { return KW_HTTP3; }
     "insecure"                 { return KW_INSECURE; }
     "ipv4"                     { return KW_IPVF; }
     "ipv6"                     { return KW_IPVS; }
     "key"                      { return KW_KEY; }
+    "limit-rate"               { return KW_LIMIT_RATE; }
     "location"                 { return KW_LOCATION; }
     "location-trusted"         { return KW_LOCATION_TRUSTED; }
     "max-redirs"               { return KW_MAX_REDIRS; }
+    "max-time"                 { return KW_MAX_TIME; }
+    "negotiate"                { return KW_NEGOTIATE; }
+    "netrc"                    { return KW_NETRC; }
+    "netrc-file"               { return KW_NETRC_FILE; }
+    "netrc-optional"           { return KW_NETRC_OPTIONAL; }
+    "no-header"                { return KW_NO_HEADER; }
+    "no-jsonpath-coercion"     { return KW_NO_JSONPATH_COERCION; }
+    "ntlm"                     { return KW_NTLM; }
     "output"                   { return KW_OUTPUT; }
     "path-as-is"               { return KW_PATH_AS_IS; }
+    "pinnedpubkey"             { return KW_PINNEDPUBKEY; }
     "proxy"                    { return KW_PROXY; }
+    "repeat"                   { return KW_REPEAT; }
     "resolve"                  { return KW_RESOLVE; }
     "retry"                    { return KW_RETRY; }
     "retry-interval"           { return KW_RETRY_INTERVAL; }
     "skip"                     { return KW_SKIP; }
+    "tls-max"                  { return KW_TLS_MAX; }
+    "tls-min"                  { return KW_TLS_MIN; }
     "unix-socket"              { return KW_UNIX_SOCKET; }
     "user"                     { return KW_USER; }
     "verbose"                  { return KW_VERBOSE; }
+    "verbosity"                { return KW_VERBOSITY; }
     "very-verbose"             { return KW_VERY_VERBOSE; }
     "variable"                 { return KW_VARIABLE; }
+    "variables-file"           { return KW_VARIABLES_FILE; }
 
     // Colon transitions to value state
     ":"                        { yybegin(OPTIONS_VALUE_STATE); return COLON; }

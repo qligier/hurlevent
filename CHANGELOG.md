@@ -2,6 +2,21 @@
 
 # Hurlevent
 
+## [Unreleased]
+
+### Added
+
+- Add support for the Hurl 8.1.0 grammar, including the new options: `digest`, `fail-with-body`, 
+  `http2-prior-knowledge`, `negotiate`, `no-header`, `no-jsonpath-coercion`, `ntlm`, `tls-max`, `tls-min`, 
+  `variables-file` and `verbosity`
+- Inspection: error when the value of an option in the `[Options]` section doesn't match the type expected by the
+  option (boolean, count, integer, duration, verbosity or variable definition)
+
+### Fixed
+
+- Recognize the `[Options]` keys that were missing from the Hurl 8.0.1 grammar: `connect-timeout`, `header`,
+  `limit-rate`, `max-time`, `netrc`, `netrc-file`, `netrc-optional`, `pinnedpubkey` and `repeat`
+
 ## [0.2.0] - 2026-08-11
 
 ### Added

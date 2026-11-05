@@ -12,7 +12,7 @@ support for request bodies and query expressions.
 ![Downloads](https://img.shields.io/jetbrains/plugin/d/ch.qligier.jetbrains.plugin.hurlevent.svg)
 ![GitHub last commit](https://img.shields.io/github/last-commit/qligier/hurlevent?style=flat-square)
 ![JDK 21](https://img.shields.io/badge/JDK-21-blue?style=flat-square)
-![Hurl 8.0.1](https://img.shields.io/badge/Specifications-Hurl_8.0.1-red?style=flat-square)
+![Hurl 8.1.0](https://img.shields.io/badge/Specifications-Hurl_8.1.0-red?style=flat-square)
 </p>
 
 ## Features
@@ -36,6 +36,8 @@ parser generated from the Hurl grammar.
 - Warnings for **deprecated filters**
 - Warnings for **unknown charsets**
 - Detection of **duplicate sections**
+- Errors for **invalid option values** in the `[Options]` section, with a description of the expected type (boolean,
+  count, integer, duration, verbosity or variable definition)
 
 ### Embedded language support
 
@@ -47,7 +49,7 @@ through [language injection](https://plugins.jetbrains.com/docs/intellij/languag
 - **JSONPath** and **XPath** query expressions — require the bundled JSONPath and XPathView plugins
 - **Regular expressions** in string values
 
-The language grammar targets the Hurl 8.0.1 specification.
+The language grammar targets the Hurl 8.1.0 specification.
 
 ## Compatibility
 

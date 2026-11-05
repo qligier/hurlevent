@@ -23,4 +23,9 @@ class InspectionAnnotatorTest : BasePlatformTestCase() {
         myFixture.configureByFile("UnknownFilter.hurl")
         myFixture.checkHighlighting(true, true, true)
     }
+
+    fun testOptionValueTypes() {
+        myFixture.configureByFile("OptionValueTypes.hurl")
+        myFixture.checkHighlighting(true, true, true)
+    }
 }

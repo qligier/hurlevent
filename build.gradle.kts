@@ -5,6 +5,7 @@
 import org.jetbrains.intellij.platform.gradle.TestFrameworkType
 import org.jetbrains.intellij.platform.gradle.tasks.GenerateLexerTask
 import org.jetbrains.intellij.platform.gradle.tasks.GenerateParserTask
+import org.jetbrains.intellij.platform.gradle.tasks.PrepareSandboxTask
 
 plugins {
     id("java")
@@ -62,6 +63,13 @@ tasks {
             html.required.set(true)
             junitXml.required.set(true)
         }
+    }
+
+    // Disable bundled plugins that are not needed in the sandboxes (tests and IDE runs):
+    // - Vue.js: its LSP provider fails to initialize in the test sandbox, which makes random tests fail
+    // - Kubernetes: it only adds noise to the logs
+    withType<PrepareSandboxTask> {
+        disabledPlugins.addAll("org.jetbrains.plugins.vue", "com.intellij.kubernetes")
     }
 
     withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {

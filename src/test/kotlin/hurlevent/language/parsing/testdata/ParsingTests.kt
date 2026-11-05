@@ -37,4 +37,7 @@ class ParsingTests : ParsingTestCase("", "hurl", HurlParserDefinition()) {
 
     // Parses the Headers.hurl file and compares its PSI tree to Headers.txt
     fun testHeaders() = doTest(true)
+
+    // Parses the Options.hurl file and compares its PSI tree to Options.txt
+    fun testOptions() = doTest(true)
 }
