@@ -49,7 +49,7 @@
       <li>Regular expressions in string values</li>
     </ul>
 
-    <p>Based on the Hurl 8.0.1 specification.</p>
+    <p>Based on the Hurl 8.1.0 specification.</p>
 
     <p>
       <a href="https://github.com/qligier/hurlevent">Source code</a> |

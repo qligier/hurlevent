@@ -4,6 +4,13 @@
 
 ## [Unreleased]
 
+### Added
+
+- Add support for the Hurl 8.1.0 grammar, including the new options: `digest`, `fail-with-body`, 
+  `http2-prior-knowledge`, `negotiate`, `no-header`, `no-jsonpath-coercion`, `ntlm`, `tls-max`, `tls-min`, 
+  `variables-file` and `verbosity`
+  
+
 ### Fixed
 
 - Recognize the `[Options]` keys that were missing from the Hurl 8.0.1 grammar: `connect-timeout`, `header`,
