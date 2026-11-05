@@ -522,8 +522,10 @@ MULTILINE_CLOSE = "```"
     "cacert"                   { return KW_CACERT; }
     "cert"                     { return KW_CERT; }
     "compressed"               { return KW_COMPRESSED; }
+    "connect-timeout"          { return KW_CONNECT_TIMEOUT; }
     "connect-to"               { return KW_CONNECT_TO; }
     "delay"                    { return KW_DELAY; }
+    "header"                   { return KW_HEADER; }
     "http1.0"                  { return KW_HTTP10; }
     "http1.1"                  { return KW_HTTP11; }
     "http2"                    { return KW_HTTP2; }
@@ -532,12 +534,19 @@ MULTILINE_CLOSE = "```"
     "ipv4"                     { return KW_IPVF; }
     "ipv6"                     { return KW_IPVS; }
     "key"                      { return KW_KEY; }
+    "limit-rate"               { return KW_LIMIT_RATE; }
     "location"                 { return KW_LOCATION; }
     "location-trusted"         { return KW_LOCATION_TRUSTED; }
     "max-redirs"               { return KW_MAX_REDIRS; }
+    "max-time"                 { return KW_MAX_TIME; }
+    "netrc"                    { return KW_NETRC; }
+    "netrc-file"               { return KW_NETRC_FILE; }
+    "netrc-optional"           { return KW_NETRC_OPTIONAL; }
     "output"                   { return KW_OUTPUT; }
     "path-as-is"               { return KW_PATH_AS_IS; }
+    "pinnedpubkey"             { return KW_PINNEDPUBKEY; }
     "proxy"                    { return KW_PROXY; }
+    "repeat"                   { return KW_REPEAT; }
     "resolve"                  { return KW_RESOLVE; }
     "retry"                    { return KW_RETRY; }
     "retry-interval"           { return KW_RETRY_INTERVAL; }

@@ -2,6 +2,13 @@
 
 # Hurlevent
 
+## [Unreleased]
+
+### Fixed
+
+- Recognize the `[Options]` keys that were missing from the Hurl 8.0.1 grammar: `connect-timeout`, `header`,
+  `limit-rate`, `max-time`, `netrc`, `netrc-file`, `netrc-optional`, `pinnedpubkey` and `repeat`
+
 ## [0.2.0] - 2026-08-11
 
 ### Added
